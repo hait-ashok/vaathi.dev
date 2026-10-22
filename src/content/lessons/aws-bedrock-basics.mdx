@@ -1,55 +1,55 @@
 ---
 title: AWS Bedrock basics
-description: Bedrock as a managed API to foundation models on AWS — beginner cloud intuition, no deploy or signup required.
-order: 15
+description: Bedrock as AWS’s managed foundation-model platform — not Claude’s home; beginner intuition only.
+order: 17
 path: foundations
-minutes: 15
+minutes: 14
 draft: false
 ---
 
-**Amazon Bedrock** is an AWS service that lets applications call **foundation models** through a managed API — including models from several providers (for example, Anthropic’s [Claude](/learn/foundations/claude-basics) family, among others). You can finish this lesson **without** creating an AWS account.
+**Amazon Bedrock** is an **AWS** service: a managed way for applications to call **foundation models** through AWS APIs, under an AWS account’s billing and permissions. It is a **cloud platform**, not an Anthropic product.
 
-## The one-sentence idea
+You can finish this lesson **without** creating an AWS account, enabling models, or deploying anything.
 
-Instead of every team wiring a different vendor SDK for every model, Bedrock offers a **common door on AWS**: pick an available model, send a request, get a response — under your organization’s AWS bill and permissions.
+## What Bedrock is (and isn’t)
+
+| Bedrock is | Bedrock is not |
+| --- | --- |
+| AWS’s door to many foundation models | “Where Claude lives” by default |
+| API + permissions + quotas on AWS | Claude chat or [Claude Code](/learn/foundations/claude-code-basics) |
+| One example of [cloud-hosted frontier models](/learn/foundations/cloud-frontier-models) | The only cloud that hosts large models |
+
+[Claude](/learn/foundations/claude-basics) models *may* be available through Bedrock when an account enables them — as **one of several** model choices. Teams also use Bedrock for models from other providers. Same AWS door; different model behind it.
 
 ## Why teams use it (intuition)
 
-- **One cloud neighborhood** — Models live next to other AWS resources the company already uses.
-- **Model choice** — Swap or compare models without redesigning the whole app (still test carefully).
-- **Account & access mental model** — Access is usually gated by an **AWS account** and **IAM** permissions (“who is allowed to call which model”), not by a consumer chat login.
-
-IAM here just means: *identity and permissions*. Think “badge access to a building,” not a full security course.
+- **One cloud neighborhood** — Models sit next to other AWS resources the company already runs.
+- **Model choice** — Compare or switch models without rebuilding the whole app (still test carefully).
+- **IAM mental model** — Access is usually “this role may invoke that model,” not a consumer chat login.
 
 ## Chat app vs Bedrock
 
-| | Consumer chat | Bedrock-style API |
+| | Consumer chat (e.g. Claude chat) | Bedrock |
 | --- | --- | --- |
-| Who it’s for | Individuals exploring | Apps and teams building features |
-| You see | A conversation UI | Code / services calling an endpoint |
-| Billing | Often a subscription or free tier | Typically usage on a cloud bill |
-| Setup | Sign up for the app | Org AWS account, permissions, quotas |
+| Maker focus | Model vendor’s product UI | AWS platform |
+| You see | Conversation | App/code calling an API |
+| Typical bill | Subscription / usage with the vendor | AWS usage |
+| Setup | App signup | Org AWS account + permissions |
 
-Foundations does **not** walk through signup, consoles, or deploy. Those are optional later skills for builders.
+## What this lesson skips on purpose
 
-## How this relates to Claude
-
-Claude can appear as Anthropic’s own chat experience **or** as a model **invoked through Bedrock** (when that model is enabled for the account). Same underlying idea — a language model — different **door** and operational controls.
-
-## What not to do in this lesson
-
-- No real account IDs, access keys, or secret pasting
-- No “click these console buttons” checklist
+- No console click-paths, no account setup walkthrough
+- No access keys, account IDs, or live API calls
 - No requirement to spend money to “complete” Foundations
 
 See also: [Glossary — Amazon Bedrock](/glossary#amazon-bedrock), [API](/glossary#api).
 
 ## Takeaway
 
-Bedrock ≈ **managed model API on AWS** for teams that want cloud permissions, billing, and model choice in one place. For beginners, the map matters more than the console.
+Bedrock = **AWS’s managed model platform**. Claude = **Anthropic’s models/products**. They can connect; they are not the same thing.
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-In one sentence each, contrast: (1) you chatting in a browser, (2) an app calling a model via Bedrock. Who pays, and who holds the permissions, in each picture?
+Fill in: “If I chat on Anthropic’s site I’m using ____. If my company’s AWS app calls a model through Bedrock I’m using ____.” (Answers: Claude product surface / AWS Bedrock platform.)
 </div>

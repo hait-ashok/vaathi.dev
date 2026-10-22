@@ -1,0 +1,48 @@
+---
+title: How clouds serve frontier models
+description: Cloud-hosted foundation models, access patterns, and how agentic apps call them — one mental model.
+order: 16
+path: foundations
+minutes: 15
+draft: false
+---
+
+import CloudAgenticAccessDiagram from '../../components/diagrams/CloudAgenticAccessDiagram.astro';
+
+**Frontier** (or **foundation**) models are the large general-purpose models teams build products on. Cloud providers don’t usually “own” every model brand — they often **host and sell access** to several, behind one account, bill, and permission system.
+
+## One mental model (not a catalog)
+
+| Cloud neighborhood | Rough idea |
+| --- | --- |
+| **AWS Bedrock** | Managed API to many foundation models on AWS — [details](/learn/foundations/aws-bedrock-basics) |
+| **Azure OpenAI** (and related Azure AI) | Microsoft Azure’s managed access to certain OpenAI (and other) models |
+| **Google Vertex AI** | Google Cloud’s managed ML / generative model platform |
+
+Names and catalogs change. The durable idea: **your app talks to a provider; the provider routes to a model.**
+
+Anthropic’s [Claude](/learn/foundations/claude-basics) is a *model/product line*. It may appear in Anthropic’s own apps **or** as one option inside a cloud catalog. Claude is not “owned by” Bedrock.
+
+## How you get access
+
+1. **Console / chat UIs** — Click around in a vendor console or consumer chat. Great for learning; less for production apps.
+2. **API keys + SDK** — Your code holds a key (or secret from a vault) and calls an HTTP API. Easy to start; protect keys carefully.
+3. **Cloud IAM roles** — In AWS/Azure/GCP, permissions say *which identity may invoke which model*. No long-lived key in the app if designed well — think “badge access,” not a password taped to a laptop.
+
+You do **not** need an account to finish this lesson.
+
+## Agentic apps on top
+
+<CloudAgenticAccessDiagram />
+
+An [agentic workflow](/learn/foundations/agentic-workflows) adds the loop: the app plans, calls tools, observes results, and may call the model again. The **cloud provider** is usually just the hop that runs the model; your agent logic still lives in your app (or in a coding agent like [Claude Code](/learn/foundations/claude-code-basics)).
+
+## Takeaway
+
+Clouds **serve** frontier models through APIs and permissions. Agentic apps = your loop + provider call + model (+ tools). Learn the map before the console.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Sketch three boxes on paper: App → Provider → Model. Label one access style you’d use for a weekend demo (API key) vs a company service (IAM). No accounts required.
+</div>

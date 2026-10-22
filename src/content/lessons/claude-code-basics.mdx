@@ -1,0 +1,94 @@
+---
+title: Claude Code basics
+description: Install and first use of Anthropic’s coding CLI/agent — vs Claude chat; link to official docs.
+order: 15
+path: foundations
+minutes: 18
+draft: false
+---
+
+**Claude Code** is Anthropic’s **agentic coding tool**: it can read a codebase, edit files, run commands, and work across your project. It is **not** the same as pasting code into [Claude chat](/learn/foundations/claude-basics). Chat is a conversation; Claude Code is a **development agent** that lives next to your files (terminal, IDE, desktop, or web).
+
+Official source of truth: [Claude Code docs](https://code.claude.com/docs/en/overview) and the [quickstart](https://code.claude.com/docs/en/quickstart). Install steps below match those pages; if anything drifts, **trust the official site**.
+
+## Claude chat vs Claude Code
+
+| | Claude chat | Claude Code |
+| --- | --- | --- |
+| Best for | Writing, explaining, brainstorming | Editing a real repo, running commands |
+| Where it runs | Browser / app chat | Terminal, IDE, desktop, or web coding UI |
+| Sees your project | Only what you paste | Can explore files you allow in the project |
+
+## Install (native path recommended)
+
+Open a terminal and run the command for your system. Prefer the **native installer** (auto-updates). Alternatives: Homebrew, WinGet — see the [install / setup docs](https://code.claude.com/docs/en/setup).
+
+**macOS, Linux, WSL:**
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+**Windows PowerShell** (prompt often shows `PS C:\`):
+
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+**Windows CMD** (prompt often shows `C:\` without `PS`):
+
+```batch
+curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
+```
+
+Then open a **new** terminal and verify:
+
+```bash
+claude --version
+```
+
+You should see a version number (and usually “Claude Code”). We don’t hard-code a version here — it changes often.
+
+**Also useful:**
+
+- macOS Homebrew: `brew install --cask claude-code` (manual upgrades; see docs)
+- Windows WinGet: `winget install Anthropic.ClaudeCode`
+- Desktop app / VS Code / JetBrains: linked from the [overview](https://code.claude.com/docs/en/overview) if you prefer not to live in the terminal
+
+Stuck? [Troubleshoot install](https://code.claude.com/docs/en/troubleshoot-install). On native Windows, Git for Windows is recommended so Bash-style tools work smoothly.
+
+## Basic usage
+
+```bash
+cd /path/to/your/project
+claude
+```
+
+On first launch you’ll usually **log in** via the browser (subscription or Console). You can finish *reading* this lesson without installing; installing is optional practice.
+
+Common first asks (after it starts):
+
+- “What’s the structure of this repo?”
+- “Where is authentication handled?”
+- “Explain this error: …” (paste a stack trace)
+
+One-shot style (non-interactive) appears in the docs as `claude -p "…"`. Learn interactive first.
+
+## Safety habits
+
+- **Review diffs** before you accept edits or commits — you’re still the author.
+- **Don’t paste secrets** (API keys, passwords, private keys, customer data) into prompts or logs.
+- Prefer a **small test repo** for your first session.
+- Treat tool use like [agentic workflows](/learn/foundations/agentic-workflows): plan → act → observe → verify.
+
+See also: [Glossary — Claude Code](/glossary#claude-code).
+
+## Takeaway
+
+Claude Code = **coding agent in your project**. Install via the official native script for your OS, run `claude` in a folder, ask about the repo, and review every change.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Without pasting any secrets: open the [quickstart](https://code.claude.com/docs/en/quickstart), skim install + “first session,” and write three questions you’d ask Claude Code about a repo you know.
+</div>
