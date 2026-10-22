@@ -1,17 +1,21 @@
 ---
 title: Transformers in plain language
 description: Attention as “what to focus on,” plus encoder/decoder intuition — no heavy math.
-order: 8
+order: 6
 path: foundations
 minutes: 15
 draft: false
 ---
+
+import AttentionAnim from '../../components/diagrams/AttentionAnim.astro';
 
 Most modern language (and many multimodal) models are built on an architecture nicknamed the **transformer**. You don’t need the equations — you need the *job* it does.
 
 ## Attention: what to focus on
 
 When you read “The trophy didn’t fit in the suitcase because **it** was too big,” you decide what “it” refers to. **Attention** is a learned way for the model to weigh which earlier words matter for the next prediction — a soft spotlight, not a single hard rule.
+
+<AttentionAnim />
 
 That “look around the context” trick is why transformers handle longer phrases better than older one-word-at-a-time designs.
 

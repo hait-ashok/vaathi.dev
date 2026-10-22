@@ -1,0 +1,81 @@
+---
+/**
+ * Goal → context → constraints → format — prompt briefing structure.
+ */
+---
+
+<figure class="diagram diagram--anim">
+  <figcaption class="diagram__caption">
+    <span class="mono-label">Animation</span>
+    A clear prompt stacks goal, context, constraints, and format
+  </figcaption>
+  <div class="diagram__frame">
+    <svg
+      class="diagram__svg"
+      viewBox="0 0 520 280"
+      role="img"
+      aria-labelledby="prompt-title prompt-desc"
+    >
+      <title id="prompt-title">Prompt structure</title>
+      <desc id="prompt-desc">
+        Four stacked layers labeled Goal, Context, Constraints, and Format light up in sequence to
+        show how a brief is built.
+      </desc>
+
+      <rect x="40" y="24" width="440" height="232" rx="4" fill="var(--surface-quiet)" stroke="var(--rule)" />
+
+      <g class="prompt-layer prompt-layer--1" transform="translate(70,48)">
+        <rect width="380" height="42" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.5" />
+        <text class="diagram-num" x="14" y="18" fill="var(--brand)">1</text>
+        <text class="diagram-label" x="40" y="27" fill="var(--ink)">Goal — what you want done</text>
+      </g>
+      <g class="prompt-layer prompt-layer--2" transform="translate(70,102)">
+        <rect width="380" height="42" rx="3" fill="var(--cobalt-soft)" stroke="var(--action)" stroke-width="1.35" stroke-opacity="0.55" />
+        <text class="diagram-num" x="14" y="18" fill="var(--action)">2</text>
+        <text class="diagram-label" x="40" y="27" fill="var(--ink)">Context — what the model must know</text>
+      </g>
+      <g class="prompt-layer prompt-layer--3" transform="translate(70,156)">
+        <rect width="380" height="42" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.35" />
+        <text class="diagram-num" x="14" y="18" fill="var(--brand)">3</text>
+        <text class="diagram-label" x="40" y="27" fill="var(--ink)">Constraints — limits and must-avoids</text>
+      </g>
+      <g class="prompt-layer prompt-layer--4" transform="translate(70,210)">
+        <rect width="380" height="42" rx="3" fill="var(--mist-deep)" stroke="var(--ink)" stroke-width="1.25" />
+        <text class="diagram-num" x="14" y="18" fill="var(--ink)">4</text>
+        <text class="diagram-label" x="40" y="27" fill="var(--ink)">Format — how the answer should look</text>
+      </g>
+    </svg>
+  </div>
+</figure>
+
+<style>
+  .prompt-layer {
+    animation: prompt-stack 5.6s ease-in-out infinite;
+  }
+  .prompt-layer--2 {
+    animation-delay: 0.7s;
+  }
+  .prompt-layer--3 {
+    animation-delay: 1.4s;
+  }
+  .prompt-layer--4 {
+    animation-delay: 2.1s;
+  }
+  @keyframes prompt-stack {
+    0%,
+    100% {
+      opacity: 0.7;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .prompt-layer {
+      animation: none !important;
+      opacity: 1;
+    }
+  }
+</style>

@@ -1,0 +1,116 @@
+---
+/**
+ * Transformer attention: spotlight on relevant words for “it”.
+ */
+---
+
+<figure class="diagram diagram--anim">
+  <figcaption class="diagram__caption">
+    <span class="mono-label">Animation</span>
+    Attention = which words matter for the next prediction
+  </figcaption>
+  <div class="diagram__frame">
+    <svg
+      class="diagram__svg"
+      viewBox="0 0 620 220"
+      role="img"
+      aria-labelledby="attn-title attn-desc"
+    >
+      <title id="attn-title">Attention spotlight</title>
+      <desc id="attn-desc">
+        Sentence tokens appear in a row. A soft spotlight moves between trophy and suitcase while
+        resolving the pronoun it, then settles on trophy.
+      </desc>
+
+      <rect x="12" y="16" width="596" height="188" rx="4" fill="var(--surface-quiet)" stroke="var(--rule)" />
+
+      <text class="diagram-hint" x="36" y="44" fill="var(--brand)">The trophy didn’t fit in the suitcase because it was too big.</text>
+
+      <!-- tokens -->
+      <g font-family="var(--font-display)" font-size="15" fill="var(--ink)">
+        <rect class="attn-token" x="40" y="70" width="70" height="36" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" />
+        <text x="75" y="93" text-anchor="middle">trophy</text>
+
+        <rect x="125" y="70" width="50" height="36" rx="3" fill="var(--mist-soft)" stroke="var(--rule)" />
+        <text x="150" y="93" text-anchor="middle" opacity="0.7">fit</text>
+
+        <rect class="attn-token attn-token--b" x="190" y="70" width="84" height="36" rx="3" fill="var(--cobalt-soft)" stroke="var(--action)" stroke-opacity="0.5" />
+        <text x="232" y="93" text-anchor="middle">suitcase</text>
+
+        <rect x="290" y="70" width="70" height="36" rx="3" fill="var(--mist-soft)" stroke="var(--rule)" />
+        <text x="325" y="93" text-anchor="middle" opacity="0.7">because</text>
+
+        <rect class="attn-focus" x="375" y="70" width="40" height="36" rx="3" fill="var(--surface-quiet)" stroke="var(--action)" stroke-width="2" />
+        <text x="395" y="93" text-anchor="middle">it</text>
+      </g>
+
+      <!-- spotlight beams -->
+      <path class="attn-beam attn-beam--a" d="M395 106 L75 106" stroke="var(--brand)" stroke-width="2" stroke-opacity="0.45" fill="none" />
+      <path class="attn-beam attn-beam--b" d="M395 106 L232 106" stroke="var(--action)" stroke-width="1.5" stroke-opacity="0.35" fill="none" />
+
+      <text class="diagram-hint" x="36" y="160" fill="var(--ink)">Spotlight weight shifts — here “it” leans toward trophy more than suitcase.</text>
+      <text class="diagram-hint" x="36" y="182" fill="var(--brand)">No equations — just “what should I focus on?”</text>
+    </svg>
+  </div>
+</figure>
+
+<style>
+  .attn-beam--a {
+    stroke-dasharray: 6 8;
+    animation: attn-flow 2.8s ease-in-out infinite;
+  }
+  .attn-beam--b {
+    stroke-dasharray: 5 9;
+    animation: attn-flow 2.8s ease-in-out infinite reverse;
+  }
+  .attn-token {
+    animation: attn-glow 2.8s ease-in-out infinite;
+  }
+  .attn-token--b {
+    animation-delay: 1.4s;
+  }
+  .attn-focus {
+    animation: attn-focus 2.8s ease-in-out infinite;
+  }
+  @keyframes attn-flow {
+    0%,
+    100% {
+      stroke-opacity: 0.25;
+    }
+    50% {
+      stroke-opacity: 0.7;
+    }
+  }
+  @keyframes attn-glow {
+    0%,
+    100% {
+      opacity: 0.75;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes attn-focus {
+    0%,
+    100% {
+      stroke-opacity: 0.55;
+    }
+    50% {
+      stroke-opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .attn-beam--a,
+    .attn-beam--b,
+    .attn-token,
+    .attn-token--b,
+    .attn-focus {
+      animation: none !important;
+    }
+    .attn-beam--a,
+    .attn-beam--b {
+      stroke-dasharray: none;
+      stroke-opacity: 0.45;
+    }
+  }
+</style>

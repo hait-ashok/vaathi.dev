@@ -64,6 +64,7 @@
 
       <!-- loop back -->
       <path
+        class="cloud-loop-path"
         d="M592 128 V188 H88 V128"
         fill="none"
         stroke="var(--brand)"
@@ -71,6 +72,7 @@
         stroke-dasharray="5 4"
         marker-end="url(#arrow-cloud-brand)"
       />
+      <circle class="cloud-loop-runner" r="3.5" fill="var(--action)" fill-opacity="0.75" />
       <text x="220" y="178" class="diagram-hint" fill="var(--brand)">observe → loop (agentic)</text>
 
       <!-- access note -->
@@ -94,3 +96,44 @@
     <a href="/learn/foundations/agentic-workflows">agentic workflow</a> lesson.
   </p>
 </figure>
+
+<style>
+  .cloud-loop-path {
+    animation: cloud-loop-dash 5s linear infinite;
+  }
+  .cloud-loop-runner {
+    offset-path: path('M592 128 V188 H88 V128');
+    offset-rotate: 0deg;
+    animation: cloud-loop-run 5s ease-in-out infinite;
+  }
+  @keyframes cloud-loop-dash {
+    to {
+      stroke-dashoffset: -40;
+    }
+  }
+  @keyframes cloud-loop-run {
+    0% {
+      offset-distance: 0%;
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    88% {
+      opacity: 1;
+    }
+    100% {
+      offset-distance: 100%;
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cloud-loop-path,
+    .cloud-loop-runner {
+      animation: none !important;
+    }
+    .cloud-loop-runner {
+      display: none;
+    }
+  }
+</style>

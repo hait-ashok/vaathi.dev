@@ -1,0 +1,123 @@
+---
+/**
+ * Data → train/fine-tune → evaluate → deploy — animated pipeline.
+ */
+---
+
+<figure class="diagram diagram--anim">
+  <figcaption class="diagram__caption">
+    <span class="mono-label">Animation</span>
+    How a model is built — a looping high-level pipeline
+  </figcaption>
+  <div class="diagram__frame">
+    <svg
+      class="diagram__svg"
+      viewBox="0 0 640 200"
+      role="img"
+      aria-labelledby="pipe-title pipe-desc"
+    >
+      <title id="pipe-title">Model build pipeline</title>
+      <desc id="pipe-desc">
+        Four stages in a row: Data, Train or fine-tune, Evaluate, Deploy. A soft highlight travels
+        along the stages to show the pipeline flow.
+      </desc>
+
+      <rect x="12" y="28" width="616" height="140" rx="4" fill="var(--surface-quiet)" stroke="var(--rule)" />
+
+      <g class="pipe-stage pipe-stage--1" transform="translate(36,56)">
+        <rect width="120" height="72" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.5" />
+        <text class="diagram-num" x="12" y="24" fill="var(--brand)">1</text>
+        <text class="diagram-label" x="12" y="46" fill="var(--ink)">Data</text>
+        <text class="diagram-hint" x="12" y="64" fill="var(--ink)">examples</text>
+      </g>
+      <path class="pipe-arrow" d="M164 92 H196" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#pipe-m)" />
+
+      <g class="pipe-stage pipe-stage--2" transform="translate(204,56)">
+        <rect width="130" height="72" rx="3" fill="var(--cobalt-soft)" stroke="var(--action)" stroke-width="1.5" />
+        <text class="diagram-num" x="12" y="24" fill="var(--action)">2</text>
+        <text class="diagram-label" x="12" y="46" fill="var(--ink)">Train</text>
+        <text class="diagram-hint" x="12" y="64" fill="var(--ink)">or fine-tune</text>
+      </g>
+      <path class="pipe-arrow" d="M342 92 H374" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#pipe-m)" />
+
+      <g class="pipe-stage pipe-stage--3" transform="translate(382,56)">
+        <rect width="120" height="72" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.5" />
+        <text class="diagram-num" x="12" y="24" fill="var(--brand)">3</text>
+        <text class="diagram-label" x="12" y="46" fill="var(--ink)">Evaluate</text>
+        <text class="diagram-hint" x="12" y="64" fill="var(--ink)">check quality</text>
+      </g>
+      <path class="pipe-arrow" d="M510 92 H534" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#pipe-m)" />
+
+      <g class="pipe-stage pipe-stage--4" transform="translate(542,56)">
+        <rect width="70" height="72" rx="3" fill="var(--mist-deep)" stroke="var(--ink)" stroke-width="1.25" />
+        <text class="diagram-num" x="10" y="24" fill="var(--ink)">4</text>
+        <text class="diagram-label" x="10" y="46" fill="var(--ink)">Deploy</text>
+      </g>
+
+      <circle class="pipe-runner" r="4" fill="var(--action)" />
+
+      <defs>
+        <marker id="pipe-m" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6" fill="none" stroke="var(--ink)" stroke-width="1.25" />
+        </marker>
+      </defs>
+    </svg>
+  </div>
+</figure>
+
+<style>
+  .pipe-stage {
+    animation: pipe-breathe 4.8s ease-in-out infinite;
+  }
+  .pipe-stage--2 {
+    animation-delay: 1.2s;
+  }
+  .pipe-stage--3 {
+    animation-delay: 2.4s;
+  }
+  .pipe-stage--4 {
+    animation-delay: 3.6s;
+  }
+  .pipe-runner {
+    offset-path: path('M96 92 H572');
+    offset-rotate: 0deg;
+    animation: pipe-run 6s ease-in-out infinite;
+  }
+  @keyframes pipe-breathe {
+    0%,
+    100% {
+      opacity: 0.82;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes pipe-run {
+    0% {
+      offset-distance: 0%;
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    88% {
+      opacity: 1;
+    }
+    100% {
+      offset-distance: 100%;
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pipe-stage,
+    .pipe-runner {
+      animation: none !important;
+    }
+    .pipe-runner {
+      display: none;
+    }
+    .pipe-stage {
+      opacity: 1;
+    }
+  }
+</style>
