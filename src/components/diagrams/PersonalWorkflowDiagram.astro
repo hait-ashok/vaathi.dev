@@ -1,0 +1,78 @@
+---
+/**
+ * Research → Draft → Verify → Cite — personal AI workflow.
+ * Uses CSS variables; meaning also carried by labels + step numbers (not color alone).
+ */
+---
+
+<figure class="diagram">
+  <figcaption class="diagram__caption">
+    <span class="mono-label">Diagram</span>
+    Personal AI workflow — you stay in charge; AI mainly helps at draft
+  </figcaption>
+  <div class="diagram__frame">
+    <svg
+      class="diagram__svg"
+      viewBox="0 0 640 200"
+      role="img"
+      aria-labelledby="personal-wf-title personal-wf-desc"
+    >
+      <title id="personal-wf-title">Personal AI workflow</title>
+      <desc id="personal-wf-desc">
+        Four steps in a row: 1 Research, gather sources; 2 Draft, AI helps write; 3 Verify, check
+        facts; 4 Cite, attribute sources. Arrows connect each step to the next. You own research,
+        verify, and cite; the model mainly helps draft.
+      </desc>
+
+      <!-- soft rail -->
+      <rect x="16" y="48" width="608" height="104" rx="4" fill="var(--surface-quiet)" stroke="var(--rule)" />
+
+      <!-- step 1 -->
+      <g transform="translate(36, 64)">
+        <rect width="120" height="72" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.5" />
+        <text x="12" y="22" class="diagram-num" fill="var(--brand)">1</text>
+        <text x="12" y="44" class="diagram-label" fill="var(--ink)">Research</text>
+        <text x="12" y="62" class="diagram-hint" fill="var(--ink)">You gather</text>
+      </g>
+      <path d="M164 100 H188" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#arrow-ink)" />
+
+      <!-- step 2 -->
+      <g transform="translate(196, 64)">
+        <rect width="120" height="72" rx="3" fill="var(--cobalt-soft)" stroke="var(--action)" stroke-width="1.5" />
+        <text x="12" y="22" class="diagram-num" fill="var(--action)">2</text>
+        <text x="12" y="44" class="diagram-label" fill="var(--ink)">Draft</text>
+        <text x="12" y="62" class="diagram-hint" fill="var(--ink)">AI helps</text>
+      </g>
+      <path d="M324 100 H348" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#arrow-ink)" />
+
+      <!-- step 3 -->
+      <g transform="translate(356, 64)">
+        <rect width="120" height="72" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.5" />
+        <text x="12" y="22" class="diagram-num" fill="var(--brand)">3</text>
+        <text x="12" y="44" class="diagram-label" fill="var(--ink)">Verify</text>
+        <text x="12" y="62" class="diagram-hint" fill="var(--ink)">You check</text>
+      </g>
+      <path d="M484 100 H508" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#arrow-ink)" />
+
+      <!-- step 4 -->
+      <g transform="translate(516, 64)">
+        <rect width="100" height="72" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.5" />
+        <text x="12" y="22" class="diagram-num" fill="var(--brand)">4</text>
+        <text x="12" y="44" class="diagram-label" fill="var(--ink)">Cite</text>
+        <text x="12" y="62" class="diagram-hint" fill="var(--ink)">You credit</text>
+      </g>
+
+      <defs>
+        <marker id="arrow-ink" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6" fill="none" stroke="var(--ink)" stroke-width="1.25" />
+        </marker>
+      </defs>
+    </svg>
+  </div>
+  <p class="diagram__legend">
+    <span class="diagram__swatch diagram__swatch--you" aria-hidden="true"></span>
+    You lead
+    <span class="diagram__swatch diagram__swatch--ai" aria-hidden="true"></span>
+    AI assists (also labeled “AI helps” on step 2)
+  </p>
+</figure>

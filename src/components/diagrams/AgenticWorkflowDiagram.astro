@@ -1,0 +1,96 @@
+---
+/**
+ * Agentic loop: Goal → Plan → Tools/Act → Observe → loop or Finish.
+ */
+---
+
+<figure class="diagram">
+  <figcaption class="diagram__caption">
+    <span class="mono-label">Diagram</span>
+    Agentic workflow — plan, act with tools, observe, then loop or finish
+  </figcaption>
+  <div class="diagram__frame">
+    <svg
+      class="diagram__svg"
+      viewBox="0 0 640 320"
+      role="img"
+      aria-labelledby="agent-title agent-desc"
+    >
+      <title id="agent-title">Agentic workflow loop</title>
+      <desc id="agent-desc">
+        Flow starts at Goal, goes to Plan, then Act with tools, then Observe. From Observe a loop
+        arrow returns to Plan if more work is needed. A separate path from Observe goes to Finish
+        when the goal is met. Step numbers 1 through 5 label Goal, Plan, Act, Observe, and Finish.
+      </desc>
+
+      <rect x="12" y="12" width="616" height="296" rx="4" fill="var(--surface-quiet)" stroke="var(--rule)" />
+
+      <!-- 1 Goal -->
+      <g transform="translate(40, 36)">
+        <rect width="130" height="56" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.5" />
+        <text x="12" y="22" class="diagram-num" fill="var(--brand)">1</text>
+        <text x="12" y="42" class="diagram-label" fill="var(--ink)">Goal</text>
+      </g>
+      <path d="M178 64 H220" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#arrow-agent)" />
+      <text x="186" y="56" class="diagram-hint" fill="var(--ink)">start</text>
+
+      <!-- 2 Plan -->
+      <g transform="translate(228, 36)">
+        <rect width="130" height="56" rx="3" fill="var(--cobalt-soft)" stroke="var(--action)" stroke-width="1.5" />
+        <text x="12" y="22" class="diagram-num" fill="var(--action)">2</text>
+        <text x="12" y="42" class="diagram-label" fill="var(--ink)">Plan</text>
+      </g>
+      <path d="M293 92 V120" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#arrow-agent)" />
+
+      <!-- 3 Act -->
+      <g transform="translate(228, 128)">
+        <rect width="130" height="64" rx="3" fill="var(--cobalt-soft)" stroke="var(--action)" stroke-width="1.5" />
+        <text x="12" y="22" class="diagram-num" fill="var(--action)">3</text>
+        <text x="12" y="42" class="diagram-label" fill="var(--ink)">Act</text>
+        <text x="12" y="58" class="diagram-hint" fill="var(--ink)">Tools / actions</text>
+      </g>
+      <path d="M366 160 H408" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#arrow-agent)" />
+
+      <!-- 4 Observe -->
+      <g transform="translate(416, 128)">
+        <rect width="140" height="64" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.5" />
+        <text x="12" y="22" class="diagram-num" fill="var(--brand)">4</text>
+        <text x="12" y="42" class="diagram-label" fill="var(--ink)">Observe</text>
+        <text x="12" y="58" class="diagram-hint" fill="var(--ink)">Read results</text>
+      </g>
+
+      <!-- loop back to Plan -->
+      <path
+        d="M486 128 V88 H293"
+        fill="none"
+        stroke="var(--brand)"
+        stroke-width="1.75"
+        stroke-dasharray="5 4"
+        marker-end="url(#arrow-brand)"
+      />
+      <text x="360" y="80" class="diagram-hint" fill="var(--brand)">loop if not done</text>
+
+      <!-- 5 Finish -->
+      <path d="M486 192 V230 H293" fill="none" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#arrow-agent)" />
+      <g transform="translate(228, 238)">
+        <rect width="130" height="48" rx="3" fill="var(--mist-deep)" stroke="var(--ink)" stroke-width="1.25" />
+        <text x="12" y="20" class="diagram-num" fill="var(--ink)">5</text>
+        <text x="12" y="38" class="diagram-label" fill="var(--ink)">Finish</text>
+      </g>
+      <text x="380" y="220" class="diagram-hint" fill="var(--ink)">goal met →</text>
+
+      <defs>
+        <marker id="arrow-agent" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6" fill="none" stroke="var(--ink)" stroke-width="1.25" />
+        </marker>
+        <marker id="arrow-brand" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6" fill="none" stroke="var(--brand)" stroke-width="1.25" />
+        </marker>
+      </defs>
+    </svg>
+  </div>
+  <p class="diagram__legend">
+    Solid arrows = forward steps (numbered). Dashed teal arrow = “loop if not done,” also labeled in
+    the diagram.
+  </p>
+</figure>

@@ -1,0 +1,51 @@
+---
+title: Agentic workflows (the loop)
+description: Goal → plan → tools → observe → loop — vs a single chat reply.
+order: 13
+path: foundations
+minutes: 15
+draft: false
+---
+
+import SingleShotChatDiagram from '../../components/diagrams/SingleShotChatDiagram.astro';
+import AgenticWorkflowDiagram from '../../components/diagrams/AgenticWorkflowDiagram.astro';
+
+Most chat use is **single-shot**: you ask, you get a reply, you’re done (or you ask again yourself). **Agentic** systems try to chase a goal by planning, calling tools, reading results, and looping until they finish — or until a limit stops them.
+
+## Single-shot first
+
+<SingleShotChatDiagram />
+
+That’s enough for many beginner tasks. Your [personal AI workflow](/learn/foundations/personal-ai-workflow) sits on top: you still research, verify, and cite.
+
+## The agentic loop
+
+<AgenticWorkflowDiagram />
+
+In plain words:
+
+1. **Goal** — What should be true when we’re done?
+2. **Plan** — Break the goal into steps (the system may rewrite the plan as it goes).
+3. **Act** — Call tools: search, code, calendar, files, APIs.
+4. **Observe** — Read what the tool returned; notice errors.
+5. **Loop or finish** — Update the plan and act again, or stop when the goal looks met.
+
+See also: [Glossary — Agent](/glossary#agent), [Agentic workflow](/glossary#agentic-workflow).
+
+## Why beginners go slow here
+
+- More steps means more ways to **spend money, leak data, or take a wrong action**.
+- A fluent loop is not the same as a **correct** loop — you still verify outcomes.
+- Prefer supervised / sandboxed agents before anything that can email, buy, or delete.
+
+From the [tool landscape](/learn/foundations/tool-landscape): start with chat; treat agents as “powerful; start supervised.”
+
+## Takeaway
+
+**Single-shot** = one generation. **Agentic** = goal-driven loop with tools. Same models often power both — the *workflow shape* is what changes.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Pick a task (e.g. “find three reputable sources on X and draft a paragraph”). Sketch it once as single-shot chat, once as the five-step loop. Which steps would you insist on doing yourself?
+</div>

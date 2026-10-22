@@ -596,3 +596,89 @@ button:focus-visible,
   max-width: var(--measure);
   color: color-mix(in srgb, var(--ink) 85%, transparent);
 }
+
+/* Inline SVG lesson diagrams */
+.diagram {
+  margin: var(--space-5) 0;
+  padding: 0;
+  max-width: 100%;
+}
+
+.diagram__caption {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: color-mix(in srgb, var(--ink) 85%, transparent);
+}
+
+.diagram__caption .mono-label {
+  color: var(--brand);
+}
+
+.diagram__frame {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--surface-quiet);
+}
+
+.diagram__svg {
+  display: block;
+  width: 100%;
+  min-width: 28rem;
+  height: auto;
+  font-family: var(--font-mono);
+}
+
+.diagram__svg .diagram-num {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.diagram__svg .diagram-label {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-display), serif;
+}
+
+.diagram__svg .diagram-hint {
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+}
+
+.diagram__legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--ink) 70%, transparent);
+}
+
+.diagram__swatch {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid;
+  vertical-align: middle;
+}
+
+.diagram__swatch--you {
+  background: var(--teal-soft);
+  border-color: var(--brand);
+}
+
+.diagram__swatch--ai {
+  background: var(--cobalt-soft);
+  border-color: var(--action);
+}

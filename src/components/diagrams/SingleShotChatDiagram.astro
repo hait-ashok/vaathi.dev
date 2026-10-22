@@ -1,0 +1,54 @@
+---
+/**
+ * Single-shot chat: You → prompt → one reply. Contrast for agentic loop.
+ */
+---
+
+<figure class="diagram">
+  <figcaption class="diagram__caption">
+    <span class="mono-label">Diagram</span>
+    Single-shot chat — one ask, one reply (no tool loop)
+  </figcaption>
+  <div class="diagram__frame">
+    <svg
+      class="diagram__svg"
+      viewBox="0 0 560 140"
+      role="img"
+      aria-labelledby="shot-title shot-desc"
+    >
+      <title id="shot-title">Single-shot chat workflow</title>
+      <desc id="shot-desc">
+        Three boxes in a line: You write a prompt, the chat model answers once, you receive a reply.
+        One arrow forward; no loop back.
+      </desc>
+
+      <rect x="12" y="28" width="536" height="84" rx="4" fill="var(--surface-quiet)" stroke="var(--rule)" />
+
+      <g transform="translate(32, 44)">
+        <rect width="120" height="52" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.5" />
+        <text x="14" y="22" class="diagram-label" fill="var(--ink)">You</text>
+        <text x="14" y="40" class="diagram-hint" fill="var(--ink)">Write a prompt</text>
+      </g>
+      <path d="M160 70 H196" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#arrow-shot)" />
+
+      <g transform="translate(204, 44)">
+        <rect width="140" height="52" rx="3" fill="var(--cobalt-soft)" stroke="var(--action)" stroke-width="1.5" />
+        <text x="14" y="22" class="diagram-label" fill="var(--ink)">Chat model</text>
+        <text x="14" y="40" class="diagram-hint" fill="var(--ink)">One generation</text>
+      </g>
+      <path d="M352 70 H388" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#arrow-shot)" />
+
+      <g transform="translate(396, 44)">
+        <rect width="132" height="52" rx="3" fill="var(--mist-deep)" stroke="var(--ink)" stroke-width="1.25" />
+        <text x="14" y="22" class="diagram-label" fill="var(--ink)">Reply</text>
+        <text x="14" y="40" class="diagram-hint" fill="var(--ink)">Done (for now)</text>
+      </g>
+
+      <defs>
+        <marker id="arrow-shot" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6" fill="none" stroke="var(--ink)" stroke-width="1.25" />
+        </marker>
+      </defs>
+    </svg>
+  </div>
+</figure>
