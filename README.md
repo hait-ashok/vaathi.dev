@@ -4,6 +4,9 @@ Free foundational AI skills for beginners — **curiosity begins here.**
 
 Local static site (Astro + MDX). Domain DNS, AWS (S3/CloudFront), and GitHub remote are deferred until this local MVP is solid.
 
+**License:** [MIT](./LICENSE) — Copyright © 2026 H&A IT.  
+**Attribution:** Powered by [H&A IT](https://www.haitsolutions.co.uk) · [info@haitsolutions.co.uk](mailto:info@haitsolutions.co.uk)
+
 ## Requirements
 
 - Node.js **≥ 22.23.4** (see `.nvmrc`)

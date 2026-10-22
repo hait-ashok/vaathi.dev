@@ -199,9 +199,22 @@ button:focus-visible,
   text-decoration: underline;
 }
 
-.site-footer__note {
+.site-footer__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 42ch;
+}
+
+.site-footer__note,
+.site-footer__credit {
+  margin: 0;
   color: color-mix(in srgb, var(--ink) 70%, transparent);
-  max-width: 36ch;
+}
+
+.site-footer__credit {
+  font-size: 0.875rem;
+  color: color-mix(in srgb, var(--brand) 75%, var(--ink));
 }
 
 .mono-label {
