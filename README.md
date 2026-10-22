@@ -1,4 +1,4 @@
-# vaathi.ai
+# vaathi.dev
 
 Free foundational AI skills for beginners — **curiosity begins here.**
 
