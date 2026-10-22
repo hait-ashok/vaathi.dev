@@ -1,9 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BanyanHero from '../components/BanyanHero.astro';
-
-/** Trial banyan atmosphere — set false to revert to mist-only gradients. */
-const showBanyanHero = true;
 ---
 
 <BaseLayout
@@ -11,9 +7,7 @@ const showBanyanHero = true;
   description="vaathi.dev — curiosity begins here. Free foundational AI skills for beginners."
 >
   <section class="hero" aria-labelledby="hero-brand">
-    <div class="hero__atmosphere" aria-hidden="true">
-      {showBanyanHero && <BanyanHero />}
-    </div>
+    <div class="hero__atmosphere" aria-hidden="true"></div>
     <div class="site-shell hero__content">
       <p id="hero-brand" class="hero__brand">vaathi.dev</p>
       <h1 class="hero__tagline">curiosity begins here.</h1>
