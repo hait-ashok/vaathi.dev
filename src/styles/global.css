@@ -271,8 +271,36 @@ button:focus-visible,
 }
 
 .hero__content {
+  position: relative;
+  z-index: 1;
   max-width: 38rem;
   animation: hero-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Soft left wash so brand text stays primary over the trial banyan */
+.hero__atmosphere::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--canvas) 72%, transparent) 0%,
+    color-mix(in srgb, var(--canvas) 45%, transparent) 38%,
+    transparent 62%
+  );
+}
+
+@media (max-width: 719px) {
+  .hero__atmosphere::before {
+    background: linear-gradient(
+      105deg,
+      color-mix(in srgb, var(--canvas) 88%, transparent) 0%,
+      color-mix(in srgb, var(--canvas) 55%, transparent) 48%,
+      transparent 78%
+    );
+  }
 }
 
 .hero__brand {
