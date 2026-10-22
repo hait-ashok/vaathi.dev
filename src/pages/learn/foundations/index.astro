@@ -12,16 +12,15 @@ const totalMinutes = lessons.reduce((sum, l) => sum + l.data.minutes, 0);
 
 <BaseLayout
   title="AI Foundations"
-  description="Short lessons on foundational AI skills for beginners — Gen AI, embeddings, transformers, evaluation, and safe habits. Free, no account."
+  description="Short lessons on foundational AI skills — Gen AI, labeling, prompting, Claude & Bedrock basics, workflows. Free, no account."
 >
   <div class="site-shell">
     <header class="page-header">
       <p class="mono-label">Path</p>
       <h1>AI Foundations</h1>
       <p>
-        From mental models to metrics and workflows: Gen AI, embeddings, transformers, BLEU &amp;
-        ROUGE, personal and agentic flows, then safe habits. {lessons.length} lessons · about{' '}
-        {totalMinutes} minutes total.
+        Mental models through labeling, prompting practice, Claude &amp; Bedrock basics, metrics, and
+        personal vs agentic workflows. {lessons.length} lessons · about {totalMinutes} minutes total.
       </p>
       {
         first && (

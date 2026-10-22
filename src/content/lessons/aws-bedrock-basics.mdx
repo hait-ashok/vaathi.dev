@@ -1,0 +1,55 @@
+---
+title: AWS Bedrock basics
+description: Bedrock as a managed API to foundation models on AWS — beginner cloud intuition, no deploy or signup required.
+order: 15
+path: foundations
+minutes: 15
+draft: false
+---
+
+**Amazon Bedrock** is an AWS service that lets applications call **foundation models** through a managed API — including models from several providers (for example, Anthropic’s [Claude](/learn/foundations/claude-basics) family, among others). You can finish this lesson **without** creating an AWS account.
+
+## The one-sentence idea
+
+Instead of every team wiring a different vendor SDK for every model, Bedrock offers a **common door on AWS**: pick an available model, send a request, get a response — under your organization’s AWS bill and permissions.
+
+## Why teams use it (intuition)
+
+- **One cloud neighborhood** — Models live next to other AWS resources the company already uses.
+- **Model choice** — Swap or compare models without redesigning the whole app (still test carefully).
+- **Account & access mental model** — Access is usually gated by an **AWS account** and **IAM** permissions (“who is allowed to call which model”), not by a consumer chat login.
+
+IAM here just means: *identity and permissions*. Think “badge access to a building,” not a full security course.
+
+## Chat app vs Bedrock
+
+| | Consumer chat | Bedrock-style API |
+| --- | --- | --- |
+| Who it’s for | Individuals exploring | Apps and teams building features |
+| You see | A conversation UI | Code / services calling an endpoint |
+| Billing | Often a subscription or free tier | Typically usage on a cloud bill |
+| Setup | Sign up for the app | Org AWS account, permissions, quotas |
+
+Foundations does **not** walk through signup, consoles, or deploy. Those are optional later skills for builders.
+
+## How this relates to Claude
+
+Claude can appear as Anthropic’s own chat experience **or** as a model **invoked through Bedrock** (when that model is enabled for the account). Same underlying idea — a language model — different **door** and operational controls.
+
+## What not to do in this lesson
+
+- No real account IDs, access keys, or secret pasting
+- No “click these console buttons” checklist
+- No requirement to spend money to “complete” Foundations
+
+See also: [Glossary — Amazon Bedrock](/glossary#amazon-bedrock), [API](/glossary#api).
+
+## Takeaway
+
+Bedrock ≈ **managed model API on AWS** for teams that want cloud permissions, billing, and model choice in one place. For beginners, the map matters more than the console.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+In one sentence each, contrast: (1) you chatting in a browser, (2) an app calling a model via Bedrock. Who pays, and who holds the permissions, in each picture?
+</div>

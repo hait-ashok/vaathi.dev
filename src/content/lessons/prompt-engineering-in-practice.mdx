@@ -1,0 +1,84 @@
+---
+title: Prompt engineering in practice
+description: Patterns beginners actually use — structure, examples, iteration — tool-agnostic and non-hype.
+order: 10
+path: foundations
+minutes: 18
+draft: false
+---
+
+[Prompting as clear communication](/learn/foundations/prompting-clear-communication) gave you the briefing template. This page is the **workshop**: patterns you’ll reuse, with concrete examples. No magic spells — just clearer asks.
+
+## Pattern 1 — Role + job + deliverable
+
+Tell the model *who it’s helping*, *what to do*, and *what to hand back*.
+
+```text
+You are helping a career switcher write a plain-language cover letter.
+Job: Turn my bullet notes into a 3-paragraph letter.
+Deliverable: Draft only — no commentary. Keep under 250 words.
+Notes: …
+```
+
+## Pattern 2 — Paste the source; constrain the truth
+
+When summarizing or extracting, put the source **in the prompt** and ban freelancing.
+
+```text
+Using ONLY the text between <doc> and </doc>, list three risks mentioned.
+If a risk isn’t in the doc, omit it. Quote a short phrase for each.
+
+<doc>
+…paste article…
+</doc>
+```
+
+## Pattern 3 — Show the shape (few-shot)
+
+One tiny example beats a paragraph of abstract style notes.
+
+```text
+Rewrite each sentence to be shorter and more concrete.
+
+Example:
+In: We will endeavor to optimize the customer journey.
+Out: We’ll make checkout simpler.
+
+Now rewrite:
+In: …
+```
+
+## Pattern 4 — Checklists and self-review
+
+Ask for a draft **then** a pass against your rules.
+
+```text
+1) Draft a friendly email postponing a meeting to next Tuesday afternoon.
+2) Then list any unclear details I still need to fill in (time zone, link, agenda).
+```
+
+## Pattern 5 — Iterate on purpose
+
+Keep a short loop: try → name what’s wrong → tighten one constraint.
+
+- “Cut by 40%; keep the deadline.”
+- “Same facts; less enthusiasm.”
+- “Table with columns: claim | source quote | confidence (high/med/low).”
+
+## Patterns to skip (for now)
+
+- Huge “mega-prompts” you don’t understand.
+- Prompts that demand secrets or other people’s private data.
+- Pretending the model is a licensed professional for high-stakes advice.
+
+See also: [Glossary — Prompt](/glossary#prompt), [Prompt engineering](/glossary#prompt-engineering).
+
+## Takeaway
+
+**Prompt engineering** here means deliberate briefing and revision — not a secret dialect. Practice on real tasks; keep the [personal AI workflow](/learn/foundations/personal-ai-workflow) for verify and cite.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Take a vague ask you used recently. Rewrite it with Pattern 1, then add one constraint from Pattern 2 or 4. Compare outputs — keep the version you’d actually send.
+</div>

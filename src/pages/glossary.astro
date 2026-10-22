@@ -11,6 +11,14 @@ const terms = [
     def: 'Generative AI — systems that create new content (text, images, audio, code) from a prompt or input, rather than only classifying or scoring existing items.',
   },
   {
+    term: 'Label',
+    def: 'A human- (or tool-) assigned answer attached to an example — a category, score, corrected text, or preference — used to train, evaluate, or fine-tune models.',
+  },
+  {
+    term: 'Supervised learning',
+    def: 'Training a model on examples that already have labels, so it learns to predict similar labels on new inputs.',
+  },
+  {
     term: 'Token',
     def: 'A chunk of text the model reads or writes — often a word piece, not always a whole word. Longer prompts and answers use more tokens.',
   },
@@ -31,12 +39,28 @@ const terms = [
     def: 'The instructions and context you give a model. Clear goals, constraints, and format usually beat “magic” one-liners.',
   },
   {
+    term: 'Prompt engineering',
+    def: 'Deliberately structuring and iterating prompts — goals, context, examples, constraints — so outputs are more useful. Habit and clarity, not secret spells.',
+  },
+  {
     term: 'BLEU',
     def: 'A classic metric for machine translation that scores overlap between a model’s output and human reference translations. (Sometimes misspelled “BLUE.”) Useful in labs; not a full measure of quality alone.',
   },
   {
     term: 'ROUGE',
     def: 'A family of metrics often used for summarization that score overlap with a human reference summary. Helpful for benchmarks; still incomplete without human judgment.',
+  },
+  {
+    term: 'Claude',
+    def: 'A family of AI assistants and models from Anthropic. Beginners often meet Claude via chat apps or via APIs (including on clouds like AWS Bedrock).',
+  },
+  {
+    term: 'Amazon Bedrock',
+    def: 'An AWS service that provides a managed API to call foundation models (from multiple providers) under an AWS account’s permissions and billing. Not required to learn Foundations.',
+  },
+  {
+    term: 'API',
+    def: 'A programmed interface an application calls to request work (for example, “generate text”) and receive a response — as opposed to a human-facing chat screen.',
   },
   {
     term: 'Agent',
@@ -59,7 +83,7 @@ const terms = [
       <h1>Glossary</h1>
       <p>
         Short definitions for terms you’ll meet in Foundations. IDs match lesson links (e.g.
-        <code>#bleu</code>, <code>#embedding</code>).
+        <code>#bleu</code>, <code>#amazon-bedrock</code>).
       </p>
     </header>
 

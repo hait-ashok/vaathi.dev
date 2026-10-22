@@ -1,0 +1,51 @@
+---
+title: How data is labeled
+description: What labels are for — supervised learning, eval, and fine-tune intuition without MLOps jargon.
+order: 5
+path: foundations
+minutes: 15
+draft: false
+---
+
+Behind many models is a quieter job: people (and sometimes tools) **label** examples so a computer can learn or be checked. A label is just a clear answer attached to an input.
+
+## What a label looks like
+
+| Input | Example label |
+| --- | --- |
+| An email | `spam` / `not spam` |
+| A support ticket | Topic: `billing` |
+| A paragraph | Summary written by a human |
+| A chatbot reply | `helpful` / `harmful` / `needs fix` |
+
+Labels can be categories, scores, corrected text, or “preferred answer A over B.” The point is the same: **teach or measure** against something humans agreed is useful.
+
+## Why teams bother
+
+1. **Supervised learning** — Train a model to predict the label from new inputs (classic “show many examples”).
+2. **Evaluation** — Score a model against labeled test sets (including metrics like [BLEU / ROUGE](/learn/foundations/bleu-and-rouge) when references exist).
+3. **Fine-tuning / preference data** — Steer a general model toward a style, domain, or safer behavior using curated examples.
+
+This sits inside the [how a model is built](/learn/foundations/how-a-model-is-built) pipeline: data quality often matters more than clever code.
+
+## Humans, guidelines, and agreement
+
+- **Guidelines** — Written rules (“count sarcasm as spam,” “don’t invent medical advice”). Vague guidelines → messy labels.
+- **Human labeling** — People apply the guidelines; hard cases get discussion, not vibes.
+- **Agreement** — If two labelers disagree often, the task or guidelines need work. Perfect agreement isn’t required; *consistent enough* is the goal.
+
+See also: [Glossary — Label](/glossary#label), [Supervised learning](/glossary#supervised-learning).
+
+## What you don’t need yet
+
+Labeling platforms, workforce vendors, or MLOps dashboards. As a beginner, notice when a product claim rests on **labeled examples** versus raw internet text — and treat labels as human judgments, not absolute truth.
+
+## Takeaway
+
+**Labels turn opinions into training and test signals.** Clear guidelines beat heroic volume.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Write a one-line guideline for labeling restaurant reviews as `positive` / `negative` / `mixed`. Then mark three made-up one-sentence reviews. Where would two friends disagree?
+</div>
