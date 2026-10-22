@@ -1,0 +1,73 @@
+---
+title: How transformers work
+description: Tokens to embeddings to attention to stacked layers — encoder/decoder vs decoder-only, still without heavy math.
+order: 7
+path: foundations
+minutes: 18
+draft: false
+---
+
+import AttentionAnim from '../../components/diagrams/AttentionAnim.astro';
+import TransformerLayersAnim from '../../components/diagrams/TransformerLayersAnim.astro';
+
+The previous lesson gave the [transformer](/learn/foundations/transformers-beginner) nickname and the attention spotlight. Here we walk the **path a sentence takes** through the architecture — still intuition, not linear algebra.
+
+## The path in one picture
+
+<TransformerLayersAnim />
+
+## 1. Tokens, then embeddings
+
+Text is split into [tokens](/glossary#token). Each token becomes an [embedding](/learn/foundations/why-vectors-embeddings) — a vector that starts as “this piece of text” and will be refined as context mixes in.
+
+You already know the sticky-note wall idea. Inside a transformer, those vectors are the working memory for each position in the sequence.
+
+## 2. Attention: what to focus on
+
+[Attention](/glossary#attention) lets each position **look at other positions** and pull in a weighted blend of what matters. Resolving “it” in a sentence is the classic story:
+
+<AttentionAnim />
+
+For Foundations: attention = **soft spotlight over context**, learned from data — not a single hard-coded rule. Doing this for every position, many times, is **compute-heavy** — that’s one reason [GPUs and accelerators](/learn/foundations/gpus-vs-cpus) show up for large models.
+
+## 3. Layers stacking
+
+One attention block isn’t the whole model. Transformers **stack** many similar layers: attention mixes context, a feed-forward step reshapes each position’s vector, then the next layer does it again.
+
+Depth isn’t a different spell each time — it’s **the same pattern repeated**, so representations get richer (syntax, then more abstract patterns) before the model predicts.
+
+## 4. Encoder / decoder vs decoder-only
+
+Rough product intuition (same as the intro lesson, with one extra beat):
+
+| Shape | Feels like | Common for |
+| --- | --- | --- |
+| **Encoder** | Read and represent the whole input | Classification, embeddings-style understanding |
+| **Decoder** | Generate the next tokens | Chat, completion |
+| **Encoder–decoder** | Read this → write that | Classic translation-style tasks |
+| **Decoder-only** | One stack that both conditions on context and generates | Many modern chat / LLM products |
+
+Names vary by paper and vendor. The durable idea: **represent context, then generate** — sometimes in one stack (decoder-only), sometimes split.
+
+## 5. Why this architecture scales for language
+
+A few beginner-friendly reasons transformers stuck for language (and spilled into vision/audio):
+
+- **Parallel-friendly** — Unlike older left-to-right-only designs, attention over a sequence can use lots of parallel math (again: [GPU-shaped work](/learn/foundations/gpus-vs-cpus)).
+- **Long-range context** — Soft spotlights can connect distant words when the pattern matters.
+- **Composable depth** — Stack more layers / more width → more capacity, with the same recipe.
+- **Fits prediction** — [LLMs](/learn/foundations/llms-plain-language) need “what’s next?”; attention + layers produce a distribution over next tokens.
+
+Limits stay honest: attention cost grows with context length; longer windows need more memory and compute. Architecture helps; it doesn’t invent truth.
+
+See also: [Glossary — Transformer](/glossary#transformer), [Attention](/glossary#attention), [Embedding](/glossary#embedding). Related: [Gen AI](/learn/foundations/what-gen-ai-is), [embeddings](/learn/foundations/why-vectors-embeddings).
+
+## Takeaway
+
+**Tokens → embeddings → attention mixes context → stacked layers deepen the representation → next-token prediction.** Encoder/decoder labels describe roles; decoder-only is the shape behind many chat models you use.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Write one sentence with a tricky pronoun. Circle the words a human would need to resolve it. That’s your attention map — then ask a chat model which words it “relied on.” Compare the stories.
+</div>

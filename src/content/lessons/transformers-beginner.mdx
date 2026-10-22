@@ -17,7 +17,7 @@ When you read “The trophy didn’t fit in the suitcase because **it** was too 
 
 <AttentionAnim />
 
-That “look around the context” trick is why transformers handle longer phrases better than older one-word-at-a-time designs.
+That “look around the context” trick is why transformers handle longer phrases better than older one-word-at-a-time designs. The next lesson, [how transformers work](/learn/foundations/how-transformers-work), walks tokens → [embeddings](/learn/foundations/why-vectors-embeddings) → attention → stacked layers in more detail.
 
 ## Encoder / decoder (intuition only)
 
@@ -27,13 +27,13 @@ Rough roles you’ll hear:
 - **Decoder** — Generates the next tokens (chat and completion models lean heavily here).
 - **Encoder–decoder** — Classic for translation-style “read this, write that.”
 
-Many chat models you use are **decoder-style** generators with clever training. The names matter less than the idea: **represent context, then generate**.
+Many chat models you use are **decoder-style** (often **decoder-only**) generators with clever training. The names matter less than the idea: **represent context, then generate**.
 
-See also: [Glossary — Transformer](/glossary#transformer).
+See also: [Glossary — Transformer](/glossary#transformer), [Attention](/glossary#attention).
 
 ## What you can ignore for now
 
-Matrix multiplies, layer counts, and paper acronyms. They matter for builders. For Foundations, remember: transformers = **context-aware prediction engines** powered by attention.
+Matrix multiplies, layer counts, and paper acronyms. They matter for builders. For Foundations, remember: transformers = **context-aware prediction engines** powered by attention. (Those multiplies are also why [GPUs](/learn/foundations/gpus-vs-cpus) show up later in the path.)
 
 ## Takeaway
 

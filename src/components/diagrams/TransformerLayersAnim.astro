@@ -1,0 +1,115 @@
+---
+/**
+ * Tokens → embeddings → attention → stacked layers → next-token prediction.
+ */
+---
+
+<figure class="diagram diagram--anim">
+  <figcaption class="diagram__caption">
+    <span class="mono-label">Animation</span>
+    How a transformer pass flows (intuition, not equations)
+  </figcaption>
+  <div class="diagram__frame">
+    <svg
+      class="diagram__svg"
+      viewBox="0 0 640 300"
+      role="img"
+      aria-labelledby="tstack-title tstack-desc"
+    >
+      <title id="tstack-title">Transformer layer stack</title>
+      <desc id="tstack-desc">
+        Text becomes tokens, then embeddings. Attention mixes context across positions. Several
+        identical layers stack. The top predicts the next token.
+      </desc>
+
+      <rect x="12" y="12" width="616" height="276" rx="4" fill="var(--surface-quiet)" stroke="var(--rule)" />
+
+      <!-- tokens -->
+      <text class="diagram-hint" x="48" y="42" fill="var(--brand)">1 · Tokens</text>
+      <g font-size="13" fill="var(--ink)">
+        <rect class="tstack-step" x="48" y="54" width="52" height="28" rx="3" fill="var(--mist-soft)" stroke="var(--rule)" />
+        <text x="74" y="73" text-anchor="middle">The</text>
+        <rect class="tstack-step" x="108" y="54" width="58" height="28" rx="3" fill="var(--mist-soft)" stroke="var(--rule)" style="animation-delay: 0.2s" />
+        <text x="137" y="73" text-anchor="middle">cat</text>
+        <rect class="tstack-step" x="174" y="54" width="58" height="28" rx="3" fill="var(--mist-soft)" stroke="var(--rule)" style="animation-delay: 0.4s" />
+        <text x="203" y="73" text-anchor="middle">sat</text>
+      </g>
+
+      <!-- embeddings -->
+      <text class="diagram-hint" x="280" y="42" fill="var(--brand)">2 · Embeddings</text>
+      <g>
+        <rect class="tstack-step" x="280" y="54" width="18" height="72" rx="2" fill="var(--teal-soft)" stroke="var(--brand)" style="animation-delay: 0.6s" />
+        <rect class="tstack-step" x="306" y="54" width="18" height="72" rx="2" fill="var(--teal-soft)" stroke="var(--brand)" style="animation-delay: 0.75s" />
+        <rect class="tstack-step" x="332" y="54" width="18" height="72" rx="2" fill="var(--teal-soft)" stroke="var(--brand)" style="animation-delay: 0.9s" />
+      </g>
+      <text class="diagram-hint" x="315" y="148" text-anchor="middle" fill="var(--ink)">vectors</text>
+
+      <!-- attention -->
+      <text class="diagram-hint" x="400" y="42" fill="var(--action)">3 · Attention</text>
+      <circle class="tstack-attn" cx="430" cy="78" r="10" fill="var(--cobalt-soft)" stroke="var(--action)" />
+      <circle class="tstack-attn" cx="470" cy="78" r="10" fill="var(--cobalt-soft)" stroke="var(--action)" style="animation-delay: 0.4s" />
+      <circle class="tstack-attn" cx="510" cy="78" r="10" fill="var(--cobalt-soft)" stroke="var(--action)" style="animation-delay: 0.8s" />
+      <path class="tstack-beam" d="M430 88 Q450 118 470 88" fill="none" stroke="var(--action)" stroke-width="1.5" stroke-opacity="0.5" />
+      <path class="tstack-beam" d="M470 88 Q490 118 510 88" fill="none" stroke="var(--brand)" stroke-width="1.5" stroke-opacity="0.45" style="animation-delay: 0.5s" />
+      <text class="diagram-hint" x="470" y="148" text-anchor="middle" fill="var(--ink)">mix context</text>
+
+      <!-- layers -->
+      <text class="diagram-hint" x="48" y="178" fill="var(--brand)">4 · Stacked layers</text>
+      <g>
+        <rect class="tstack-layer" x="48" y="192" width="200" height="28" rx="3" fill="var(--mist-soft)" stroke="var(--rule)" />
+        <text x="148" y="211" text-anchor="middle" fill="var(--ink)" font-size="12">Layer 1 · attention + feed-forward</text>
+        <rect class="tstack-layer" x="48" y="228" width="200" height="28" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" style="animation-delay: 0.35s" />
+        <text x="148" y="247" text-anchor="middle" fill="var(--ink)" font-size="12">Layer 2 · same pattern</text>
+        <rect class="tstack-layer" x="48" y="264" width="200" height="16" rx="3" fill="var(--cobalt-soft)" stroke="var(--action)" stroke-opacity="0.5" style="animation-delay: 0.7s" />
+        <text class="diagram-hint" x="148" y="276" text-anchor="middle" fill="var(--ink)" font-size="11">… more layers …</text>
+      </g>
+
+      <!-- output -->
+      <text class="diagram-hint" x="320" y="178" fill="var(--brand)">5 · Next token</text>
+      <rect class="tstack-out" x="320" y="198" width="260" height="56" rx="4" fill="var(--surface-quiet)" stroke="var(--action)" stroke-width="1.5" />
+      <text x="450" y="224" text-anchor="middle" fill="var(--ink)" font-size="14">Predict likely next piece</text>
+      <text class="diagram-hint" x="450" y="244" text-anchor="middle" fill="var(--brand)">then repeat for the reply</text>
+    </svg>
+  </div>
+  <p class="diagram__legend">
+    Depth comes from stacking the same attention idea many times — not from one giant rule.
+  </p>
+</figure>
+
+<style>
+  .tstack-step,
+  .tstack-layer,
+  .tstack-attn,
+  .tstack-out {
+    animation: tstack-fade 3.2s ease-in-out infinite;
+  }
+  .tstack-beam {
+    stroke-dasharray: 5 7;
+    animation: tstack-flow 2.6s linear infinite;
+  }
+  @keyframes tstack-fade {
+    0%,
+    100% {
+      opacity: 0.65;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes tstack-flow {
+    to {
+      stroke-dashoffset: -36;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tstack-step,
+    .tstack-layer,
+    .tstack-attn,
+    .tstack-out,
+    .tstack-beam {
+      animation: none !important;
+      opacity: 0.95;
+      stroke-dasharray: none;
+    }
+  }
+</style>

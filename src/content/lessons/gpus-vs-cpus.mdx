@@ -1,0 +1,63 @@
+---
+title: GPUs vs CPUs — why GPUs for model compute
+description: Parallel matrix math, VRAM intuition, and when CPUs still show up — without a vendor pitch.
+order: 9
+path: foundations
+minutes: 14
+draft: false
+---
+
+import GpuCpuCompare from '../../components/diagrams/GpuCpuCompare.astro';
+
+You’ve seen [how a model is built](/learn/foundations/how-a-model-is-built) and how [transformers](/learn/foundations/transformers-beginner) lean on [attention](/glossary#attention). This lesson answers a practical “why”: **why do labs and clouds talk so much about GPUs (and other accelerators)?**
+
+## Two kinds of good at
+
+Think of chips as workplaces with different staffing:
+
+- A **CPU** is great at a **few complex jobs** — branching logic, running your OS, orchestrating apps, deciding what to do next.
+- A **GPU** is great at **many similar simple operations at once** — the same multiply-and-add pattern repeated across huge grids of numbers.
+
+Neither “wins” at everything. They’re specialized.
+
+<GpuCpuCompare />
+
+## Why neural nets love that shape of work
+
+Training and inference for neural nets (including transformers) spend most of their time on **matrix math**: combine many numbers, mix context, update weights. [Attention](/learn/foundations/how-transformers-work) especially creates a storm of parallel multiplies as every position looks at others.
+
+That workload maps well to GPUs and similar **accelerators** (chips built for this pattern — you may hear TPUs or other names; same idea: parallel numerical grunt work). The point isn’t a brand. It’s **shape of compute**.
+
+## VRAM and batching (light intuition)
+
+- **VRAM** (GPU memory) holds the model weights and the temporary numbers for the current batch of tokens. Bigger models and longer contexts need more room.
+- **Batching** means processing several examples (or several requests) together so the chip stays busy. More parallelism → better use of those many cores — until you run out of memory.
+
+You don’t need to size hardware yourself as a beginner. Just know: **memory and parallelism** are why “this model needs a GPU” shows up in install notes and cloud bills.
+
+## When CPUs still appear
+
+CPUs don’t disappear:
+
+- **Small models** and light demos may run fine on CPU (slower, but fine for learning).
+- **Preprocessing** — cleaning text, loading files, tokenization — often starts on CPU.
+- **Orchestration** — your app, the API server, queues, logging — still CPU-shaped work.
+- **Laptop chat apps** may use a mix: local small models on CPU/Apple Silicon, big models on a remote GPU farm.
+
+So: GPUs (accelerators) for the heavy model math; CPUs for running the rest of the system.
+
+## What you can ignore for now
+
+CUDA versions, specific card SKUs, and vendor scoreboards. Foundations care about the **job**, not the shopping list.
+
+See also: [Glossary — GPU](/glossary#gpu), [CPU](/glossary#cpu). Cross-links: [transformers](/learn/foundations/transformers-beginner), [how transformers work](/learn/foundations/how-transformers-work), [Gen AI](/learn/foundations/what-gen-ai-is).
+
+## Takeaway
+
+**CPUs handle flexible control; GPUs (and accelerators) flood the chip with parallel matrix ops** — the shape of work that training and large-model inference need.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Open the system requirements for any local AI app or cloud “inference” pricing page. Note whether they mention GPU, memory (VRAM/GB), or “CPU-only.” You’re reading the hardware story in product language.
+</div>

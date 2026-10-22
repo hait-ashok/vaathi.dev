@@ -1,0 +1,115 @@
+---
+/**
+ * Calm CPU vs GPU comparison: few complex workers vs many parallel simple ops.
+ */
+---
+
+<figure class="diagram diagram--anim">
+  <figcaption class="diagram__caption">
+    <span class="mono-label">Diagram</span>
+    CPU vs GPU — different strengths, same computer story
+  </figcaption>
+  <div class="diagram__frame">
+    <svg
+      class="diagram__svg"
+      viewBox="0 0 620 280"
+      role="img"
+      aria-labelledby="gpu-title gpu-desc"
+    >
+      <title id="gpu-title">CPU versus GPU parallelism</title>
+      <desc id="gpu-desc">
+        Left: a few large CPU cores handling complex tasks one after another. Right: many small GPU
+        cores doing simple multiply-add work in parallel. Labels note orchestration versus matrix math.
+      </desc>
+
+      <rect x="12" y="12" width="596" height="256" rx="4" fill="var(--surface-quiet)" stroke="var(--rule)" />
+
+      <!-- CPU panel -->
+      <text class="diagram-label" x="120" y="44" text-anchor="middle" fill="var(--brand)" font-weight="600">CPU</text>
+      <text class="diagram-hint" x="120" y="64" text-anchor="middle" fill="var(--ink)">Few cores · complex tasks</text>
+
+      <g class="cpu-core">
+        <rect x="48" y="88" width="144" height="44" rx="3" fill="var(--mist-soft)" stroke="var(--brand)" />
+        <text x="120" y="115" text-anchor="middle" fill="var(--ink)" font-size="13">Core A</text>
+      </g>
+      <g class="cpu-core" style="animation-delay: 0.9s">
+        <rect x="48" y="148" width="144" height="44" rx="3" fill="var(--mist-soft)" stroke="var(--brand)" />
+        <text x="120" y="175" text-anchor="middle" fill="var(--ink)" font-size="13">Core B</text>
+      </g>
+      <text class="diagram-hint" x="120" y="230" text-anchor="middle" fill="var(--ink)">Logic, branching,</text>
+      <text class="diagram-hint" x="120" y="248" text-anchor="middle" fill="var(--ink)">orchestration</text>
+
+      <!-- divider -->
+      <line x1="310" y1="36" x2="310" y2="252" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4 6" />
+
+      <!-- GPU panel -->
+      <text class="diagram-label" x="460" y="44" text-anchor="middle" fill="var(--action)" font-weight="600">GPU</text>
+      <text class="diagram-hint" x="460" y="64" text-anchor="middle" fill="var(--ink)">Many cores · parallel ops</text>
+
+      {
+        [0, 1, 2, 3, 4, 5].map((row) =>
+          [0, 1, 2, 3, 4, 5].map((col) => {
+            const x = 368 + col * 28;
+            const y = 84 + row * 22;
+            const delay = ((row * 6 + col) % 12) * 0.12;
+            return (
+              <rect
+                class="gpu-cell"
+                x={x}
+                y={y}
+                width="22"
+                height="16"
+                rx="2"
+                fill="var(--cobalt-soft)"
+                stroke="var(--action)"
+                stroke-opacity="0.45"
+                style={`animation-delay: ${delay}s`}
+              />
+            );
+          }),
+        )
+      }
+
+      <text class="diagram-hint" x="460" y="230" text-anchor="middle" fill="var(--ink)">Matrix math, batches,</text>
+      <text class="diagram-hint" x="460" y="248" text-anchor="middle" fill="var(--ink)">attention at scale</text>
+    </svg>
+  </div>
+  <p class="diagram__legend">
+    Training and large-model inference flood the chip with similar multiply-adds — GPUs (and other
+    accelerators) are built for that shape of work.
+  </p>
+</figure>
+
+<style>
+  .cpu-core {
+    animation: cpu-pulse 2.4s ease-in-out infinite;
+  }
+  .gpu-cell {
+    animation: gpu-twinkle 2.8s ease-in-out infinite;
+  }
+  @keyframes cpu-pulse {
+    0%,
+    100% {
+      opacity: 0.7;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes gpu-twinkle {
+    0%,
+    100% {
+      opacity: 0.45;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cpu-core,
+    .gpu-cell {
+      animation: none !important;
+      opacity: 0.9;
+    }
+  }
+</style>

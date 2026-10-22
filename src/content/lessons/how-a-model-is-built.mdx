@@ -1,7 +1,7 @@
 ---
 title: How a model is built (high level)
 description: Data → train or fine-tune → evaluate → deploy — what “training” means for a user.
-order: 7
+order: 8
 path: foundations
 minutes: 15
 draft: false
@@ -29,6 +29,10 @@ When a chat app “learns,” it might mean:
 - Optional **memory / personalization** features store preferences — check privacy settings.
 
 You are almost always **using** a deployed model, not rebuilding it.
+
+## Where the heavy compute goes
+
+Adjusting those “knobs” (and later running the model for every user request) is mostly **matrix math at scale** — the kind of work [GPUs and accelerators](/learn/foundations/gpus-vs-cpus) are built for. You’ll meet that hardware intuition next.
 
 ## Why this matters
 

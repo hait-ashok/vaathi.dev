@@ -28,7 +28,19 @@ const terms = [
   },
   {
     term: 'Transformer',
-    def: 'A model architecture that uses attention to weigh which parts of the input matter when predicting the next output. Common backbone for modern language models.',
+    def: 'A model architecture that uses attention to weigh which parts of the input matter when predicting the next output. Common backbone for modern language models. Often stacked in many layers; chat products are frequently decoder-only.',
+  },
+  {
+    term: 'Attention',
+    def: 'A learned “spotlight” that weighs which tokens (or positions) matter when the model updates a representation or predicts the next token. Central idea behind transformers — compute-heavy at long context.',
+  },
+  {
+    term: 'CPU',
+    def: 'Central processing unit — strong at a few complex, branching tasks (running apps, orchestration, preprocessing). Not specialized for huge parallel matrix math the way GPUs/accelerators are.',
+  },
+  {
+    term: 'GPU',
+    def: 'Graphics processing unit — strong at many similar simple operations in parallel. Training and large-model inference lean on this shape of work (matrix multiplies). Other accelerators play a similar role.',
   },
   {
     term: 'Hallucination',
