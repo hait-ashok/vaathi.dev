@@ -51,6 +51,23 @@ const terms = [
     def: 'A family of metrics often used for summarization that score overlap with a human reference summary. Helpful for benchmarks; still incomplete without human judgment.',
   },
   {
+    term: 'METEOR',
+    def: 'A reference-based text metric that is often a bit more flexible than classic BLEU when matching related wording. Still needs human references and still incomplete alone.',
+  },
+  {
+    term: 'BERTScore',
+    def: 'An embedding-based metric that compares meaning similarity between a model output and a reference, rather than counting exact word overlap only.',
+  },
+  {
+    term: 'Perplexity',
+    def: 'A measure of how “surprised” a language model is by a piece of text. Useful for model fit; not a direct score of helpful chat answers.',
+  },
+  {
+    term: 'F1',
+    def: 'A single number balancing precision and recall for labeled (classification) tasks. Not the right default tool for open-ended free text.',
+  },
+
+  {
     term: 'Claude',
     def: 'Anthropic’s family of language models and related products (chat, API, Claude Code). Distinct from cloud platforms like AWS Bedrock, which may host Claude among other models.',
   },

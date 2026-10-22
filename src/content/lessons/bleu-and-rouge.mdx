@@ -1,45 +1,106 @@
 ---
-title: BLEU and ROUGE (how we score text)
-description: What these metrics measure for translation and summarization — and why they aren’t enough alone.
+title: Evaluating AI outputs
+description: BLEU, ROUGE, and other metrics — when to use which, and why numbers aren’t enough alone.
 order: 9
 path: foundations
-minutes: 15
+minutes: 18
 draft: false
 ---
 
-When teams train or compare text models, they often want a **number** that says “how close is this output to a human reference?” Two classic metrics you’ll hear are **BLEU** and **ROUGE**.
+When teams train or compare models, they often want a **number** that says “how good is this output?” Classic text metrics include **BLEU** and **ROUGE** — and several others you’ll hear next. This lesson is a **map of metrics**, not a formulas course.
 
 *(People sometimes write “BLUE” by mistake — the standard name is **BLEU**.)*
 
-## BLEU — mostly for translation
+## Overlap with a reference (wording)
 
-**BLEU** (Bilingual Evaluation Understudy) checks how much the model’s wording **overlaps in short word chunks** with one or more reference translations. Higher usually meant “closer to the reference” in older machine-translation benchmarks.
+These scores compare a model’s text to one or more **human reference** answers.
 
-- **Used for:** translation-style tasks with fairly fixed “right” phrasings.
-- **Intuition:** lots of the same little phrases as the reference → higher BLEU.
+### BLEU — mostly translation
 
-## ROUGE — mostly for summarization
+**BLEU** (Bilingual Evaluation Understudy) checks how much the model’s wording **overlaps in short word chunks** with reference translations.
 
-**ROUGE** (Recall-Oriented Understudy for Gisting Evaluation) also looks at overlap with a reference, with flavors that care about **recall** (did we cover the reference’s important bits?) and sometimes longer matches.
+- **Use when:** translation-style tasks with fairly fixed “right” phrasings.
+- **Intuition:** same little phrases as the reference → higher BLEU.
+- **Limit:** synonyms and paraphrases can score poorly even when meaning is fine.
 
-- **Used for:** summarization and related “gisting” tasks.
-- **Intuition:** did the summary catch the content the human summary cared about?
+### ROUGE — mostly summarization
 
-See also: [Glossary — BLEU](/glossary#bleu), [ROUGE](/glossary#rouge).
+**ROUGE** (Recall-Oriented Understudy for Gisting Evaluation) also looks at overlap, with flavors that care about **recall** (did we cover the reference’s important bits?).
 
-## Why they aren’t enough alone
+- **Use when:** summarization and “gisting.”
+- **Intuition:** did the summary catch what the human summary cared about?
+- **Limit:** a high score can still miss the real point or sound awkward.
 
-- A summary can score well and still miss the *point*, or sound awkward.
-- Creative, open-ended answers have **no single reference** — overlap metrics struggle.
-- Gaming the metric (copying safe phrases) ≠ being helpful or truthful.
-- Human review, task success, and safety checks still matter.
+### METEOR and chrF — more flexible overlap
+
+**METEOR** and **chrF** still compare to a reference, but they’re often a bit more forgiving than classic BLEU (e.g. softer matching of related words, or character-level pieces).
+
+- **Use when:** you want a reference-based score that isn’t as brittle as pure exact n-gram match.
+- **Limit:** they still need references — and still don’t fully measure “helpful” or “true.”
+
+See also: [Glossary — BLEU](/glossary#bleu), [ROUGE](/glossary#rouge), [METEOR](/glossary#meteor).
+
+## Meaning-aware scores (embedding-based)
+
+### BERTScore (and cousins)
+
+**BERTScore**-style metrics embed the model output and the reference, then ask how **similar in meaning** those embeddings are — closer to the [embeddings](/learn/foundations/why-vectors-embeddings) intuition than to counting exact words.
+
+- **Use when:** wording can vary but meaning should match a reference.
+- **Limit:** “nearby in embedding space” ≠ correct facts or safe advice.
+
+## Language-model fitness
+
+### Perplexity
+
+**Perplexity** roughly asks: *how surprised is the model by this text?* Lower usually means the text looks more “expected” under the model.
+
+- **Use when:** comparing language models on held-out text, or checking how well a model fits a domain.
+- **What it doesn’t measure:** helpfulness, truth, or whether a *generated* answer is good for a user task. Low perplexity ≠ good chat reply.
+
+See also: [Glossary — Perplexity](/glossary#perplexity).
+
+## When the job is labels, not essays
+
+If the model picks a **category** (spam / not spam, topic tags), people use classification metrics:
+
+| Metric | Plain idea |
+| --- | --- |
+| **Accuracy** | How often was the label right? |
+| **Precision** | Of the items we flagged positive, how many truly were? |
+| **Recall** | Of the true positives, how many did we catch? |
+| **F1** | A balance of precision and recall in one number |
+
+- **Use when:** clear right/wrong labels exist (see [how data is labeled](/learn/foundations/how-data-is-labeled)).
+- **Limit:** don’t force F1 onto open-ended chat; wrong tool for free-form text.
+
+## Human evaluation (still the grown-up check)
+
+Automatic metrics are **lab tools**. For real products, people still:
+
+- Side-by-side **preference** checks (“which answer would you use?”)
+- Rubrics for usefulness, tone, safety
+- Spot-checks for hallucinations and policy breaks
+
+**Why:** open-ended Gen AI often has no single golden reference — and metrics can be gamed.
+
+## When to reach for which (cheat sheet)
+
+| Situation | Start with |
+| --- | --- |
+| Translation vs references | BLEU / METEOR / chrF |
+| Summaries vs references | ROUGE (maybe BERTScore too) |
+| Paraphrase-friendly meaning match | BERTScore-style |
+| “Does this LM fit the text?” | Perplexity |
+| Spam / topics / yes-no labels | Accuracy, precision, recall, F1 |
+| “Would a human trust this?” | Human eval + task success |
 
 ## Takeaway
 
-**BLEU** ≈ “overlap with a translation reference.” **ROUGE** ≈ “overlap with a summary reference.” Useful lab tools — not a full grade for real-world Gen AI quality.
+**BLEU** and **ROUGE** are classic overlap scores. **METEOR/chrF** soften overlap; **BERTScore** leans on meaning; **perplexity** fits LMs to text; **F1-style** metrics fit labeled tasks. None replace **human judgment** for open-ended Gen AI.
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Write one sentence summarizing a short news blurb in your own words, then a second version that swaps synonyms but keeps the meaning. ROUGE/BLEU might score them differently even when a human says “same idea” — that’s the limit in one minute.
+Pick one real task (translate a sentence, summarize a paragraph, or label an email). Name **one** automatic metric that might help and **one** reason you’d still want a human glance.
 </div>
