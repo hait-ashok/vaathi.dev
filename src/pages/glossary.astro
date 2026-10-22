@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const terms = [
+  {
+    term: 'Model',
+    def: 'Software trained on data that maps inputs to outputs (text, images, scores). You usually call a model through a product or API rather than training it yourself.',
+  },
+  {
+    term: 'Token',
+    def: 'A chunk of text the model reads or writes — often a word piece, not always a whole word. Longer prompts and answers use more tokens.',
+  },
+  {
+    term: 'Hallucination',
+    def: 'When a model produces fluent text that is wrong or invented. Treat confident wording as a style, not a guarantee of truth.',
+  },
+  {
+    term: 'Prompt',
+    def: 'The instructions and context you give a model. Clear goals, constraints, and format usually beat “magic” one-liners.',
+  },
+  {
+    term: 'Agent',
+    def: 'A system that uses a model plus tools (search, code, apps) to take multi-step actions. More power, more ways to go wrong — start simple.',
+  },
+];
+---
+
+<BaseLayout
+  title="Glossary"
+  description="Short definitions for common AI terms used in the Foundations path."
+>
+  <div class="site-shell">
+    <header class="page-header">
+      <p class="mono-label">Reference</p>
+      <h1>Glossary</h1>
+      <p>A short stub of terms you’ll meet in Foundations. More entries as lessons grow.</p>
+    </header>
+
+    <dl class="glossary-list">
+      {
+        terms.map(({ term, def }) => (
+          <div>
+            <dt id={term.toLowerCase()}>{term}</dt>
+            <dd>{def}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</BaseLayout>

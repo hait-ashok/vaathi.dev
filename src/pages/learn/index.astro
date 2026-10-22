@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Learn"
+  description="Learning paths on vaathi.ai — start with AI Foundations."
+>
+  <div class="site-shell">
+    <header class="page-header">
+      <p class="mono-label">Learn</p>
+      <h1>Paths</h1>
+      <p>
+        MVP ships one path. More may follow later — Foundations is the place to begin.
+      </p>
+    </header>
+
+    <ul class="path-list">
+      <li>
+        <a href="/learn/foundations">
+          <span class="lesson-list__num" aria-hidden="true">01</span>
+          <span>
+            <span class="lesson-list__title">AI Foundations</span>
+            <br />
+            <span class="lesson-list__meta">8 lessons · beginner · free</span>
+          </span>
+          <span class="lesson-list__arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</BaseLayout>

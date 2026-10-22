@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const lessons = (await getCollection('lessons'))
+  .filter((l) => l.data.path === 'foundations' && !l.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const first = lessons[0];
+const totalMinutes = lessons.reduce((sum, l) => sum + l.data.minutes, 0);
+---
+
+<BaseLayout
+  title="AI Foundations"
+  description="Eight short lessons on foundational AI skills for beginners — free, no account."
+>
+  <div class="site-shell">
+    <header class="page-header">
+      <p class="mono-label">Path</p>
+      <h1>AI Foundations</h1>
+      <p>
+        Leave with usable vocabulary and a few safe habits. {lessons.length} lessons · about{' '}
+        {totalMinutes} minutes total.
+      </p>
+      {
+        first && (
+          <p style="margin-top: 1.5rem">
+            <a class="site-cta" href={`/learn/foundations/${first.id}`}>
+              Start lesson 1
+            </a>
+          </p>
+        )
+      }
+    </header>
+
+    <ol class="lesson-list">
+      {
+        lessons.map((lesson) => (
+          <li>
+            <a href={`/learn/foundations/${lesson.id}`}>
+              <span class="lesson-list__num">
+                {String(lesson.data.order).padStart(2, '0')}
+              </span>
+              <span class="lesson-list__title">{lesson.data.title}</span>
+              <span class="lesson-list__meta">{lesson.data.minutes} min</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</BaseLayout>

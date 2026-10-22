@@ -1,0 +1,31 @@
+:root {
+  --canvas: #e8eef2;
+  --ink: #0f1c24;
+  --brand: #0a5c63;
+  --action: #1b4dff;
+  --action-ink: #ffffff;
+  --surface-quiet: #f7fafb;
+  --rule: #c5d0d8;
+  --mist-deep: #cfdce6;
+  --mist-soft: #f0f5f8;
+  --teal-soft: #d4ecee;
+  --cobalt-soft: #dce6ff;
+
+  --font-display: 'Fraunces', 'Palatino Linotype', Palatino, serif;
+  --font-body: 'Source Serif 4', 'Iowan Old Style', 'Apple Garamond', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  --measure: 68ch;
+  --shell: 72rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  --radius-sm: 2px;
+  --focus: 2px solid var(--action);
+  --focus-offset: 3px;
+}

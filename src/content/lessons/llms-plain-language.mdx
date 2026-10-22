@@ -1,0 +1,38 @@
+---
+title: Large language models in plain language
+description: Tokens, prediction, why they sound confident; hallucinations as a design fact.
+order: 3
+path: foundations
+minutes: 15
+draft: false
+---
+
+Large language models (LLMs) generate text by repeatedly asking: **what token is likely next?** That simple idea explains a lot of their strengths and failures.
+
+## Tokens, not “thoughts”
+
+Text is split into **tokens** — chunks that may be whole words or pieces. The model assigns probabilities to possible next tokens and samples from them (with settings that make answers more or less “creative”).
+
+It is not looking up a single truth database. It is continuing a pattern that often *looks* like knowledge.
+
+## Why they sound confident
+
+Training rewards fluent, helpful-sounding continuations. Confidence is a **style** of language, not a calibrated certainty meter. A wrong answer can still sound polished.
+
+## Hallucinations are expected
+
+When the model invents a citation, a date, or a feature that doesn’t exist, that is often called a **hallucination**. It’s not a rare bug you can ignore — it’s a consequence of predicting plausible text under uncertainty.
+
+Practical response: **verify claims that matter**. Prefer primary sources for facts that affect money, health, law, or someone’s reputation.
+
+See also: [Glossary — Hallucination](/glossary#hallucination), [Token](/glossary#token).
+
+## Takeaway
+
+LLMs are powerful **pattern completers**. Use them for drafting, exploring, and restructuring — then check anything you’d be embarrassed to get wrong.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Ask a chat model for a specific statistic you can verify (a public figure, a historical date). Check the answer against a trusted source. Note how “sure” the tone felt versus how accurate it was.
+</div>

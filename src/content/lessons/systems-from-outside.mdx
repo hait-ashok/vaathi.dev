@@ -1,0 +1,40 @@
+---
+title: How modern AI systems feel from the outside
+description: Inputs, outputs, models-as-services — you don’t need to train models to use them well.
+order: 2
+path: foundations
+minutes: 12
+draft: false
+---
+
+You can understand most AI products without opening the engine bay. Think in **inputs**, **outputs**, and **services**.
+
+## The loop
+
+1. **You provide an input** — a prompt, a document, an image, a click.
+2. **A model (somewhere) computes** — often on a company’s servers, not on your laptop.
+3. **You get an output** — text, a score, a generated image, a suggested action.
+
+Settings, system prompts, and safety filters sit around that loop. They shape what you can ask and what comes back.
+
+## Models as services
+
+Modern AI is usually **rented by the request**: an API or app sends your input to a hosted model and returns a result. That means:
+
+- Quality and cost depend on which model and settings you use.
+- Your data may leave your device — check privacy defaults.
+- The same product can change behavior when the vendor swaps models.
+
+## What you don’t need yet
+
+You don’t need to know how training works, what a GPU is, or how to fine-tune. Those topics matter later if you build systems. For using AI well as a beginner, the skill is **framing inputs and judging outputs**.
+
+## Takeaway
+
+Treat every AI feature as a **service with a contract**: what goes in, what comes out, and what you still owe the world (checking, citing, deciding).
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Pick one AI feature you use. Sketch: input → mystery box → output. Add one note: “What would a wrong output look like here?”
+</div>

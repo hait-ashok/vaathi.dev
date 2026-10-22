@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const lessons = (await getCollection('lessons'))
+    .filter((l) => l.data.path === 'foundations' && !l.data.draft)
+    .sort((a, b) => a.data.order - b.data.order);
+
+  return lessons.map((lesson, index) => ({
+    params: { slug: lesson.id },
+    props: {
+      lesson,
+      prev: index > 0 ? lessons[index - 1] : null,
+      next: index < lessons.length - 1 ? lessons[index + 1] : null,
+    },
+  }));
+}
+
+const { lesson, prev, next } = Astro.props;
+const { Content } = await render(lesson);
+---
+
+<BaseLayout title={lesson.data.title} description={lesson.data.description}>
+  <div class="site-shell">
+    <nav class="lesson-chrome" aria-label="Lesson">
+      <a href="/learn/foundations">AI Foundations</a>
+      <span>
+        Lesson {lesson.data.order} · {lesson.data.minutes} min
+      </span>
+      <span>
+        {
+          prev ? (
+            <a href={`/learn/foundations/${prev.id}`}>← Prev</a>
+          ) : (
+            <span aria-hidden="true"> </span>
+          )
+        }
+        {' · '}
+        {
+          next ? (
+            <a href={`/learn/foundations/${next.id}`}>Next →</a>
+          ) : (
+            <a href="/learn/foundations">Path</a>
+          )
+        }
+      </span>
+    </nav>
+
+    <article class="lesson-article">
+      <h1>{lesson.data.title}</h1>
+      <p class="mono-label" style="margin-bottom: 1.5rem">{lesson.data.description}</p>
+      <div class="lesson-prose">
+        <Content />
+      </div>
+
+      <nav class="lesson-nav" aria-label="Continue">
+        {
+          prev ? (
+            <a href={`/learn/foundations/${prev.id}`}>← {prev.data.title}</a>
+          ) : (
+            <a href="/learn/foundations">← All lessons</a>
+          )
+        }
+        {
+          next ? (
+            <a href={`/learn/foundations/${next.id}`}>
+              Next: {next.data.title} →
+            </a>
+          ) : (
+            <a href="/about">Done — about &amp; community →</a>
+          )
+        }
+      </nav>
+    </article>
+  </div>
+</BaseLayout>

@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="vaathi.ai"
+  description="vaathi.ai — curiosity begins here. Free foundational AI skills for beginners."
+>
+  <section class="hero" aria-labelledby="hero-brand">
+    <div class="hero__atmosphere" aria-hidden="true"></div>
+    <div class="site-shell hero__content">
+      <p id="hero-brand" class="hero__brand">vaathi.ai</p>
+      <h1 class="hero__tagline">curiosity begins here.</h1>
+      <p class="hero__support">
+        Free foundational AI skills for beginners — clear mental models, safe habits, and practical
+        first steps. No account. No paywall.
+      </p>
+      <a class="site-cta" href="/learn/foundations">Start Foundations</a>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="path-heading">
+    <div class="site-shell">
+      <p class="mono-label">Learning path</p>
+      <h2 id="path-heading" class="section__title">One path to start</h2>
+      <p class="section__lede">
+        AI Foundations walks you from “what is AI, really?” to a simple personal workflow — eight
+        short lessons, one idea each.
+      </p>
+      <ul class="path-list">
+        <li>
+          <a href="/learn/foundations">
+            <span class="lesson-list__num" aria-hidden="true">01</span>
+            <span>
+              <span class="lesson-list__title">AI Foundations</span>
+              <br />
+              <span class="lesson-list__meta">8 lessons · ~2 hours total</span>
+            </span>
+            <span class="lesson-list__arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="how-heading">
+    <div class="site-shell">
+      <p class="mono-label">How it works</p>
+      <h2 id="how-heading" class="section__title">Learn without friction</h2>
+      <ol class="steps">
+        <li>
+          <span class="mono-label">01</span>
+          <h3>Free</h3>
+          <p>Every lesson is public. Share a link; no drip, no waitlist.</p>
+        </li>
+        <li>
+          <span class="mono-label">02</span>
+          <h3>No account</h3>
+          <p>Open a page and read. Progress is yours — bookmark what you need.</p>
+        </li>
+        <li>
+          <span class="mono-label">03</span>
+          <h3>Short lessons</h3>
+          <p>Ten to twenty minutes each. One idea per page, then a next step.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="community-heading">
+    <div class="site-shell">
+      <p class="mono-label">Community</p>
+      <h2 id="community-heading" class="section__title">Open access, honest limits</h2>
+      <p class="section__lede">
+        vaathi.ai is a beginner community primer — welcoming tone, plain language, and honesty about
+        what AI can and cannot do. Suggest a topic anytime on the About page.
+      </p>
+      <a class="site-cta site-cta--ghost" href="/about">About &amp; community</a>
+    </div>
+  </section>
+</BaseLayout>
