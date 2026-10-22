@@ -43,7 +43,7 @@ Static output lands in `dist/`.
 
 **Canonical URL:** `https://vaathi.dev` (`site` in `astro.config.mjs`). `www` redirects to apex (CloudFront Function in the infra repo).
 
-Infrastructure is **Terraform in a separate repo:** `~/vaathi-dev-infra` (GitHub: `hait-ashok/vaathi-dev-infra` when created). Architecture: Project store `docs/aws-infra-architecture.md`.
+Infrastructure is **Terraform in a separate repo:** [`hait-ashok/vaathi-dev-infra`](https://github.com/hait-ashok/vaathi-dev-infra). This app: [`hait-ashok/vaathi.dev`](https://github.com/hait-ashok/vaathi.dev). Architecture: Project store `docs/aws-infra-architecture.md`.
 
 ### CI (this repo)
 
