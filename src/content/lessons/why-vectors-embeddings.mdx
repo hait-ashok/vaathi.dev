@@ -1,0 +1,38 @@
+---
+title: Why vectors and embeddings
+description: Similarity in number-space — the intuition behind search and retrieval.
+order: 6
+path: foundations
+minutes: 15
+draft: false
+---
+
+Computers don’t “feel” that *dog* and *puppy* are related. **Embeddings** turn words, sentences, or documents into lists of numbers (**vectors**) so that *similar meaning tends to sit nearby* in that number-space.
+
+## The intuition
+
+Imagine placing sticky notes on a wall: related ideas closer together, unrelated ones farther apart. An embedding model learns a high-dimensional version of that wall. “Distance” (or angle) between vectors becomes a rough measure of **similarity**.
+
+You don’t need the math. You need the idea: **meaning → coordinates → compare by nearness**.
+
+## Why we bother
+
+- **Search / retrieval** — Find documents like your question without exact keyword matches (“refund policy” can find “money-back terms”).
+- **Recommendations** — “More like this.”
+- **RAG-style apps** — Retrieve relevant notes first, then ask a language model to answer using them (reduces pure guesswork).
+
+See also: [Glossary — Embedding](/glossary#embedding).
+
+## Limits (keep it honest)
+
+Nearby ≠ true. Two vectors can be close for the wrong reason. Embeddings don’t replace reading the source — they help you *find* candidates faster.
+
+## Takeaway
+
+Vectors/embeddings are how modern AI systems **measure likeness** so they can retrieve and organize text (and other media) at scale.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Write three short phrases: two that mean nearly the same thing, and one that doesn’t. Mentally place them on a wall — the first pair close, the odd one out farther. That’s the embedding story without code.
+</div>

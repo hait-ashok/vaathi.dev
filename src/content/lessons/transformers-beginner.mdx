@@ -1,0 +1,42 @@
+---
+title: Transformers in plain language
+description: Attention as “what to focus on,” plus encoder/decoder intuition — no heavy math.
+order: 7
+path: foundations
+minutes: 15
+draft: false
+---
+
+Most modern language (and many multimodal) models are built on an architecture nicknamed the **transformer**. You don’t need the equations — you need the *job* it does.
+
+## Attention: what to focus on
+
+When you read “The trophy didn’t fit in the suitcase because **it** was too big,” you decide what “it” refers to. **Attention** is a learned way for the model to weigh which earlier words matter for the next prediction — a soft spotlight, not a single hard rule.
+
+That “look around the context” trick is why transformers handle longer phrases better than older one-word-at-a-time designs.
+
+## Encoder / decoder (intuition only)
+
+Rough roles you’ll hear:
+
+- **Encoder** — Reads and represents the input (useful for understanding / classifying a passage).
+- **Decoder** — Generates the next tokens (chat and completion models lean heavily here).
+- **Encoder–decoder** — Classic for translation-style “read this, write that.”
+
+Many chat models you use are **decoder-style** generators with clever training. The names matter less than the idea: **represent context, then generate**.
+
+See also: [Glossary — Transformer](/glossary#transformer).
+
+## What you can ignore for now
+
+Matrix multiplies, layer counts, and paper acronyms. They matter for builders. For Foundations, remember: transformers = **context-aware prediction engines** powered by attention.
+
+## Takeaway
+
+A transformer is a design that lets the model **decide what to pay attention to** in the input while predicting what comes next.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Paste a short paragraph into a chat model and ask: “Which words would you need to resolve the pronoun in sentence two?” You’re practicing the *attention* idea — spotlighting context — without any code.
+</div>

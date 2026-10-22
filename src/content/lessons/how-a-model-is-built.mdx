@@ -1,0 +1,41 @@
+---
+title: How a model is built (high level)
+description: Data → train or fine-tune → evaluate → deploy — what “training” means for a user.
+order: 4
+path: foundations
+minutes: 15
+draft: false
+---
+
+You rarely train a giant model yourself. Still, knowing the **pipeline** helps you ask better questions of vendors and of your own workflow.
+
+## The short pipeline
+
+1. **Data** — Examples of the job (text pairs, images + captions, chat transcripts). Quality and coverage matter more than magic.
+2. **Train or fine-tune** — The model’s internal knobs are adjusted so its outputs better match the examples. *Pre-training* builds general skill on huge data; *fine-tuning* specializes on a narrower set.
+3. **Evaluate** — Humans and metrics check whether outputs are useful, safe, and on-task. Numbers help; they don’t replace judgment. (You’ll meet classic text metrics like [BLEU and ROUGE](/learn/foundations/bleu-and-rouge) later.)
+4. **Deploy** — The model is wrapped as a product or API: filters, rate limits, logging, updates.
+
+## What “training” means for you as a user
+
+When a chat app “learns,” it might mean:
+
+- The **base model** was trained earlier by a lab (you’re borrowing that skill).
+- Your **prompt and chat history** steer this session only (usually not permanent learning).
+- Optional **memory / personalization** features store preferences — check privacy settings.
+
+You are almost always **using** a deployed model, not rebuilding it.
+
+## Why this matters
+
+Understanding the pipeline explains product behavior: a model can be great at fluent English and still weak on your company’s private facts (those weren’t in training). Retrieval and good prompts help bridge that gap — covered in later lessons.
+
+## Takeaway
+
+**Data shapes skill → training adjusts → evaluation catches gaps → deploy serves users.** Your job as a beginner is usually step “use carefully,” not step “train from scratch.”
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+For one AI product you use, guess: was the hard work mostly *pre-training* (general), *fine-tuning* (specialized), or *your prompt* (this session)? You don’t need a perfect answer — noticing the layers is the win.
+</div>

@@ -7,8 +7,20 @@ const terms = [
     def: 'Software trained on data that maps inputs to outputs (text, images, scores). You usually call a model through a product or API rather than training it yourself.',
   },
   {
+    term: 'Gen AI',
+    def: 'Generative AI — systems that create new content (text, images, audio, code) from a prompt or input, rather than only classifying or scoring existing items.',
+  },
+  {
     term: 'Token',
     def: 'A chunk of text the model reads or writes — often a word piece, not always a whole word. Longer prompts and answers use more tokens.',
+  },
+  {
+    term: 'Embedding',
+    def: 'A list of numbers (a vector) that represents text or other media so similar meanings tend to sit nearby. Used for search, retrieval, and “more like this.”',
+  },
+  {
+    term: 'Transformer',
+    def: 'A model architecture that uses attention to weigh which parts of the input matter when predicting the next output. Common backbone for modern language models.',
   },
   {
     term: 'Hallucination',
@@ -17,6 +29,14 @@ const terms = [
   {
     term: 'Prompt',
     def: 'The instructions and context you give a model. Clear goals, constraints, and format usually beat “magic” one-liners.',
+  },
+  {
+    term: 'BLEU',
+    def: 'A classic metric for machine translation that scores overlap between a model’s output and human reference translations. (Sometimes misspelled “BLUE.”) Useful in labs; not a full measure of quality alone.',
+  },
+  {
+    term: 'ROUGE',
+    def: 'A family of metrics often used for summarization that score overlap with a human reference summary. Helpful for benchmarks; still incomplete without human judgment.',
   },
   {
     term: 'Agent',
@@ -33,17 +53,23 @@ const terms = [
     <header class="page-header">
       <p class="mono-label">Reference</p>
       <h1>Glossary</h1>
-      <p>A short stub of terms you’ll meet in Foundations. More entries as lessons grow.</p>
+      <p>
+        Short definitions for terms you’ll meet in Foundations. IDs match lesson links (e.g.
+        <code>#bleu</code>, <code>#embedding</code>).
+      </p>
     </header>
 
     <dl class="glossary-list">
       {
-        terms.map(({ term, def }) => (
-          <div>
-            <dt id={term.toLowerCase()}>{term}</dt>
-            <dd>{def}</dd>
-          </div>
-        ))
+        terms.map(({ term, def }) => {
+          const id = term.toLowerCase().replace(/\s+/g, '-');
+          return (
+            <div>
+              <dt id={id}>{term}</dt>
+              <dd>{def}</dd>
+            </div>
+          );
+        })
       }
     </dl>
   </div>

@@ -1,0 +1,45 @@
+---
+title: BLEU and ROUGE (how we score text)
+description: What these metrics measure for translation and summarization — and why they aren’t enough alone.
+order: 9
+path: foundations
+minutes: 15
+draft: false
+---
+
+When teams train or compare text models, they often want a **number** that says “how close is this output to a human reference?” Two classic metrics you’ll hear are **BLEU** and **ROUGE**.
+
+*(People sometimes write “BLUE” by mistake — the standard name is **BLEU**.)*
+
+## BLEU — mostly for translation
+
+**BLEU** (Bilingual Evaluation Understudy) checks how much the model’s wording **overlaps in short word chunks** with one or more reference translations. Higher usually meant “closer to the reference” in older machine-translation benchmarks.
+
+- **Used for:** translation-style tasks with fairly fixed “right” phrasings.
+- **Intuition:** lots of the same little phrases as the reference → higher BLEU.
+
+## ROUGE — mostly for summarization
+
+**ROUGE** (Recall-Oriented Understudy for Gisting Evaluation) also looks at overlap with a reference, with flavors that care about **recall** (did we cover the reference’s important bits?) and sometimes longer matches.
+
+- **Used for:** summarization and related “gisting” tasks.
+- **Intuition:** did the summary catch the content the human summary cared about?
+
+See also: [Glossary — BLEU](/glossary#bleu), [ROUGE](/glossary#rouge).
+
+## Why they aren’t enough alone
+
+- A summary can score well and still miss the *point*, or sound awkward.
+- Creative, open-ended answers have **no single reference** — overlap metrics struggle.
+- Gaming the metric (copying safe phrases) ≠ being helpful or truthful.
+- Human review, task success, and safety checks still matter.
+
+## Takeaway
+
+**BLEU** ≈ “overlap with a translation reference.” **ROUGE** ≈ “overlap with a summary reference.” Useful lab tools — not a full grade for real-world Gen AI quality.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Write one sentence summarizing a short news blurb in your own words, then a second version that swaps synonyms but keeps the meaning. ROUGE/BLEU might score them differently even when a human says “same idea” — that’s the limit in one minute.
+</div>
