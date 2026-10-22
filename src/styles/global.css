@@ -250,7 +250,8 @@ button:focus-visible,
 .hero__atmosphere {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
+  overflow: hidden;
   background:
     radial-gradient(ellipse 80% 60% at 15% 20%, var(--teal-soft) 0%, transparent 55%),
     radial-gradient(ellipse 70% 50% at 90% 10%, var(--cobalt-soft) 0%, transparent 50%),

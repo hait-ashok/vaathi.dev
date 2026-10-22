@@ -1,107 +1,179 @@
 ---
 /**
- * Editorial hero visual: curiosity → understanding → growth.
- * Sparse knowledge-path / constellation — not a neural or medical diagram.
- * Decorative only; brand copy in the hero column stays primary.
+ * Hero atmosphere: learner climbing curiosity → understanding → growth
+ * through a light AI ecosystem constellation.
+ * Nested under .hero__atmosphere; brand copy stays primary.
  */
+const pathD =
+  'M88 330 C130 300, 150 270, 170 240 C195 205, 210 175, 235 155 C265 130, 295 115, 340 95';
 ---
 
-<div class="learn-path-hero" aria-hidden="true">
+<div class="learn-path-hero">
   <svg
     class="learn-path-hero__svg"
-    viewBox="0 0 440 400"
+    viewBox="0 0 460 400"
     xmlns="http://www.w3.org/2000/svg"
     focusable="false"
   >
     <defs>
-      <linearGradient id="learn-path-wash" x1="20%" y1="10%" x2="90%" y2="90%">
-        <stop offset="0%" stop-color="var(--teal-soft)" stop-opacity="0.65" />
-        <stop offset="100%" stop-color="var(--cobalt-soft)" stop-opacity="0.35" />
+      <linearGradient id="learn-path-wash" x1="15%" y1="85%" x2="85%" y2="10%">
+        <stop offset="0%" stop-color="var(--teal-soft)" stop-opacity="0.85" />
+        <stop offset="55%" stop-color="var(--mist-soft)" stop-opacity="0.5" />
+        <stop offset="100%" stop-color="var(--cobalt-soft)" stop-opacity="0.7" />
       </linearGradient>
+      <filter id="learn-soft-glow" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="2.5" result="b" />
+        <feMerge>
+          <feMergeNode in="b" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
     </defs>
 
-    <!-- Quiet field (mist wash) -->
+    <!-- Atmospheric wash -->
     <ellipse
       class="learn-path-hero__field"
-      cx="250"
+      cx="260"
       cy="200"
-      rx="170"
-      ry="150"
+      rx="185"
+      ry="160"
       fill="url(#learn-path-wash)"
-      opacity="0.55"
+      opacity="0.75"
     />
 
-    <!-- Soft secondary idea dots (constellation, sparse) -->
-    <g class="learn-path-hero__stars" fill="var(--brand)" fill-opacity="0.2">
-      <circle cx="92" cy="88" r="2" />
-      <circle cx="358" cy="72" r="1.75" />
-      <circle cx="400" cy="180" r="2" />
-      <circle cx="78" cy="260" r="1.5" />
-      <circle cx="380" cy="300" r="1.75" />
-      <circle cx="120" cy="340" r="1.5" />
+    <!-- AI ecosystem cluster (secondary) -->
+    <g class="learn-path-hero__ecosystem">
+      <text class="learn-path-hero__eco-title" x="300" y="48" text-anchor="middle">
+        AI ecosystem
+      </text>
+
+      <!-- models -->
+      <g transform="translate(360 78)">
+        <g class="learn-path-hero__eco-node learn-path-hero__eco-node--orbit-a">
+          <circle r="14" fill="var(--surface-quiet)" stroke="var(--brand)" stroke-width="1.25" stroke-opacity="0.55" />
+          <circle r="3.5" fill="var(--brand)" fill-opacity="0.7" />
+          <text class="learn-path-hero__eco-label" x="0" y="28" text-anchor="middle">models</text>
+        </g>
+      </g>
+
+      <!-- tools -->
+      <g transform="translate(400 155)">
+        <g class="learn-path-hero__eco-node learn-path-hero__eco-node--orbit-b">
+          <circle r="12" fill="var(--surface-quiet)" stroke="var(--action)" stroke-width="1.25" stroke-opacity="0.4" />
+          <circle r="3" fill="var(--action)" fill-opacity="0.55" />
+          <text class="learn-path-hero__eco-label" x="0" y="26" text-anchor="middle">tools</text>
+        </g>
+      </g>
+
+      <!-- agents -->
+      <g class="learn-path-hero__eco-node" transform="translate(355 210)">
+        <circle r="13" fill="var(--surface-quiet)" stroke="var(--brand)" stroke-width="1.25" stroke-opacity="0.5" />
+        <circle r="3.25" fill="var(--brand)" fill-opacity="0.65" />
+        <text class="learn-path-hero__eco-label" x="0" y="27" text-anchor="middle">agents</text>
+      </g>
+
+      <!-- prompts -->
+      <g class="learn-path-hero__eco-node" transform="translate(395 255)">
+        <circle r="11" fill="var(--surface-quiet)" stroke="var(--rule)" stroke-width="1.25" />
+        <circle r="2.75" fill="var(--brand)" fill-opacity="0.45" />
+        <text class="learn-path-hero__eco-label" x="0" y="25" text-anchor="middle">prompts</text>
+      </g>
+
+      <!-- soft links into the path neighborhood -->
+      <g fill="none" stroke="var(--rule)" stroke-width="1.1" stroke-opacity="0.85">
+        <path d="M346 88 L300 120" />
+        <path d="M388 155 L318 165" />
+        <path d="M342 210 L300 200" />
+        <path d="M384 250 L320 230" />
+      </g>
     </g>
 
-    <!-- Faint cross-links (knowledge graph, not a mesh) -->
-    <g
-      class="learn-path-hero__graph"
+    <!-- Path trail (underlay) -->
+    <path
+      d={pathD}
       fill="none"
-      stroke="var(--rule)"
-      stroke-width="1"
-      stroke-opacity="0.9"
-    >
-      <path d="M168 118 L210 168" />
-      <path d="M292 128 L250 168" />
-      <path d="M210 168 L250 228" />
-      <path d="M292 128 L318 210" />
-      <path d="M168 118 L140 200" />
-    </g>
+      stroke="var(--mist-deep)"
+      stroke-width="6"
+      stroke-linecap="round"
+      opacity="0.85"
+    />
 
     <!-- Primary learning path -->
     <path
       class="learn-path-hero__route"
-      d="M120 300 C150 250, 170 200, 210 168 C240 140, 260 110, 300 96"
+      d={pathD}
       fill="none"
       stroke="var(--brand)"
-      stroke-width="1.5"
+      stroke-width="2.25"
       stroke-linecap="round"
-      stroke-opacity="0.55"
+      stroke-opacity="0.75"
     />
 
-    <!-- Traveling accent along the path (curiosity lighting the way) -->
-    <circle class="learn-path-hero__traveler" r="3.25" fill="var(--action)" fill-opacity="0.7" />
-
-    <!-- Stage 1 — curiosity -->
-    <g class="learn-path-hero__stage learn-path-hero__stage--1" transform="translate(120 300)">
-      <circle r="18" fill="var(--surface-quiet)" stroke="var(--brand)" stroke-width="1.25" stroke-opacity="0.45" />
-      <circle r="5" fill="var(--brand)" fill-opacity="0.55" />
-      <text class="learn-path-hero__label" x="0" y="36" text-anchor="middle">curiosity</text>
+    <!-- Stage markers -->
+    <g class="learn-path-hero__stage learn-path-hero__stage--1" transform="translate(88 330)">
+      <circle r="20" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.75" stroke-opacity="0.7" />
+      <circle r="6" fill="var(--brand)" fill-opacity="0.75" filter="url(#learn-soft-glow)" />
+      <text class="learn-path-hero__stage-label" x="0" y="38" text-anchor="middle">curiosity</text>
     </g>
 
-    <!-- Stage 2 — understanding -->
-    <g class="learn-path-hero__stage learn-path-hero__stage--2" transform="translate(210 168)">
-      <circle r="22" fill="var(--teal-soft)" fill-opacity="0.85" stroke="var(--brand)" stroke-width="1.25" stroke-opacity="0.55" />
-      <circle r="6" fill="var(--brand)" fill-opacity="0.65" />
-      <!-- small idea triad -->
-      <circle cx="-28" cy="-8" r="3.5" fill="var(--brand)" fill-opacity="0.35" />
-      <circle cx="30" cy="-14" r="3.5" fill="var(--action)" fill-opacity="0.4" />
-      <circle cx="18" cy="26" r="3" fill="var(--brand)" fill-opacity="0.3" />
-      <text class="learn-path-hero__label" x="0" y="42" text-anchor="middle">understanding</text>
+    <g class="learn-path-hero__stage learn-path-hero__stage--2" transform="translate(235 155)">
+      <circle r="24" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.75" stroke-opacity="0.75" />
+      <circle r="7" fill="var(--brand)" fill-opacity="0.8" filter="url(#learn-soft-glow)" />
+      <text class="learn-path-hero__stage-label" x="0" y="42" text-anchor="middle">understanding</text>
     </g>
 
-    <!-- Stage 3 — growth -->
-    <g class="learn-path-hero__stage learn-path-hero__stage--3" transform="translate(300 96)">
-      <circle r="16" fill="var(--cobalt-soft)" fill-opacity="0.9" stroke="var(--action)" stroke-width="1.25" stroke-opacity="0.45" />
-      <circle r="4.5" fill="var(--action)" fill-opacity="0.65" />
-      <!-- open mark: path continues -->
-      <path
-        d="M22 -4 L34 -12 M22 -4 L30 6"
-        fill="none"
-        stroke="var(--action)"
-        stroke-width="1.25"
-        stroke-linecap="round"
-        stroke-opacity="0.55"
-      />
-      <text class="learn-path-hero__label" x="0" y="34" text-anchor="middle">growth</text>
+    <g class="learn-path-hero__stage learn-path-hero__stage--3" transform="translate(340 95)">
+      <circle r="18" fill="var(--cobalt-soft)" stroke="var(--action)" stroke-width="1.75" stroke-opacity="0.55" />
+      <circle r="5.5" fill="var(--action)" fill-opacity="0.75" filter="url(#learn-soft-glow)" />
+      <text class="learn-path-hero__stage-label" x="0" y="36" text-anchor="middle">growth</text>
+    </g>
+
+    <!-- Climber (elegant silhouette) rides the path -->
+    <g class="learn-path-hero__climber">
+      <g class="learn-path-hero__climber-figure" transform="translate(-7 -22) scale(1.05)">
+        <!-- head -->
+        <circle cx="7" cy="5" r="4.2" fill="var(--ink)" fill-opacity="0.82" />
+        <!-- torso -->
+        <path
+          d="M7 10 L7 20"
+          stroke="var(--ink)"
+          stroke-width="3.2"
+          stroke-linecap="round"
+          stroke-opacity="0.82"
+        />
+        <!-- arm reaching up-path -->
+        <path
+          d="M7 13 L14 9"
+          stroke="var(--ink)"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          stroke-opacity="0.78"
+        />
+        <!-- trailing arm -->
+        <path
+          d="M7 14 L1 18"
+          stroke="var(--ink)"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-opacity="0.7"
+        />
+        <!-- lead leg (climb) -->
+        <path
+          d="M7 20 L13 28"
+          stroke="var(--ink)"
+          stroke-width="2.6"
+          stroke-linecap="round"
+          stroke-opacity="0.82"
+        />
+        <!-- trail leg -->
+        <path
+          d="M7 20 L2 29"
+          stroke="var(--ink)"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-opacity="0.75"
+        />
+      </g>
     </g>
   </svg>
 </div>
@@ -110,98 +182,131 @@
   .learn-path-hero {
     position: absolute;
     inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    pointer-events: none;
+    overflow: hidden;
   }
 
   .learn-path-hero__svg {
-    width: min(52vw, 28rem);
+    width: min(56vw, 30rem);
     height: auto;
-    margin-right: clamp(0.5rem, 5vw, 3.5rem);
-    opacity: 0.95;
+    margin-right: clamp(0.25rem, 4vw, 2.5rem);
+    margin-top: 0.5rem;
   }
 
-  .learn-path-hero__label {
+  .learn-path-hero__eco-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    fill: var(--brand);
+    fill-opacity: 0.7;
+  }
+
+  .learn-path-hero__eco-label,
+  .learn-path-hero__stage-label {
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     fill: var(--ink);
-    fill-opacity: 0.55;
+    fill-opacity: 0.62;
   }
 
   .learn-path-hero__route {
-    stroke-dasharray: 8 12;
-    animation: learn-path-draw 14s linear infinite;
+    stroke-dasharray: 10 14;
+    animation: learn-path-dash 12s linear infinite;
   }
 
-  .learn-path-hero__traveler {
-    offset-path: path('M120 300 C150 250, 170 200, 210 168 C240 140, 260 110, 300 96');
-    offset-rotate: 0deg;
-    animation: learn-path-travel 9s ease-in-out infinite;
+  .learn-path-hero__climber {
+    offset-path: path('M88 330 C130 300, 150 270, 170 240 C195 205, 210 175, 235 155 C265 130, 295 115, 340 95');
+    offset-rotate: auto 90deg;
+    animation: learn-path-climb 14s ease-in-out infinite;
   }
 
   .learn-path-hero__stage {
-    animation: learn-path-breathe 7s ease-in-out infinite;
+    animation: learn-path-stage 6.5s ease-in-out infinite;
   }
 
   .learn-path-hero__stage--2 {
-    animation-delay: 1.4s;
+    animation-delay: 1.2s;
   }
 
   .learn-path-hero__stage--3 {
-    animation-delay: 2.8s;
+    animation-delay: 2.4s;
+  }
+
+  .learn-path-hero__eco-node--orbit-a {
+    animation: learn-path-orbit-a 10s ease-in-out infinite alternate;
+  }
+
+  .learn-path-hero__eco-node--orbit-b {
+    animation: learn-path-orbit-b 12s ease-in-out infinite alternate;
   }
 
   .learn-path-hero__field {
-    animation: learn-path-wash 18s ease-in-out infinite alternate;
+    animation: learn-path-wash 16s ease-in-out infinite alternate;
   }
 
-  @keyframes learn-path-draw {
+  @keyframes learn-path-dash {
     to {
-      stroke-dashoffset: -120;
+      stroke-dashoffset: -144;
     }
   }
 
-  @keyframes learn-path-travel {
+  @keyframes learn-path-climb {
     0% {
-      offset-distance: 0%;
+      offset-distance: 2%;
       opacity: 0;
     }
-    10% {
-      opacity: 0.85;
+    8% {
+      opacity: 1;
     }
-    90% {
-      opacity: 0.85;
+    92% {
+      opacity: 1;
     }
     100% {
-      offset-distance: 100%;
+      offset-distance: 98%;
       opacity: 0;
     }
   }
 
-  @keyframes learn-path-breathe {
+  @keyframes learn-path-stage {
     0%,
     100% {
-      opacity: 0.88;
+      opacity: 0.85;
     }
     50% {
       opacity: 1;
     }
   }
 
-  @keyframes learn-path-wash {
+  @keyframes learn-path-orbit-a {
     from {
-      opacity: 0.45;
-      transform: translate(0, 0);
+      transform: translate(-5px, 4px);
     }
     to {
-      opacity: 0.62;
+      transform: translate(6px, -6px);
+    }
+  }
+
+  @keyframes learn-path-orbit-b {
+    from {
       transform: translate(4px, -3px);
+    }
+    to {
+      transform: translate(-6px, 5px);
+    }
+  }
+
+  @keyframes learn-path-wash {
+    from {
+      opacity: 0.62;
+    }
+    to {
+      opacity: 0.85;
     }
   }
 
@@ -209,24 +314,25 @@
     .learn-path-hero {
       justify-content: center;
       align-items: flex-start;
-      padding-top: 0.25rem;
     }
 
     .learn-path-hero__svg {
-      width: min(88vw, 22rem);
-      margin: 0 auto;
-      opacity: 0.42;
+      width: min(94vw, 24rem);
+      margin: 0.25rem auto 0;
+      opacity: 0.88;
     }
 
-    .learn-path-hero__label {
-      font-size: 8px;
+    .learn-path-hero__eco-title {
+      font-size: 9px;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .learn-path-hero__route,
-    .learn-path-hero__traveler,
+    .learn-path-hero__climber,
     .learn-path-hero__stage,
+    .learn-path-hero__eco-node--orbit-a,
+    .learn-path-hero__eco-node--orbit-b,
     .learn-path-hero__field {
       animation: none !important;
     }
@@ -235,12 +341,15 @@
       stroke-dasharray: none;
     }
 
-    .learn-path-hero__traveler {
-      display: none;
+    /* Climber rests mid-path (understanding) */
+    .learn-path-hero__climber {
+      offset-distance: 48%;
+      opacity: 1;
     }
 
-    .learn-path-hero__stage {
-      opacity: 1;
+    .learn-path-hero__eco-node--orbit-a,
+    .learn-path-hero__eco-node--orbit-b {
+      transform: none;
     }
   }
 </style>
