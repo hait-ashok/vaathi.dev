@@ -1,0 +1,335 @@
+---
+/**
+ * Decorative neural / soft-brain network for the home hero.
+ * Brand text stays in the content column; this is atmospheric only.
+ */
+const nodes = [
+  // soft brain-ish cluster (viewBox 0 0 480 420)
+  { id: 'n0', x: 248, y: 72, r: 5 },
+  { id: 'n1', x: 188, y: 98, r: 4 },
+  { id: 'n2', x: 312, y: 96, r: 4 },
+  { id: 'n3', x: 142, y: 148, r: 4.5 },
+  { id: 'n4', x: 230, y: 140, r: 6 },
+  { id: 'n5', x: 318, y: 152, r: 4.5 },
+  { id: 'n6', x: 380, y: 168, r: 3.5 },
+  { id: 'n7', x: 108, y: 210, r: 4 },
+  { id: 'n8', x: 190, y: 205, r: 5 },
+  { id: 'n9', x: 270, y: 198, r: 5.5 },
+  { id: 'n10', x: 350, y: 220, r: 4 },
+  { id: 'n11', x: 420, y: 230, r: 3.5 },
+  { id: 'n12', x: 150, y: 268, r: 4 },
+  { id: 'n13', x: 240, y: 275, r: 5 },
+  { id: 'n14', x: 320, y: 285, r: 4 },
+  { id: 'n15', x: 200, y: 330, r: 3.5 },
+  { id: 'n16', x: 280, y: 338, r: 4 },
+  { id: 'n17', x: 360, y: 320, r: 3.5 },
+];
+
+const edges: [number, number][] = [
+  [0, 1],
+  [0, 2],
+  [0, 4],
+  [1, 3],
+  [1, 4],
+  [2, 4],
+  [2, 5],
+  [3, 7],
+  [3, 8],
+  [4, 8],
+  [4, 9],
+  [5, 6],
+  [5, 9],
+  [5, 10],
+  [6, 10],
+  [6, 11],
+  [7, 8],
+  [7, 12],
+  [8, 9],
+  [8, 12],
+  [8, 13],
+  [9, 10],
+  [9, 13],
+  [10, 11],
+  [10, 14],
+  [12, 13],
+  [12, 15],
+  [13, 14],
+  [13, 15],
+  [13, 16],
+  [14, 16],
+  [14, 17],
+  [15, 16],
+  [16, 17],
+];
+---
+
+<div class="neural-hero" aria-hidden="true">
+  <svg
+    class="neural-hero__svg"
+    viewBox="0 0 480 420"
+    xmlns="http://www.w3.org/2000/svg"
+    focusable="false"
+  >
+    <defs>
+      <linearGradient id="neural-silhouette" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="var(--teal-soft)" stop-opacity="0.55" />
+        <stop offset="55%" stop-color="var(--cobalt-soft)" stop-opacity="0.4" />
+        <stop offset="100%" stop-color="var(--mist-deep)" stop-opacity="0.35" />
+      </linearGradient>
+      <filter id="neural-soft" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="1.2" />
+      </filter>
+    </defs>
+
+    <!-- Soft abstract brain silhouette (not medical detail) -->
+    <g class="neural-hero__silhouette">
+      <path
+        fill="url(#neural-silhouette)"
+        stroke="var(--brand)"
+        stroke-opacity="0.22"
+        stroke-width="1.25"
+        d="M248 48
+           C318 48 388 88 402 152
+           C414 198 404 248 378 288
+           C352 328 318 348 288 362
+           C268 372 252 378 248 378
+           C244 378 228 372 208 362
+           C178 348 144 328 118 288
+           C92 248 82 198 94 152
+           C108 88 178 48 248 48 Z
+           M248 78
+           C210 92 188 128 192 168
+           M248 78
+           C286 92 308 128 304 168
+           M168 210
+           C198 198 228 206 248 230
+           C268 206 298 198 328 210"
+      />
+    </g>
+
+    <g class="neural-hero__net">
+      {
+        edges.map(([a, b], i) => {
+          const from = nodes[a];
+          const to = nodes[b];
+          return (
+            <line
+              class={`neural-hero__edge neural-hero__edge--${i % 4}`}
+              x1={from.x}
+              y1={from.y}
+              x2={to.x}
+              y2={to.y}
+              stroke="var(--brand)"
+              stroke-opacity="0.35"
+              stroke-width="1.15"
+            />
+          );
+        })
+      }
+      {
+        nodes.map((n, i) => (
+          <circle
+            class={`neural-hero__node neural-hero__node--${i % 5}`}
+            cx={n.x}
+            cy={n.y}
+            r={n.r}
+            fill={i % 3 === 0 ? 'var(--action)' : 'var(--brand)'}
+            fill-opacity={i % 3 === 0 ? '0.55' : '0.45'}
+          />
+        ))
+      }
+      <!-- pulse dots ride a few edges -->
+      <circle class="neural-hero__pulse neural-hero__pulse--a" r="2.4" fill="var(--action)" />
+      <circle class="neural-hero__pulse neural-hero__pulse--b" r="2.2" fill="var(--brand)" />
+      <circle class="neural-hero__pulse neural-hero__pulse--c" r="2" fill="var(--action)" />
+    </g>
+  </svg>
+</div>
+
+<style>
+  .neural-hero {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .neural-hero__svg {
+    width: min(58vw, 34rem);
+    height: auto;
+    margin-right: clamp(0rem, 4vw, 3rem);
+    margin-top: 1rem;
+    opacity: 0.92;
+    animation: neural-drift 22s ease-in-out infinite alternate;
+  }
+
+  .neural-hero__silhouette {
+    opacity: 0.9;
+  }
+
+  .neural-hero__edge {
+    stroke-dasharray: 6 10;
+    animation: neural-edge-flow 7s linear infinite;
+  }
+
+  .neural-hero__edge--1 {
+    animation-duration: 9s;
+    animation-direction: reverse;
+    stroke: var(--action);
+    stroke-opacity: 0.28;
+  }
+
+  .neural-hero__edge--2 {
+    animation-duration: 11s;
+    stroke-opacity: 0.3;
+  }
+
+  .neural-hero__edge--3 {
+    animation-duration: 8.5s;
+    animation-direction: reverse;
+    stroke: var(--action);
+    stroke-opacity: 0.25;
+  }
+
+  .neural-hero__node {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: neural-node-glow 4.5s ease-in-out infinite;
+  }
+
+  .neural-hero__node--1 {
+    animation-delay: 0.4s;
+    animation-duration: 5.2s;
+  }
+
+  .neural-hero__node--2 {
+    animation-delay: 1.1s;
+    animation-duration: 3.8s;
+  }
+
+  .neural-hero__node--3 {
+    animation-delay: 1.8s;
+    animation-duration: 6s;
+  }
+
+  .neural-hero__node--4 {
+    animation-delay: 0.7s;
+    animation-duration: 4.2s;
+  }
+
+  .neural-hero__pulse {
+    opacity: 0.85;
+    offset-rotate: 0deg;
+  }
+
+  .neural-hero__pulse--a {
+    offset-path: path('M248 72 L230 140 L270 198 L240 275');
+    animation: neural-pulse-ride 6.5s ease-in-out infinite;
+  }
+
+  .neural-hero__pulse--b {
+    offset-path: path('M188 98 L142 148 L108 210 L150 268 L200 330');
+    animation: neural-pulse-ride 8s ease-in-out infinite;
+    animation-delay: 1.2s;
+  }
+
+  .neural-hero__pulse--c {
+    offset-path: path('M312 96 L318 152 L350 220 L360 320');
+    animation: neural-pulse-ride 7.2s ease-in-out infinite;
+    animation-delay: 2.4s;
+  }
+
+  @keyframes neural-drift {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(-1.2%, 1.4%, 0) scale(1.02);
+    }
+  }
+
+  @keyframes neural-edge-flow {
+    to {
+      stroke-dashoffset: -64;
+    }
+  }
+
+  @keyframes neural-node-glow {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.18);
+    }
+  }
+
+  @keyframes neural-pulse-ride {
+    0% {
+      offset-distance: 0%;
+      opacity: 0;
+    }
+    12% {
+      opacity: 0.9;
+    }
+    88% {
+      opacity: 0.9;
+    }
+    100% {
+      offset-distance: 100%;
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 719px) {
+    .neural-hero {
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .neural-hero__svg {
+      width: min(92vw, 26rem);
+      margin: 0 auto;
+      margin-top: 0.5rem;
+      opacity: 0.38;
+    }
+
+    /* fewer busy pulses on small screens */
+    .neural-hero__pulse--c {
+      display: none;
+    }
+
+    .neural-hero__edge--2,
+    .neural-hero__edge--3 {
+      animation: none;
+      stroke-dasharray: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .neural-hero__svg,
+    .neural-hero__edge,
+    .neural-hero__node,
+    .neural-hero__pulse {
+      animation: none !important;
+    }
+
+    .neural-hero__edge {
+      stroke-dasharray: none;
+    }
+
+    .neural-hero__pulse {
+      display: none;
+    }
+
+    .neural-hero__node {
+      opacity: 0.65;
+    }
+  }
+</style>
