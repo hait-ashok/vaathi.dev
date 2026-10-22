@@ -1,0 +1,246 @@
+---
+/**
+ * Editorial hero visual: curiosity → understanding → growth.
+ * Sparse knowledge-path / constellation — not a neural or medical diagram.
+ * Decorative only; brand copy in the hero column stays primary.
+ */
+---
+
+<div class="learn-path-hero" aria-hidden="true">
+  <svg
+    class="learn-path-hero__svg"
+    viewBox="0 0 440 400"
+    xmlns="http://www.w3.org/2000/svg"
+    focusable="false"
+  >
+    <defs>
+      <linearGradient id="learn-path-wash" x1="20%" y1="10%" x2="90%" y2="90%">
+        <stop offset="0%" stop-color="var(--teal-soft)" stop-opacity="0.65" />
+        <stop offset="100%" stop-color="var(--cobalt-soft)" stop-opacity="0.35" />
+      </linearGradient>
+    </defs>
+
+    <!-- Quiet field (mist wash) -->
+    <ellipse
+      class="learn-path-hero__field"
+      cx="250"
+      cy="200"
+      rx="170"
+      ry="150"
+      fill="url(#learn-path-wash)"
+      opacity="0.55"
+    />
+
+    <!-- Soft secondary idea dots (constellation, sparse) -->
+    <g class="learn-path-hero__stars" fill="var(--brand)" fill-opacity="0.2">
+      <circle cx="92" cy="88" r="2" />
+      <circle cx="358" cy="72" r="1.75" />
+      <circle cx="400" cy="180" r="2" />
+      <circle cx="78" cy="260" r="1.5" />
+      <circle cx="380" cy="300" r="1.75" />
+      <circle cx="120" cy="340" r="1.5" />
+    </g>
+
+    <!-- Faint cross-links (knowledge graph, not a mesh) -->
+    <g
+      class="learn-path-hero__graph"
+      fill="none"
+      stroke="var(--rule)"
+      stroke-width="1"
+      stroke-opacity="0.9"
+    >
+      <path d="M168 118 L210 168" />
+      <path d="M292 128 L250 168" />
+      <path d="M210 168 L250 228" />
+      <path d="M292 128 L318 210" />
+      <path d="M168 118 L140 200" />
+    </g>
+
+    <!-- Primary learning path -->
+    <path
+      class="learn-path-hero__route"
+      d="M120 300 C150 250, 170 200, 210 168 C240 140, 260 110, 300 96"
+      fill="none"
+      stroke="var(--brand)"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-opacity="0.55"
+    />
+
+    <!-- Traveling accent along the path (curiosity lighting the way) -->
+    <circle class="learn-path-hero__traveler" r="3.25" fill="var(--action)" fill-opacity="0.7" />
+
+    <!-- Stage 1 — curiosity -->
+    <g class="learn-path-hero__stage learn-path-hero__stage--1" transform="translate(120 300)">
+      <circle r="18" fill="var(--surface-quiet)" stroke="var(--brand)" stroke-width="1.25" stroke-opacity="0.45" />
+      <circle r="5" fill="var(--brand)" fill-opacity="0.55" />
+      <text class="learn-path-hero__label" x="0" y="36" text-anchor="middle">curiosity</text>
+    </g>
+
+    <!-- Stage 2 — understanding -->
+    <g class="learn-path-hero__stage learn-path-hero__stage--2" transform="translate(210 168)">
+      <circle r="22" fill="var(--teal-soft)" fill-opacity="0.85" stroke="var(--brand)" stroke-width="1.25" stroke-opacity="0.55" />
+      <circle r="6" fill="var(--brand)" fill-opacity="0.65" />
+      <!-- small idea triad -->
+      <circle cx="-28" cy="-8" r="3.5" fill="var(--brand)" fill-opacity="0.35" />
+      <circle cx="30" cy="-14" r="3.5" fill="var(--action)" fill-opacity="0.4" />
+      <circle cx="18" cy="26" r="3" fill="var(--brand)" fill-opacity="0.3" />
+      <text class="learn-path-hero__label" x="0" y="42" text-anchor="middle">understanding</text>
+    </g>
+
+    <!-- Stage 3 — growth -->
+    <g class="learn-path-hero__stage learn-path-hero__stage--3" transform="translate(300 96)">
+      <circle r="16" fill="var(--cobalt-soft)" fill-opacity="0.9" stroke="var(--action)" stroke-width="1.25" stroke-opacity="0.45" />
+      <circle r="4.5" fill="var(--action)" fill-opacity="0.65" />
+      <!-- open mark: path continues -->
+      <path
+        d="M22 -4 L34 -12 M22 -4 L30 6"
+        fill="none"
+        stroke="var(--action)"
+        stroke-width="1.25"
+        stroke-linecap="round"
+        stroke-opacity="0.55"
+      />
+      <text class="learn-path-hero__label" x="0" y="34" text-anchor="middle">growth</text>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .learn-path-hero {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .learn-path-hero__svg {
+    width: min(52vw, 28rem);
+    height: auto;
+    margin-right: clamp(0.5rem, 5vw, 3.5rem);
+    opacity: 0.95;
+  }
+
+  .learn-path-hero__label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    fill: var(--ink);
+    fill-opacity: 0.55;
+  }
+
+  .learn-path-hero__route {
+    stroke-dasharray: 8 12;
+    animation: learn-path-draw 14s linear infinite;
+  }
+
+  .learn-path-hero__traveler {
+    offset-path: path('M120 300 C150 250, 170 200, 210 168 C240 140, 260 110, 300 96');
+    offset-rotate: 0deg;
+    animation: learn-path-travel 9s ease-in-out infinite;
+  }
+
+  .learn-path-hero__stage {
+    animation: learn-path-breathe 7s ease-in-out infinite;
+  }
+
+  .learn-path-hero__stage--2 {
+    animation-delay: 1.4s;
+  }
+
+  .learn-path-hero__stage--3 {
+    animation-delay: 2.8s;
+  }
+
+  .learn-path-hero__field {
+    animation: learn-path-wash 18s ease-in-out infinite alternate;
+  }
+
+  @keyframes learn-path-draw {
+    to {
+      stroke-dashoffset: -120;
+    }
+  }
+
+  @keyframes learn-path-travel {
+    0% {
+      offset-distance: 0%;
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.85;
+    }
+    90% {
+      opacity: 0.85;
+    }
+    100% {
+      offset-distance: 100%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes learn-path-breathe {
+    0%,
+    100% {
+      opacity: 0.88;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes learn-path-wash {
+    from {
+      opacity: 0.45;
+      transform: translate(0, 0);
+    }
+    to {
+      opacity: 0.62;
+      transform: translate(4px, -3px);
+    }
+  }
+
+  @media (max-width: 719px) {
+    .learn-path-hero {
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 0.25rem;
+    }
+
+    .learn-path-hero__svg {
+      width: min(88vw, 22rem);
+      margin: 0 auto;
+      opacity: 0.42;
+    }
+
+    .learn-path-hero__label {
+      font-size: 8px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .learn-path-hero__route,
+    .learn-path-hero__traveler,
+    .learn-path-hero__stage,
+    .learn-path-hero__field {
+      animation: none !important;
+    }
+
+    .learn-path-hero__route {
+      stroke-dasharray: none;
+    }
+
+    .learn-path-hero__traveler {
+      display: none;
+    }
+
+    .learn-path-hero__stage {
+      opacity: 1;
+    }
+  }
+</style>
