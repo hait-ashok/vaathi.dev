@@ -20,7 +20,9 @@ const pageTitle = title === 'vaathi.dev' ? title : `${title} · vaathi.dev`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/logo.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -33,7 +35,10 @@ const pageTitle = title === 'vaathi.dev' ? title : `${title} · vaathi.dev`;
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="site-shell site-header__inner">
-        <a class="site-wordmark" href="/">vaathi.dev</a>
+        <a class="site-wordmark" href="/">
+          <img class="site-wordmark__mark" src="/logo.svg" width="28" height="28" alt="" />
+          <span>vaathi.dev</span>
+        </a>
         <nav class="site-nav" aria-label="Primary">
           <a href="/learn">Learn</a>
           <a href="/about">About</a>

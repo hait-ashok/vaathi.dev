@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" role="img" aria-hidden="true">
+  <!-- Header mark — same language as favicon, slightly airier -->
+  <rect width="40" height="40" rx="9" fill="#0a5c63"/>
+  <circle cx="20" cy="9.5" r="2.6" fill="#1b4dff"/>
+  <path
+    d="M10 14.5 L20 31.5 L30 14.5"
+    stroke="#f0f5f8"
+    stroke-width="3.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M12.6 15.4 L20 28.5 L27.4 15.4"
+    stroke="#d4ecee"
+    stroke-width="1.25"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.5"
+  />
+</svg>

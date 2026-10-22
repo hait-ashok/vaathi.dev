@@ -95,6 +95,9 @@ button:focus-visible,
 }
 
 .site-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-family: var(--font-display);
   font-size: 1.25rem;
   font-weight: 600;
@@ -103,8 +106,20 @@ button:focus-visible,
   letter-spacing: -0.02em;
 }
 
+.site-wordmark__mark {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  border-radius: 0.35rem;
+}
+
 .site-wordmark:hover {
   color: var(--brand);
+  text-decoration: none;
+}
+
+.site-wordmark:hover span {
   text-decoration: underline;
 }
 
