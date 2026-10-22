@@ -39,6 +39,29 @@ Static output lands in `dist/`.
 - Frontmatter: `title`, `description`, `order`, `path`, `minutes`, `draft`
 - Design tokens: `src/styles/tokens.css` (mist / teal / cobalt)
 
-## Deploy (later)
+## Deploy (AWS)
 
-Not configured yet. When ready: private S3 + CloudFront (OAC), custom domain owned by H&A, CI from a GitHub remote. See Project store docs: `implementation-tasks.md` Phases 4–6.
+**Canonical URL:** `https://vaathi.dev` (`site` in `astro.config.mjs`). `www` redirects to apex (CloudFront Function in the infra repo).
+
+Infrastructure is **Terraform in a separate repo:** `~/vaathi-dev-infra` (GitHub: `hait-ashok/vaathi-dev-infra` when created). Architecture: Project store `docs/aws-infra-architecture.md`.
+
+### CI (this repo)
+
+Workflow: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
+
+1. Apply infra; copy Terraform output `github_actions_vars` into this repo’s **Actions variables**:
+   - `AWS_REGION`
+   - `AWS_DEPLOY_ROLE_ARN`
+   - `AWS_S3_BUCKET`
+   - `AWS_CLOUDFRONT_DISTRIBUTION_ID`
+2. Push to `main` (or **Run workflow**). Actions builds `dist/`, syncs to S3 via **OIDC** (no long-lived keys), invalidates CloudFront.
+
+### Manual publish (break-glass)
+
+```bash
+npm ci && npm run build
+aws s3 sync dist/ s3://BUCKET --delete
+aws cloudfront create-invalidation --distribution-id ID --paths "/*"
+```
+
+Use bucket / distribution IDs from `terraform output` in `~/vaathi-dev-infra`.
