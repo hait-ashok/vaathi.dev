@@ -1,81 +1,226 @@
 ---
 /**
- * Goal → context → constraints → format — prompt briefing structure.
+ * Prompting as clear communication: vague ask → Goal → Context → Constraints → Format.
+ * One composition; sequential reveal (not bouncing bars).
  */
 ---
 
 <figure class="diagram diagram--anim">
   <figcaption class="diagram__caption">
     <span class="mono-label">Animation</span>
-    A clear prompt stacks goal, context, constraints, and format
+    From a vague ask to a clear brief — four parts, one idea at a time
   </figcaption>
   <div class="diagram__frame">
     <svg
       class="diagram__svg"
-      viewBox="0 0 520 280"
+      viewBox="0 0 640 360"
+      xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-labelledby="prompt-title prompt-desc"
     >
-      <title id="prompt-title">Prompt structure</title>
+      <title id="prompt-title">Building a clear prompt</title>
       <desc id="prompt-desc">
-        Four stacked layers labeled Goal, Context, Constraints, and Format light up in sequence to
-        show how a brief is built.
+        A vague request, help with my resume, transforms into a clear brief with four parts: Goal,
+        Context, Constraints, and Format. Each part appears in order with a short example line.
       </desc>
 
-      <rect x="40" y="24" width="440" height="232" rx="4" fill="var(--surface-quiet)" stroke="var(--rule)" />
+      <rect x="12" y="12" width="616" height="336" rx="4" fill="var(--surface-quiet)" stroke="var(--rule)" />
 
-      <g class="prompt-layer prompt-layer--1" transform="translate(70,48)">
-        <rect width="380" height="42" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.5" />
-        <text class="diagram-num" x="14" y="18" fill="var(--brand)">1</text>
-        <text class="diagram-label" x="40" y="27" fill="var(--ink)">Goal — what you want done</text>
+      <!-- Vague ask -->
+      <g class="ps-vague">
+        <text class="diagram-hint" x="36" y="42" fill="var(--ink)" style="letter-spacing: 0.08em; text-transform: uppercase; font-size: 10px;">
+          Vague
+        </text>
+        <rect x="36" y="52" width="220" height="44" rx="3" fill="var(--mist-soft)" stroke="var(--rule)" stroke-width="1.25" />
+        <text x="52" y="80" fill="var(--ink)" fill-opacity="0.55" style="font-family: var(--font-body); font-size: 15px; font-style: italic;">
+          “help with my resume”
+        </text>
       </g>
-      <g class="prompt-layer prompt-layer--2" transform="translate(70,102)">
-        <rect width="380" height="42" rx="3" fill="var(--cobalt-soft)" stroke="var(--action)" stroke-width="1.35" stroke-opacity="0.55" />
-        <text class="diagram-num" x="14" y="18" fill="var(--action)">2</text>
-        <text class="diagram-label" x="40" y="27" fill="var(--ink)">Context — what the model must know</text>
+
+      <!-- Arrow vague → clear -->
+      <path
+        class="ps-bridge"
+        d="M270 74 H318"
+        fill="none"
+        stroke="var(--brand)"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        marker-end="url(#ps-arrow)"
+      />
+      <text class="diagram-hint" x="294" y="64" text-anchor="middle" fill="var(--brand)">brief</text>
+
+      <!-- Clear brief panel -->
+      <text class="diagram-hint" x="340" y="42" fill="var(--brand)" style="letter-spacing: 0.08em; text-transform: uppercase; font-size: 10px;">
+        Clear brief
+      </text>
+      <rect x="340" y="52" width="268" height="44" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.35" stroke-opacity="0.45" />
+      <text x="356" y="80" fill="var(--ink)" style="font-family: var(--font-body); font-size: 14px;">
+        Same ask — four clear parts
+      </text>
+
+      <!-- Step cards -->
+      <g class="ps-step ps-step--1">
+        <rect x="36" y="120" width="568" height="48" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.75" />
+        <circle cx="64" cy="144" r="14" fill="var(--surface-quiet)" stroke="var(--brand)" stroke-width="1.5" />
+        <text x="64" y="149" text-anchor="middle" fill="var(--brand)" style="font-family: var(--font-mono); font-size: 12px; font-weight: 500;">1</text>
+        <text x="92" y="138" fill="var(--ink)" style="font-family: var(--font-display); font-size: 16px; font-weight: 600;">Goal</text>
+        <text x="92" y="158" fill="var(--ink)" fill-opacity="0.75" style="font-family: var(--font-body); font-size: 13px;">
+          Draft a 3-bullet summary for a hiring manager
+        </text>
       </g>
-      <g class="prompt-layer prompt-layer--3" transform="translate(70,156)">
-        <rect width="380" height="42" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.35" />
-        <text class="diagram-num" x="14" y="18" fill="var(--brand)">3</text>
-        <text class="diagram-label" x="40" y="27" fill="var(--ink)">Constraints — limits and must-avoids</text>
+
+      <g class="ps-step ps-step--2">
+        <rect x="36" y="180" width="568" height="48" rx="3" fill="var(--cobalt-soft)" stroke="var(--action)" stroke-width="1.5" stroke-opacity="0.55" />
+        <circle cx="64" cy="204" r="14" fill="var(--surface-quiet)" stroke="var(--action)" stroke-width="1.5" stroke-opacity="0.65" />
+        <text x="64" y="209" text-anchor="middle" fill="var(--action)" style="font-family: var(--font-mono); font-size: 12px; font-weight: 500;">2</text>
+        <text x="92" y="198" fill="var(--ink)" style="font-family: var(--font-display); font-size: 16px; font-weight: 600;">Context</text>
+        <text x="92" y="218" fill="var(--ink)" fill-opacity="0.75" style="font-family: var(--font-body); font-size: 13px;">
+          Career switcher · pasting bullet notes below
+        </text>
       </g>
-      <g class="prompt-layer prompt-layer--4" transform="translate(70,210)">
-        <rect width="380" height="42" rx="3" fill="var(--mist-deep)" stroke="var(--ink)" stroke-width="1.25" />
-        <text class="diagram-num" x="14" y="18" fill="var(--ink)">4</text>
-        <text class="diagram-label" x="40" y="27" fill="var(--ink)">Format — how the answer should look</text>
+
+      <g class="ps-step ps-step--3">
+        <rect x="36" y="240" width="568" height="48" rx="3" fill="var(--teal-soft)" stroke="var(--brand)" stroke-width="1.5" />
+        <circle cx="64" cy="264" r="14" fill="var(--surface-quiet)" stroke="var(--brand)" stroke-width="1.5" />
+        <text x="64" y="269" text-anchor="middle" fill="var(--brand)" style="font-family: var(--font-mono); font-size: 12px; font-weight: 500;">3</text>
+        <text x="92" y="258" fill="var(--ink)" style="font-family: var(--font-display); font-size: 16px; font-weight: 600;">Constraints</text>
+        <text x="92" y="278" fill="var(--ink)" fill-opacity="0.75" style="font-family: var(--font-body); font-size: 13px;">
+          Under 80 words · plain language · no fluff
+        </text>
       </g>
+
+      <g class="ps-step ps-step--4">
+        <rect x="36" y="300" width="568" height="36" rx="3" fill="var(--mist-deep)" stroke="var(--ink)" stroke-width="1.25" stroke-opacity="0.45" />
+        <circle cx="64" cy="318" r="12" fill="var(--surface-quiet)" stroke="var(--ink)" stroke-width="1.25" stroke-opacity="0.5" />
+        <text x="64" y="322" text-anchor="middle" fill="var(--ink)" style="font-family: var(--font-mono); font-size: 11px; font-weight: 500;">4</text>
+        <text x="92" y="314" fill="var(--ink)" style="font-family: var(--font-display); font-size: 15px; font-weight: 600;">Format</text>
+        <text x="168" y="314" fill="var(--ink)" fill-opacity="0.75" style="font-family: var(--font-body); font-size: 13px;">
+          Bullets only · no intro paragraph
+        </text>
+      </g>
+
+      <!-- highlight traveler down the steps -->
+      <rect class="ps-cursor" x="28" y="120" width="4" height="48" rx="2" fill="var(--action)" />
+
+      <defs>
+        <marker id="ps-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6" fill="none" stroke="var(--brand)" stroke-width="1.25" />
+        </marker>
+      </defs>
     </svg>
   </div>
+  <p class="diagram__legend">
+    Clarity beats cleverness: say the job, give context, set limits, ask for a shape.
+  </p>
 </figure>
 
 <style>
-  .prompt-layer {
-    animation: prompt-stack 5.6s ease-in-out infinite;
+  .ps-step {
+    opacity: 0.28;
+    animation: ps-reveal 10s ease-in-out infinite;
   }
-  .prompt-layer--2 {
-    animation-delay: 0.7s;
+  .ps-step--1 {
+    animation-delay: 0s;
   }
-  .prompt-layer--3 {
-    animation-delay: 1.4s;
+  .ps-step--2 {
+    animation-delay: 2.2s;
   }
-  .prompt-layer--4 {
-    animation-delay: 2.1s;
+  .ps-step--3 {
+    animation-delay: 4.4s;
   }
-  @keyframes prompt-stack {
+  .ps-step--4 {
+    animation-delay: 6.6s;
+  }
+
+  .ps-cursor {
+    animation: ps-cursor 10s ease-in-out infinite;
+  }
+
+  .ps-vague {
+    animation: ps-vague 10s ease-in-out infinite;
+  }
+
+  .ps-bridge {
+    stroke-dasharray: 4 6;
+    animation: ps-bridge 10s linear infinite;
+  }
+
+  @keyframes ps-reveal {
     0%,
-    100% {
-      opacity: 0.7;
-      transform: translateY(0);
+    8% {
+      opacity: 0.28;
     }
-    50% {
+    14%,
+    88% {
       opacity: 1;
-      transform: translateY(-2px);
+    }
+    96%,
+    100% {
+      opacity: 0.28;
     }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .prompt-layer {
-      animation: none !important;
+
+  @keyframes ps-cursor {
+    0%,
+    10% {
+      transform: translateY(0);
+      opacity: 0.9;
+    }
+    25%,
+    32% {
+      transform: translateY(60px);
+    }
+    45%,
+    52% {
+      transform: translateY(120px);
+    }
+    65%,
+    78% {
+      transform: translateY(180px);
+      opacity: 0.9;
+    }
+    90%,
+    100% {
+      transform: translateY(180px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes ps-vague {
+    0%,
+    12% {
       opacity: 1;
+    }
+    30%,
+    100% {
+      opacity: 0.55;
+    }
+  }
+
+  @keyframes ps-bridge {
+    to {
+      stroke-dashoffset: -40;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ps-step,
+    .ps-cursor,
+    .ps-vague,
+    .ps-bridge {
+      animation: none !important;
+    }
+    .ps-step {
+      opacity: 1;
+    }
+    .ps-cursor {
+      display: none;
+    }
+    .ps-bridge {
+      stroke-dasharray: none;
+    }
+    .ps-vague {
+      opacity: 0.7;
     }
   }
 </style>
