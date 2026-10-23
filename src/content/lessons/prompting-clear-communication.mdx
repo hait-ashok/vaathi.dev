@@ -7,7 +7,66 @@ minutes: 15
 draft: false
 ---
 
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
 import PromptStructureAnim from '../../components/diagrams/PromptStructureAnim.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">
+    A good prompt is a clear brief: what you want, what the model needs to know, the limits, and the shape of the answer.
+  </Beat>
+  <Beat label="From your world">
+    It is like texting a colleague who was not in the meeting. They only know the words you send.
+  </Beat>
+  <Beat label="One example">
+    “Help with my resume” leaves everything open. “Rewrite these three bullets for a school-admin job. Under twenty words each. Plain tone. Bullets only.” can be used.
+  </Beat>
+  <Beat label="Watch-out">
+    A clever one-liner is weaker than a second try that says what was wrong with the first draft.
+  </Beat>
+  <Beat label="Try this">
+    Rewrite one vague ask into a goal, the background, the limits, and the format. Run both and keep the one you would actually use.
+  </Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">
+    A prompt is the request payload: instructions plus context. Missing context moves quality more than hunting for magic phrasing.
+  </Beat>
+  <Beat label="From your world">
+    It behaves like an under-specified ticket. The service still returns a success and a plausible body.
+  </Beat>
+  <Beat label="One example">
+    Put the source text in the request and say “only use this.” When the output feeds another step, ask for a shape you can parse — named fields, not a paragraph.
+  </Beat>
+  <Beat label="Watch-out">
+    The model fills gaps. If the spec is silent, it invents. Keep the prompt next to the output when you debug a bad answer.
+  </Beat>
+  <Beat label="Try this">
+    Split a vague internal request into goal, context, constraints, and output shape. Mark which field was missing the last time the answer was wrong.
+  </Beat>
+</Lens>
+
+<Lens persona="sales" relevance="start">
+  <Beat label="In one sentence">
+    The way you ask is the way the draft comes back. Name the customer, the limit, and the format, or you will spend the hour editing.
+  </Beat>
+  <Beat label="From your world">
+    Brief it the way you brief a new teammate before a call: who it is for, what you may claim, how long, and which number to leave blank.
+  </Beat>
+  <Beat label="One example">
+    “Write a follow-up” is a blank page. “Write 120 words to a clinic manager. We showed scheduling, not diagnosis. No medical claims. Three short paragraphs. End with one question.” is a brief.
+  </Beat>
+  <Beat label="Watch-out">
+    Keep private customer notes out of a tool your company has not approved. Do not let the draft invent a discount, a feature, or a compliance claim.
+  </Beat>
+  <Beat label="Try this">
+    Rewrite your last “help me email them” into who they are, what you may say, what you must not say, and the length. Compare the two drafts before you send either.
+  </Beat>
+</Lens>
+
+<LessonBody>
 
 Good prompting is less spellcasting and more **clear communication**. You’re briefing a fast, literal collaborator that doesn’t share your unspoken context.
 
@@ -43,3 +102,5 @@ Prompting skill is briefing skill. Clarity beats cleverness.
 
 Rewrite a vague ask (“help with my resume”) into goal + context + constraints + format. Run both versions and compare which output you’d actually use.
 </div>
+
+</LessonBody>

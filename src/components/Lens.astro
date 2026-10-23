@@ -1,0 +1,17 @@
+---
+import type { LensId, Relevance } from '../lib/lenses';
+import { LENSES } from '../lib/lenses';
+
+interface Props {
+  persona: LensId;
+  relevance?: Relevance;
+}
+
+const { persona, relevance = 'start' } = Astro.props;
+const lens = LENSES.find((item) => item.id === persona);
+---
+
+<aside class="lens-card" data-lens={persona} data-relevance={relevance} aria-label={lens?.label}>
+  <p class="mono-label">For you · {lens?.label}</p>
+  <slot />
+</aside>

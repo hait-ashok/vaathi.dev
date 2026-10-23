@@ -1,0 +1,17 @@
+---
+import { LENSES } from '../lib/lenses';
+---
+
+<div class="lens-switch" data-lens-switch>
+  <span class="mono-label" id="lens-switch-label">Read this as</span>
+  <div class="lens-switch__choices" role="radiogroup" aria-labelledby="lens-switch-label">
+    {
+      LENSES.map((lens) => (
+        <label class="lens-switch__choice">
+          <input type="radio" name="lens" value={lens.id} data-lens-choice={lens.id} />
+          <span>{lens.label}</span>
+        </label>
+      ))
+    }
+  </div>
+</div>

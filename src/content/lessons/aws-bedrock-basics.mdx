@@ -7,6 +7,66 @@ minutes: 14
 draft: false
 ---
 
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">
+    Bedrock is Amazon’s doorway for apps to call large models on AWS. Claude is a family of models and products. They can meet. They are not the same thing.
+  </Beat>
+  <Beat label="From your world">
+    Picture a food court and one restaurant. Bedrock is the court, on AWS. Claude is one restaurant that might have a counter there — and also its own shop on the street.
+  </Beat>
+  <Beat label="One example">
+    Chatting on claude.ai is the restaurant’s own shop. A company app that calls a model through AWS is using the food court. Claude might be one counter, if that account turned it on.
+  </Beat>
+  <Beat label="Watch-out">
+    You do not need an AWS account to understand this. Turning a model on can spend money. This lesson does not ask you to.
+  </Beat>
+  <Beat label="Try this">
+    Finish the pair: chatting on Anthropic’s site is the Claude product. A company app calling a model through AWS is using Bedrock, the platform.
+  </Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">
+    Bedrock is a managed AWS API that invokes foundation models under IAM, quotas, and the account bill. It is a platform, not the model vendor’s chat product.
+  </Beat>
+  <Beat label="From your world">
+    It is another AWS data-plane API: caller role, resource permission, region, quota, CloudTrail. The model id is a parameter. The platform is the API.
+  </Beat>
+  <Beat label="One example">
+    An app role with permission to invoke one model id. Change the model id and you still own auth, retries, and the prompt log. Claude on Bedrock is one model id. Anthropic’s own API is a different front door, with different keys.
+  </Beat>
+  <Beat label="Watch-out">
+    Enabling a model can incur usage. Region and whether prompts are logged are account settings. A consumer chat login is not IAM.
+  </Beat>
+  <Beat label="Try this">
+    Sketch one call: which role, which model id, what must stay in the account, and how a bad output would show up in logs.
+  </Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">
+    If a buyer says “we use Claude on AWS,” you can answer: Claude is the model. Bedrock is AWS’s door to that model and to others.
+  </Beat>
+  <Beat label="From your world">
+    It is the same split as “we run our CRM on AWS.” The product and the cloud are different boxes on the diagram, and often different signatures on the bill.
+  </Beat>
+  <Beat label="One example">
+    Their team might chat in Claude’s own app, or their engineers might call Claude through Bedrock. Same model family. Different contract, different admin, different invoice.
+  </Beat>
+  <Beat label="Watch-out">
+    Bedrock is not Claude. Buying AWS does not include Claude. You cannot know which model their account has enabled.
+  </Beat>
+  <Beat label="Try this">
+    Say it in one breath: “Claude is Anthropic’s assistant. Bedrock is how some companies call it — and other models — from AWS.”
+  </Beat>
+</Lens>
+
+<LessonBody>
+
 **Amazon Bedrock** is an **AWS** service: a managed way for applications to call **foundation models** through AWS APIs, under an AWS account’s billing and permissions. It is a **cloud platform**, not an Anthropic product.
 
 You can finish this lesson **without** creating an AWS account, enabling models, or deploying anything.
@@ -53,3 +113,5 @@ Bedrock = **AWS’s managed model platform**. Claude = **Anthropic’s models/pr
 
 Fill in: “If I chat on Anthropic’s site I’m using ____. If my company’s AWS app calls a model through Bedrock I’m using ____.” (Answers: Claude product surface / AWS Bedrock platform.)
 </div>
+
+</LessonBody>

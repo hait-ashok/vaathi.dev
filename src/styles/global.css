@@ -111,7 +111,7 @@ button:focus-visible,
   width: 1.75rem;
   height: 1.75rem;
   flex-shrink: 0;
-  border-radius: 0.35rem;
+  border-radius: 30%;
 }
 
 .site-wordmark:hover {
@@ -709,4 +709,233 @@ button:focus-visible,
 .diagram__swatch--ai {
   background: var(--cobalt-soft);
   border-color: var(--action);
+}
+
+/* Explanation lenses */
+.lens-picker {
+  padding-bottom: var(--space-5);
+}
+
+.lens-choices {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+}
+
+@media (min-width: 720px) {
+  .lens-choices {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.lens-choice {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--space-3);
+  row-gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-4);
+  background: var(--surface-quiet);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.lens-choice input {
+  grid-row: 1 / span 2;
+  justify-self: start;
+  align-self: start;
+  width: 1.15rem;
+  height: 1.15rem;
+  min-width: 1.15rem;
+  margin: 0.2rem 0 0;
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+
+.lens-choice:focus-within {
+  outline: var(--focus);
+  outline-offset: var(--focus-offset);
+}
+
+.lens-choice:has(input:checked) {
+  background: var(--teal-soft);
+  border-color: var(--brand);
+}
+
+.lens-choice__title {
+  grid-column: 2;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.lens-choice__blurb {
+  grid-column: 2;
+  color: color-mix(in srgb, var(--ink) 80%, transparent);
+  font-size: 1rem;
+}
+
+.lens-picker__pilots {
+  margin: 0;
+  max-width: 62ch;
+  color: color-mix(in srgb, var(--ink) 78%, transparent);
+}
+
+.lens-switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.lens-switch__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.lens-switch__choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0.45rem 0.8rem;
+  background: var(--surface-quiet);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lens-switch__choice input {
+  flex: 0 0 auto;
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+
+.lens-switch__choice:focus-within {
+  outline: var(--focus);
+  outline-offset: var(--focus-offset);
+}
+
+.lens-switch__choice:has(input:checked) {
+  background: var(--teal-soft);
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.lens-marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  margin-top: 0.35rem;
+}
+
+html[data-lens-ready] .lens-mark {
+  display: none;
+}
+
+html[data-lens-ready][data-lens='new'] .lens-mark[data-lens='new'],
+html[data-lens-ready][data-lens='it'] .lens-mark[data-lens='it'],
+html[data-lens-ready][data-lens='sales'] .lens-mark[data-lens='sales'] {
+  display: inline;
+}
+
+.lens-mark {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lens-mark[data-relevance='start'] {
+  color: var(--brand);
+}
+
+.lens-mark[data-relevance='useful'] {
+  color: color-mix(in srgb, var(--ink) 70%, transparent);
+}
+
+.lens-mark[data-relevance='skim'] {
+  color: color-mix(in srgb, var(--ink) 50%, transparent);
+}
+
+.lens-unframed {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  margin: 0 0 var(--space-4);
+  max-width: var(--measure);
+}
+
+.lesson-article:has(.lens-card) .lens-unframed {
+  display: none;
+}
+
+.lens-unframed__hint {
+  color: color-mix(in srgb, var(--ink) 75%, transparent);
+}
+
+html[data-lens-ready] .lens-card {
+  display: none;
+}
+
+html[data-lens-ready][data-lens='new'] .lens-card[data-lens='new'],
+html[data-lens-ready][data-lens='it'] .lens-card[data-lens='it'],
+html[data-lens-ready][data-lens='sales'] .lens-card[data-lens='sales'] {
+  display: block;
+}
+
+.lens-card {
+  margin: 0 0 var(--space-5);
+  padding: var(--space-4);
+  max-width: var(--measure);
+  background: var(--mist-soft);
+  border-left: 3px solid var(--brand);
+}
+
+.lens-card > .mono-label {
+  display: block;
+  margin-bottom: var(--space-3);
+  color: var(--brand);
+}
+
+.lens-beat + .lens-beat {
+  margin-top: var(--space-3);
+}
+
+.lens-beat .mono-label {
+  display: block;
+  margin: 0 0 var(--space-1);
+  color: var(--brand);
+}
+
+.lens-beat__body :first-child {
+  margin-top: 0;
+}
+
+.lens-beat__body :last-child {
+  margin-bottom: 0;
+}
+
+html[data-lens-ready] .lesson-prose.is-skim:not(.is-open) .lesson-body {
+  display: none;
+}
+
+.lens-expand-row {
+  margin: var(--space-4) 0 0;
+  max-width: var(--measure);
+}
+
+.lens-expand-row button[hidden] {
+  display: none;
 }
