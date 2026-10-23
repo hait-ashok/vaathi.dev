@@ -17,21 +17,7 @@ const pageTitle = title === 'vaathi.dev' ? title : `${title} · vaathi.dev`;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <script is:inline>
-      (function () {
-        try {
-          var allowed = { new: 1, it: 1, sales: 1 };
-          var q = new URLSearchParams(location.search).get('lens');
-          var stored = null;
-          try {
-            stored = localStorage.getItem('vaathi.lens');
-          } catch (e) {}
-          var lens = q && allowed[q] ? q : stored && allowed[stored] ? stored : 'new';
-          document.documentElement.setAttribute('data-lens', lens);
-          document.documentElement.setAttribute('data-lens-ready', 'ready');
-        } catch (e) {}
-      })();
-    </script>
+    <script is:inline src="/lens.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
@@ -87,23 +73,5 @@ const pageTitle = title === 'vaathi.dev' ? title : `${title} · vaathi.dev`;
         </div>
       </div>
     </footer>
-    <script is:inline>
-      (function () {
-        var lens = document.documentElement.getAttribute('data-lens') || 'new';
-        document.querySelectorAll('[data-lens-choice]').forEach(function (input) {
-          input.checked = input.value === lens;
-        });
-        var card = document.querySelector('.lens-card[data-lens="' + lens + '"]');
-        if (card && card.getAttribute('data-relevance') === 'skim') {
-          var prose = document.querySelector('.lesson-prose');
-          if (prose) prose.classList.add('is-skim');
-          var btn = document.querySelector('[data-lens-expand]');
-          if (btn) btn.hidden = false;
-        }
-      })();
-    </script>
-    <script>
-      import '../scripts/lens.ts';
-    </script>
   </body>
 </html>
