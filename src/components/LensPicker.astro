@@ -1,0 +1,41 @@
+---
+import { LENSES } from '../lib/lenses';
+
+const pilots = [
+  { href: '/learn/foundations/what-ai-means', label: 'What “AI” usually means' },
+  { href: '/learn/foundations/prompting-clear-communication', label: 'Prompting as clear communication' },
+  { href: '/learn/foundations/aws-bedrock-basics', label: 'AWS Bedrock basics' },
+];
+---
+
+<section class="lens-picker" data-lens-picker aria-labelledby="lens-heading">
+  <p class="mono-label">How should this read</p>
+  <h2 id="lens-heading" class="section__title">Same lessons, three doors</h2>
+  <p class="section__lede">
+    Pick the background closest to yours. The facts stay the same. The opening, the example, and the
+    task change. Switch anytime — a link can carry the door you picked.
+  </p>
+  <div class="lens-choices" role="radiogroup" aria-labelledby="lens-heading">
+    {
+      LENSES.map((lens) => (
+        <label class="lens-choice">
+          <input type="radio" name="lens" value={lens.id} data-lens-choice={lens.id} />
+          <span class="lens-choice__title">{lens.label}</span>
+          <span class="lens-choice__blurb">{lens.blurb}</span>
+        </label>
+      ))
+    }
+  </div>
+  <p class="lens-picker__pilots">
+    Tailored frames are written on three lessons so far:
+    {
+      pilots.map((pilot, index) => (
+        <>
+          <a href={pilot.href}>{pilot.label}</a>
+          {index < pilots.length - 1 ? <span aria-hidden="true"> · </span> : null}
+        </>
+      ))
+    }
+    . Every lesson is marked Start here, Useful, or Skim for the door you picked.
+  </p>
+</section>

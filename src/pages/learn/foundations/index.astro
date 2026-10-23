@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LensPicker from '../../../components/LensPicker.astro';
+import { LENSES, RELEVANCE_LABEL, relevanceFor } from '../../../lib/lenses';
 import { getCollection } from 'astro:content';
 
 const lessons = (await getCollection('lessons'))
@@ -34,6 +36,8 @@ const totalMinutes = lessons.reduce((sum, l) => sum + l.data.minutes, 0);
       }
     </header>
 
+    <LensPicker />
+
     <ol class="lesson-list">
       {
         lessons.map((lesson) => (
@@ -42,7 +46,19 @@ const totalMinutes = lessons.reduce((sum, l) => sum + l.data.minutes, 0);
               <span class="lesson-list__num">
                 {String(lesson.data.order).padStart(2, '0')}
               </span>
-              <span class="lesson-list__title">{lesson.data.title}</span>
+              <span>
+                <span class="lesson-list__title">{lesson.data.title}</span>
+                <span class="lens-marks">
+                  {LENSES.map((lens) => {
+                    const relevance = relevanceFor(lesson.id, lens.id);
+                    return (
+                      <span class="lens-mark" data-lens={lens.id} data-relevance={relevance}>
+                        {RELEVANCE_LABEL[relevance]}
+                      </span>
+                    );
+                  })}
+                </span>
+              </span>
               <span class="lesson-list__meta">{lesson.data.minutes} min</span>
             </a>
           </li>

@@ -1,0 +1,14 @@
+---
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="lens-beat">
+  <p class="mono-label">{label}</p>
+  <div class="lens-beat__body">
+    <slot />
+  </div>
+</div>
