@@ -1064,6 +1064,40 @@ html[data-lens-ready] .lesson-prose.is-skim:not(.is-open) .lesson-body {
   color: #b33;
 }
 
+.sb-auth__msg {
+  margin: 0 0 var(--space-3);
+  font-size: 0.95rem;
+  color: color-mix(in srgb, var(--ink) 78%, transparent);
+}
+
+.sb-auth__msg[hidden] {
+  display: none;
+}
+
+.sb-auth__msg--notice {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 650;
+  line-height: 1.35;
+  color: var(--ink);
+  padding: var(--space-3) var(--space-4);
+  background: var(--teal-soft);
+  border-left: 4px solid var(--brand);
+  border-radius: var(--radius-sm);
+}
+
+.sb-auth__msg--error {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.35;
+  color: #8b1e1e;
+  padding: var(--space-3) var(--space-4);
+  background: #fff0f0;
+  border-left: 4px solid #c0392b;
+  border-radius: var(--radius-sm);
+}
+
 /* Animated pipeline */
 .sb-tabs {
   display: flex;

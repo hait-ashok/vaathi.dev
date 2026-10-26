@@ -9,11 +9,14 @@
     return (window.VAATHI_SANDBOX_API || '').replace(/\/?$/, '/');
   }
 
-  function setMsg(text, isError) {
+  function setMsg(text, tone) {
     var el = $('sandbox-auth-msg');
     if (!el) return;
     el.textContent = text || '';
-    el.className = 'sandbox-hint' + (isError ? ' sandbox-status--error' : '');
+    // tone: true/'error' | 'notice' | falsy (quiet hint)
+    var kind = tone === true || tone === 'error' ? 'error' : tone === 'notice' ? 'notice' : '';
+    el.className = 'sb-auth__msg' + (kind ? ' sb-auth__msg--' + kind : '');
+    el.hidden = !text;
   }
 
   function showPanel(name) {
@@ -109,12 +112,15 @@
       }
       state.email = email;
       if (data.status === 'approved') {
-        setMsg(data.message || 'Already approved. Create an account.');
+        setMsg(data.message || 'Already approved. Create an account.', 'notice');
         showPanel('register');
         var regEmail = $('auth-email');
         if (regEmail) regEmail.value = email;
       } else {
-        setMsg(data.message || 'Request submitted. Check back after approval.');
+        setMsg(
+          data.message || 'Request submitted. Check back after approval.',
+          'notice'
+        );
       }
     } catch (err) {
       setMsg(err.message || 'Could not submit request.', true);
