@@ -38,13 +38,75 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
 
       <aside class="sb-stage-note" aria-label="How runs are secured">
         <p>
-          <strong>Runs on Amazon Bedrock</strong> (Nova Micro, EU) through an AWS Lambda in your account —
-          not OpenAI, no API key to paste. The browser only talks to the sandbox API; the model stays on the AWS backbone.
+          <strong>Amazon Bedrock</strong> (Nova Micro, EU) via Lambda IAM — no OpenAI, no BYOK.
+          Sign in with <strong>Cognito</strong> (email + authenticator TOTP) before you Run.
         </p>
         <p>
-          Soft site cap ~$1/day (DynamoDB ledger) plus the AWS Budget on Bedrock. Cognito sign-in can gate this further next.
+          <strong>$1/day Bedrock cap</strong> for the whole site (DynamoDB ledger + AWS Budget on Amazon Bedrock).
         </p>
       </aside>
+
+      <p id="sandbox-auth-who" class="sandbox-hint" hidden></p>
+      <p>
+        <button id="sandbox-signout" class="site-cta site-cta--ghost" type="button" hidden>Sign out</button>
+      </p>
+
+      <div id="sandbox-auth" class="sandbox-setup sb-auth" aria-label="Sandbox sign-in">
+        <p id="sandbox-auth-msg" class="sandbox-hint" role="status"></p>
+
+        <div data-auth-panel="signin">
+          <h2 class="sb-explain__title">Sign in</h2>
+          <form id="auth-form-signin" class="sb-auth__form">
+            <label class="sandbox-label" for="auth-email-signin">Email</label>
+            <input id="auth-email-signin" class="sandbox-input" type="email" autocomplete="username" required />
+            <label class="sandbox-label" for="auth-password-signin">Password</label>
+            <input id="auth-password-signin" class="sandbox-input" type="password" autocomplete="current-password" required minlength="10" />
+            <button class="site-cta" type="submit">Sign in</button>
+          </form>
+          <p class="sandbox-hint">New here? <button type="button" class="sb-auth__link" data-auth-goto="register">Create an account</button></p>
+        </div>
+
+        <div data-auth-panel="register" hidden>
+          <h2 class="sb-explain__title">Create account</h2>
+          <form id="auth-form-register" class="sb-auth__form">
+            <label class="sandbox-label" for="auth-email">Email</label>
+            <input id="auth-email" class="sandbox-input" type="email" autocomplete="username" required />
+            <label class="sandbox-label" for="auth-password">Password</label>
+            <input id="auth-password" class="sandbox-input" type="password" autocomplete="new-password" required minlength="10" />
+            <button class="site-cta" type="submit">Register</button>
+          </form>
+          <p class="sandbox-hint"><button type="button" class="sb-auth__link" data-auth-goto="signin">Back to sign in</button></p>
+        </div>
+
+        <div data-auth-panel="confirm" hidden>
+          <h2 class="sb-explain__title">Confirm email</h2>
+          <form id="auth-form-confirm" class="sb-auth__form">
+            <label class="sandbox-label" for="auth-confirm-code">Confirmation code</label>
+            <input id="auth-confirm-code" class="sandbox-input" inputmode="numeric" autocomplete="one-time-code" required />
+            <button class="site-cta" type="submit">Confirm</button>
+          </form>
+        </div>
+
+        <div data-auth-panel="mfa-setup" hidden>
+          <h2 class="sb-explain__title">Set up authenticator</h2>
+          <p class="sandbox-hint">Add this secret in Google Authenticator / 1Password / Authy, then enter a 6-digit code.</p>
+          <p class="sb-auth__secret"><code id="auth-totp-secret"></code></p>
+          <form id="auth-form-mfa-setup" class="sb-auth__form">
+            <label class="sandbox-label" for="auth-mfa-setup-code">Authenticator code</label>
+            <input id="auth-mfa-setup-code" class="sandbox-input" inputmode="numeric" autocomplete="one-time-code" required pattern="[0-9]{6}" />
+            <button class="site-cta" type="submit">Verify &amp; continue</button>
+          </form>
+        </div>
+
+        <div data-auth-panel="mfa" hidden>
+          <h2 class="sb-explain__title">Authenticator code</h2>
+          <form id="auth-form-mfa" class="sb-auth__form">
+            <label class="sandbox-label" for="auth-mfa-code">6-digit code</label>
+            <input id="auth-mfa-code" class="sandbox-input" inputmode="numeric" autocomplete="one-time-code" required pattern="[0-9]{6}" />
+            <button class="site-cta" type="submit">Verify</button>
+          </form>
+        </div>
+      </div>
 
       <!-- Scenario tabs -->
       <nav class="sb-tabs" aria-label="Scenario picker">
@@ -227,7 +289,7 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
 
       <!-- Run + pipeline -->
       <div class="sandbox-bar">
-        <button id="sandbox-run" class="site-cta" type="button">▶ Run</button>
+        <button id="sandbox-run" class="site-cta" type="button" disabled>▶ Run</button>
         <span id="sandbox-status" class="sandbox-status"></span>
       </div>
       <div id="sandbox-pipeline" class="sb-pipeline" aria-live="polite"></div>
@@ -249,11 +311,11 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
 
         <h3>Security model</h3>
         <ul>
-          <li><strong>Amazon Bedrock</strong> (Nova Micro, EU inference profile) — invoked only from Lambda IAM role.</li>
-          <li><strong>No BYOK</strong> — nothing leaves the browser except the scenario payload to your Function URL.</li>
-          <li><strong>Origin allow-list</strong> — Lambda rejects requests that are not from vaathi.dev (or local dev).</li>
-          <li><strong>$1/day soft ledger</strong> + AWS Budget on Bedrock as the hard backstop.</li>
-          <li><strong>Next:</strong> Cognito + TOTP so only signed-in learners can run.</li>
+          <li><strong>Cognito</strong> — email sign-in + required authenticator (TOTP). Lambda rejects runs without a valid access token.</li>
+          <li><strong>Amazon Bedrock</strong> (Nova Micro, EU) — invoked only from the Lambda IAM role.</li>
+          <li><strong>No BYOK</strong> — no model keys in the browser.</li>
+          <li><strong>Origin allow-list</strong> — API only accepts vaathi.dev (and local dev).</li>
+          <li><strong>$1/day Bedrock</strong> — DynamoDB ledger on every run + AWS Budget <code>vaathi-practice-bedrock-daily</code> on the Bedrock service.</li>
         </ul>
 
         <h3>Lessons ↔ Sandbox</h3>
@@ -286,5 +348,7 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
   </section>
 
   <script is:inline src="/sandbox-config.js"></script>
+  <script is:inline src="/cognito-auth.js"></script>
+  <script is:inline src="/sandbox-auth-ui.js"></script>
   <script is:inline src="/sandbox.js"></script>
 </BaseLayout>

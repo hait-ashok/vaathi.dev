@@ -85,12 +85,28 @@
       payload.question = questionFor('agent');
     }
 
+    var token = (window.VaathiAuth && window.VaathiAuth.accessToken && window.VaathiAuth.accessToken()) || '';
+    if (!token) {
+      setStatus('Sign in with Cognito first (email + authenticator).', 'error');
+      addStep('error', 'Sign in required', 'Create an account, confirm email, then complete TOTP MFA.');
+      running = false;
+      if (btn) btn.disabled = false;
+      return;
+    }
+
     try {
       var resp = await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
         body: JSON.stringify(payload),
       });
+      if (resp.status === 401) {
+        if (window.VaathiAuth && window.VaathiAuth.clearSession) window.VaathiAuth.clearSession();
+        throw new Error('Session expired — sign in again.');
+      }
       var data = await resp.json().catch(function () { return {}; });
       if (!resp.ok) {
         throw new Error(data.error || ('HTTP ' + resp.status));
