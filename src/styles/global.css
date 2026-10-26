@@ -1198,23 +1198,27 @@ html[data-lens-ready] .lesson-prose.is-skim:not(.is-open) .lesson-body {
 
 .sb-auth__secret {
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   word-break: break-all;
   padding: var(--space-3);
   background: var(--surface-quiet);
   border: 1px solid var(--rule);
+  opacity: 0.85;
 }
 
 .sb-auth__qr {
-  display: inline-block;
-  margin: var(--space-3) 0;
-  padding: var(--space-3);
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: var(--space-4) 0 var(--space-3);
+  padding: var(--space-4);
   background: #fff;
   border: 1px solid var(--rule);
   border-radius: var(--radius-sm);
   line-height: 0;
 }
 
+.sb-auth__qr img,
 .sb-auth__qr svg {
   display: block;
   width: min(220px, 70vw);
