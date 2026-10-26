@@ -39,7 +39,7 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
       <aside class="sb-stage-note" aria-label="How runs are secured">
         <p>
           <strong>Amazon Bedrock</strong> (Nova Micro, EU) via Lambda IAM — no OpenAI, no BYOK.
-          Sign in with <strong>Cognito</strong> (email + authenticator TOTP) before you Run.
+          Access is <strong>request-only</strong>: submit your email, wait for approval, then register with Cognito (email + authenticator TOTP) before you Run.
         </p>
         <p>
           <strong>$1/day Bedrock cap</strong> for the whole site (DynamoDB ledger + AWS Budget on Amazon Bedrock).
@@ -54,7 +54,26 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
       <div id="sandbox-auth" class="sandbox-setup sb-auth" aria-label="Sandbox sign-in">
         <p id="sandbox-auth-msg" class="sandbox-hint" role="status"></p>
 
-        <div data-auth-panel="signin">
+        <div data-auth-panel="request">
+          <h2 class="sb-explain__title">Request access</h2>
+          <p class="sandbox-hint">
+            Sandbox is invite-gated so we can keep the shared Bedrock budget under control.
+            Enter your email — after approval you can create an account.
+          </p>
+          <form id="auth-form-request" class="sb-auth__form">
+            <label class="sandbox-label" for="auth-email-request">Email</label>
+            <input id="auth-email-request" class="sandbox-input" type="email" autocomplete="email" required />
+            <button class="site-cta" type="submit">Request access</button>
+          </form>
+          <p class="sandbox-hint">
+            Already approved?
+            <button type="button" class="sb-auth__link" data-auth-goto="register">Create an account</button>
+            ·
+            <button type="button" class="sb-auth__link" data-auth-goto="signin">Sign in</button>
+          </p>
+        </div>
+
+        <div data-auth-panel="signin" hidden>
           <h2 class="sb-explain__title">Sign in</h2>
           <form id="auth-form-signin" class="sb-auth__form">
             <label class="sandbox-label" for="auth-email-signin">Email</label>
@@ -63,11 +82,17 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
             <input id="auth-password-signin" class="sandbox-input" type="password" autocomplete="current-password" required minlength="10" />
             <button class="site-cta" type="submit">Sign in</button>
           </form>
-          <p class="sandbox-hint">New here? <button type="button" class="sb-auth__link" data-auth-goto="register">Create an account</button></p>
+          <p class="sandbox-hint">
+            Need access?
+            <button type="button" class="sb-auth__link" data-auth-goto="request">Request access</button>
+            · Approved?
+            <button type="button" class="sb-auth__link" data-auth-goto="register">Create an account</button>
+          </p>
         </div>
 
         <div data-auth-panel="register" hidden>
           <h2 class="sb-explain__title">Create account</h2>
+          <p class="sandbox-hint">Only works after your email has been approved.</p>
           <form id="auth-form-register" class="sb-auth__form">
             <label class="sandbox-label" for="auth-email">Email</label>
             <input id="auth-email" class="sandbox-input" type="email" autocomplete="username" required />
@@ -75,7 +100,11 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
             <input id="auth-password" class="sandbox-input" type="password" autocomplete="new-password" required minlength="10" />
             <button class="site-cta" type="submit">Register</button>
           </form>
-          <p class="sandbox-hint"><button type="button" class="sb-auth__link" data-auth-goto="signin">Back to sign in</button></p>
+          <p class="sandbox-hint">
+            <button type="button" class="sb-auth__link" data-auth-goto="signin">Back to sign in</button>
+            ·
+            <button type="button" class="sb-auth__link" data-auth-goto="request">Request access</button>
+          </p>
         </div>
 
         <div data-auth-panel="confirm" hidden>
@@ -315,6 +344,7 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
 
         <h3>Security model</h3>
         <ul>
+          <li><strong>Access requests</strong> — new emails must be approved before Cognito registration (PreSignUp + Run allowlist).</li>
           <li><strong>Cognito</strong> — email sign-in + required authenticator (TOTP). Lambda rejects runs without a valid access token.</li>
           <li><strong>Amazon Bedrock</strong> (Nova Micro, EU) — invoked only from the Lambda IAM role.</li>
           <li><strong>No BYOK</strong> — no model keys in the browser.</li>
@@ -351,9 +381,9 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
     </div>
   </section>
 
-  <script is:inline src="/sandbox-config.js?v=20261026q"></script>
-  <script is:inline src="/qrcode.js?v=20261026q"></script>
-  <script is:inline src="/cognito-auth.js?v=20261026q"></script>
-  <script is:inline src="/sandbox-auth-ui.js?v=20261026q"></script>
-  <script is:inline src="/sandbox.js?v=20261026q"></script>
+  <script is:inline src="/sandbox-config.js?v=20261026a"></script>
+  <script is:inline src="/qrcode.js?v=20261026a"></script>
+  <script is:inline src="/cognito-auth.js?v=20261026a"></script>
+  <script is:inline src="/sandbox-auth-ui.js?v=20261026a"></script>
+  <script is:inline src="/sandbox.js?v=20261026a"></script>
 </BaseLayout>
