@@ -1,0 +1,58 @@
+---
+title: Vectors in code (why RAG works)
+description: Embeddings, chunks, and retrieval — the idea behind Document Q&A.
+order: 3
+path: build
+minutes: 14
+draft: false
+---
+
+You already met [vectors and embeddings](/learn/foundations/why-vectors-embeddings) as intuition. Here is how that idea becomes a **document Q&A** program — the Sandbox **Document Q&A** path.
+
+## The problem a model alone has
+
+If you only send a question, the model answers from training patterns. It may invent. If you send **the document** (or the right pieces of it) with the question, the model can ground the answer in *your* text. That pattern is **RAG**: retrieval-augmented generation.
+
+## The pipeline (four steps)
+
+```text
+document  →  chunk  →  embed + store  →  retrieve  →  ask model
+```
+
+1. **Chunk** — split the doc into small overlapping pieces.
+2. **Embed** — turn each chunk into a vector (list of numbers).
+3. **Store** — keep vectors in an index (e.g. FAISS locally).
+4. **Retrieve** — embed the question, find the nearest chunks, then call the chat model with those chunks as context.
+
+```python
+# Sketch — see sandbox/templates/02_document_qa.py for the full version
+splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=30)
+chunks = splitter.split_text(document)
+
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+vectorstore = FAISS.from_texts(chunks, embeddings)
+
+qa = RetrievalQA.from_chain_type(
+    llm=llm,
+    retriever=vectorstore.as_retriever(search_kwargs={"k": 2}),
+)
+result = qa.invoke({"query": question})
+```
+
+## Why chunk at all?
+
+A whole book will not fit (or will waste tokens). Small chunks let retrieval pick the *few* paragraphs that match the question. Overlap stops a sentence from being cut in half at a boundary.
+
+## Browser vs full RAG
+
+In the Sandbox browser demo, a short document is often sent whole in the system prompt — fine for learning. The Python template does real chunk → embed → retrieve. Same *idea*; different scale.
+
+## Takeaway
+
+**Nearness in vector space ≈ related meaning.** Retrieval finds candidates; the chat model writes the answer. Always check the retrieved chunks — nearby is not the same as true.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Take three sentences from a policy or note. Ask a question whose answer is only in sentence 2. When you reach the Sandbox, run Document Q&amp;A and confirm the answer quotes that part — not a confident guess.
+</div>

@@ -1,0 +1,115 @@
+---
+title: The agent loop in code
+description: Plan → tool → observe → stop — with a full traced example you can read line by line.
+order: 5
+path: build
+minutes: 16
+draft: false
+---
+
+[Agentic workflows](/learn/foundations/agentic-workflows) named the loop. Here it is as code you can follow — the same shape as Sandbox **Agent + Tools**.
+
+## Single-shot vs loop
+
+| | Single-shot chat | Agent |
+|--|------------------|-------|
+| Calls | One | Many, until done or capped |
+| Tools | None | Optional each step |
+| Stop | After one reply | No more tool calls, or step limit |
+
+## Full example (read top to bottom)
+
+This is close to `sandbox/templates/03_simple_agent.py`. Comments mark what you will see in the Sandbox cards.
+
+```python
+from langchain_openai import ChatOpenAI
+from langchain_core.tools import tool
+from langchain_core.messages import HumanMessage, ToolMessage
+
+@tool
+def lookup_fact(topic: str) -> str:
+    """Look up a fact about an AI concept. Pass a short topic name."""
+    facts = {
+        "llm": "An LLM predicts the next token from training patterns.",
+        "agent": "An agent is a loop: plan, act with tools, observe, stop.",
+        "embedding": "An embedding maps text to a vector for similarity search.",
+    }
+    t = topic.lower()
+    for key, value in facts.items():
+        if key in t:
+            return value
+    return f"No fact for '{topic}'. Try: {', '.join(facts)}"
+
+# Model + permission to call the tool
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+agent = llm.bind_tools([lookup_fact])
+
+# Brief (Sandbox card: Brief)
+question = "What is an agent and how does it relate to an LLM?"
+messages = [HumanMessage(content=question)]
+
+for step in range(5):
+    # Model (Sandbox card: Model)
+    print(f"\n=== Step {step + 1} ===")
+    response = agent.invoke(messages)
+    messages.append(response)
+
+    if not response.tool_calls:
+        # Answer (Sandbox card: Answer)
+        print("ANSWER:", response.content)
+        break
+
+    for call in response.tool_calls:
+        # Tool call (Sandbox card: Tool)
+        print("CALL:", call["name"], call["args"])
+        result = lookup_fact.invoke(call["args"])
+        # Tool result (Sandbox card: Result)
+        print("GOT: ", result)
+        messages.append(
+            ToolMessage(content=result, tool_call_id=call["id"])
+        )
+else:
+    print("Stopped: step limit reached.")
+```
+
+## What each moving part does
+
+1. **`@tool` / `lookup_fact`** — the only thing that can return *your* facts, not guesses.
+2. **`bind_tools`** — model may emit structured `tool_calls`.
+3. **`messages`** — growing history; without it, the model forgets earlier tool results.
+4. **`for step in range(5)`** — hard stop. Agents must timeout.
+5. **`if not response.tool_calls`** — done; print the answer.
+6. **`lookup_fact.invoke` + `ToolMessage`** — you execute; the next model turn sees real data.
+
+## Example console output
+
+```text
+=== Step 1 ===
+CALL: lookup_fact {'topic': 'agent'}
+GOT:  An agent is a loop: plan, act with tools, observe, stop.
+
+=== Step 2 ===
+CALL: lookup_fact {'topic': 'llm'}
+GOT:  An LLM predicts the next token from training patterns.
+
+=== Step 3 ===
+ANSWER: An agent uses an LLM inside a loop. The LLM reasons; tools (like lookup_fact) supply facts…
+```
+
+Two tool rounds, then a final answer — that is a successful agent run.
+
+## Limits to keep
+
+- Step cap (here: 5).
+- Prefer read-only tools until you add a human approve step for writes.
+- Check `GOT:` lines — fluent answers can still ignore a bad tool result.
+
+## Takeaway
+
+An agent is not a smarter model. It is the **same model inside a bounded loop with tools**. Next: [assemble the pieces into one file](/learn/build/assemble-a-python-agent), then [grow chat → agent](/learn/build/grow-chat-into-agent).
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+On paper, draw five boxes: Brief, Model, Tool, Result, Answer. Fill them using the sample console output above. In the Sandbox, run Agent + Tools and tick each box as it appears.
+</div>

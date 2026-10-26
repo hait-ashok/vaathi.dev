@@ -1,0 +1,305 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const templates = [
+  '01_simple_chat.py',
+  '02_document_qa.py',
+  '03_simple_agent.py',
+  'bedrock_chat_preview.py',
+];
+const code: Record<string, string> = {};
+for (const t of templates) {
+  const fp = path.join(process.cwd(), 'sandbox', 'templates', t);
+  code[t] = fs.readFileSync(fp, 'utf-8');
+}
+
+const defaultDoc = `Artificial intelligence is the simulation of human intelligence by machines.
+A large language model (LLM) predicts the next token in a sequence using patterns learned from large amounts of text during training.
+
+Transformers are the architecture behind modern LLMs. They use an attention mechanism so every token can look at every other token in the input.
+
+An agent is a system that uses a model inside a loop: set a goal, plan steps, call tools, read the results, and decide whether to continue or stop. The model is the reasoning engine; the tools are the hands.`;
+---
+
+<BaseLayout
+  title="Sandbox — vaathi.dev"
+  description="Build and run an AI agent in the browser. Watch every step animate: brief, model, tool call, result, answer."
+>
+  <section class="section" aria-labelledby="sandbox-heading">
+    <div class="site-shell">
+      <p class="mono-label">Stage 03 · Sandbox</p>
+      <h1 id="sandbox-heading" class="section__title">Build, run, watch every step</h1>
+      <p class="section__lede">
+        After <a href="/learn/build">Build (Stage 2)</a>, run the same flow here.
+        Pick a scenario, change the inputs, watch the animated pipeline — then read the annotated Python for that option.
+      </p>
+
+      <aside class="sb-stage-note" aria-label="Access modes">
+        <p>
+          <strong>Today (local / learning):</strong> paste your own OpenAI key — it stays in this browser
+          and is sent only to <code>api.openai.com</code>.
+        </p>
+        <p>
+          <strong>Next stage (web):</strong> Amazon Bedrock with a site-managed key, Cognito sign-in,
+          and a $1/day budget cap — no BYOK. Same scenarios; the model call moves server-side.
+        </p>
+      </aside>
+
+      <!-- Key input (BYOK until Bedrock stage) -->
+      <div class="sandbox-setup">
+        <div class="sandbox-row">
+          <label class="sandbox-label" for="sandbox-key">OpenAI API key (temporary BYOK)</label>
+          <input id="sandbox-key" class="sandbox-input" type="password" placeholder="sk-…" autocomplete="off" />
+          <span class="sandbox-hint">Required only until the Bedrock stage ships. Stored in localStorage only.</span>
+        </div>
+      </div>
+
+      <!-- Scenario tabs -->
+      <nav class="sb-tabs" aria-label="Scenario picker">
+        <button class="sb-tab sb-tab--active" data-scenario-tab="chat" type="button">
+          <span class="sb-tab__icon" aria-hidden="true">💬</span> Simple Chat
+        </button>
+        <button class="sb-tab" data-scenario-tab="rag" type="button">
+          <span class="sb-tab__icon" aria-hidden="true">📄</span> Document Q&amp;A
+        </button>
+        <button class="sb-tab" data-scenario-tab="agent" type="button">
+          <span class="sb-tab__icon" aria-hidden="true">🤖</span> Agent + Tools
+        </button>
+      </nav>
+
+      <!-- ── Chat ── -->
+      <div data-scenario-panel="chat" class="sb-panel">
+        <p class="sb-panel__desc">
+          One model call. You send a system prompt and a question. The model returns a single reply — no tools, no loop.
+        </p>
+
+        <label class="sandbox-label" for="sandbox-prompt">System prompt</label>
+        <textarea id="sandbox-prompt" class="sandbox-code" rows="3">You are a helpful assistant that explains AI concepts in one short paragraph.</textarea>
+        <label class="sandbox-label" for="sandbox-question-chat">User question</label>
+        <textarea id="sandbox-question-chat" class="sandbox-code" data-role="question" rows="2">What is a large language model?</textarea>
+
+        <div class="sb-explain">
+          <h2 class="sb-explain__title">What this option does</h2>
+          <ol class="sb-explain__steps">
+            <li><strong>Create a client</strong> — loads your API key from the environment.</li>
+            <li><strong>Send two messages</strong> — a <em>system</em> role (how to behave) and a <em>user</em> role (the question).</li>
+            <li><strong>One completion</strong> — the model returns text. No tool calls, no second round.</li>
+            <li><strong>Print the answer</strong> — you see the model&rsquo;s content field.</li>
+          </ol>
+          <p class="sb-explain__bridge">
+            In the browser run above, the same shape is used: system + user → stream tokens into the pipeline.
+            On Bedrock later, this becomes a single <code>Converse</code> call to Nova Micro.
+          </p>
+        </div>
+
+        <div class="sb-codeblock">
+          <h3 class="sb-codeblock__title">Python — <code>01_simple_chat.py</code></h3>
+          <dl class="sb-annotate">
+            <div class="sb-annotate__row">
+              <dt><code>from openai import OpenAI</code></dt>
+              <dd>Import the official SDK. One client talks to the Chat Completions API.</dd>
+            </div>
+            <div class="sb-annotate__row">
+              <dt><code>client = OpenAI()</code></dt>
+              <dd>Reads <code>OPENAI_API_KEY</code> from the environment. No key in the source file.</dd>
+            </div>
+            <div class="sb-annotate__row">
+              <dt><code>chat.completions.create(...)</code></dt>
+              <dd>
+                The actual call. <code>model</code> picks the model; <code>messages</code> is the brief;
+                <code>max_tokens</code> caps length.
+              </dd>
+            </div>
+            <div class="sb-annotate__row">
+              <dt><code>role: system</code> / <code>role: user</code></dt>
+              <dd>
+                System = instructions. User = the question you type above. Change either field and re-run to feel the difference.
+              </dd>
+            </div>
+            <div class="sb-annotate__row">
+              <dt><code>response.choices[0].message.content</code></dt>
+              <dd>The model&rsquo;s text reply. One choice, one message — the simplest possible result.</dd>
+            </div>
+          </dl>
+          <pre class="sb-codeblock__pre"><code>{code['01_simple_chat.py']}</code></pre>
+
+          <h3 class="sb-codeblock__title sb-codeblock__title--follow">Next stage — same idea on Bedrock (no user key)</h3>
+          <p class="sb-explain__bridge sb-explain__bridge--pad">
+            Lambda holds the IAM role. The browser calls your Function URL after Cognito auth — never OpenAI, never a pasted key.
+          </p>
+          <pre class="sb-codeblock__pre"><code>{code['bedrock_chat_preview.py']}</code></pre>
+        </div>
+      </div>
+
+      <!-- ── RAG ── -->
+      <div data-scenario-panel="rag" class="sb-panel" hidden>
+        <p class="sb-panel__desc">
+          The document is given as context. The model should answer only from that text — the idea behind RAG (retrieval-augmented generation).
+        </p>
+
+        <label class="sandbox-label" for="sandbox-doc">Document</label>
+        <textarea id="sandbox-doc" class="sandbox-code" rows="6">{defaultDoc}</textarea>
+        <label class="sandbox-label" for="sandbox-question-rag">Question about the document</label>
+        <textarea id="sandbox-question-rag" class="sandbox-code" data-role="question" rows="2">What is the role of the model inside an agent?</textarea>
+
+        <div class="sb-explain">
+          <h2 class="sb-explain__title">What this option does</h2>
+          <ol class="sb-explain__steps">
+            <li><strong>Paste a document</strong> — your source of truth (policy, notes, article).</li>
+            <li><strong>Split into chunks</strong> — small overlapping pieces so retrieval can find the right bit.</li>
+            <li><strong>Embed &amp; store</strong> — each chunk becomes a vector in a FAISS index (similar meaning ≈ nearby vectors).</li>
+            <li><strong>Retrieve + ask</strong> — pull the top chunks, then ask the model with that context.</li>
+            <li><strong>Answer from sources</strong> — the chain returns the answer and the chunks it used.</li>
+          </ol>
+          <p class="sb-explain__bridge">
+            The browser demo simplifies step 2–3: it sends the whole document in the system prompt (fine for short text).
+            The Python below is the real RAG pattern you would ship. On Bedrock, embeddings and the chat model both move to AWS.
+          </p>
+        </div>
+
+        <div class="sb-codeblock">
+          <h3 class="sb-codeblock__title">Python — <code>02_document_qa.py</code></h3>
+          <dl class="sb-annotate">
+            <div class="sb-annotate__row">
+              <dt><code>RecursiveCharacterTextSplitter</code></dt>
+              <dd>Cuts the document into ~200-character pieces with overlap so sentences are not lost at boundaries.</dd>
+            </div>
+            <div class="sb-annotate__row">
+              <dt><code>OpenAIEmbeddings</code> + <code>FAISS</code></dt>
+              <dd>Turns each chunk into a vector and stores them locally. Search finds the chunks closest to the question.</dd>
+            </div>
+            <div class="sb-annotate__row">
+              <dt><code>RetrievalQA</code></dt>
+              <dd>Glue: retrieve <code>k=2</code> chunks → feed them to the chat model → return answer + source docs.</dd>
+            </div>
+            <div class="sb-annotate__row">
+              <dt><code>qa.invoke(&#123;"query": ...&#125;)</code></dt>
+              <dd>One call runs retrieve + generate. Print <code>result</code> and the retrieved chunks to verify the answer.</dd>
+            </div>
+          </dl>
+          <pre class="sb-codeblock__pre"><code>{code['02_document_qa.py']}</code></pre>
+        </div>
+      </div>
+
+      <!-- ── Agent ── -->
+      <div data-scenario-panel="agent" class="sb-panel" hidden>
+        <p class="sb-panel__desc">
+          The model can call a <code>lookup_fact</code> tool, read the result, and loop until it answers.
+          Topics: <em>LLM, transformer, agent, embedding, RAG, MCP, AI, prompt</em>.
+        </p>
+
+        <label class="sandbox-label" for="sandbox-question-agent">Your question</label>
+        <textarea id="sandbox-question-agent" class="sandbox-code" data-role="question" rows="2">What is an agent and how does it relate to an LLM?</textarea>
+
+        <div class="sb-explain">
+          <h2 class="sb-explain__title">What this option does</h2>
+          <ol class="sb-explain__steps">
+            <li><strong>Define a tool</strong> — <code>lookup_fact(topic)</code> returns a short fact from a fixed dictionary.</li>
+            <li><strong>Bind the tool to the model</strong> — the model may request that tool instead of answering immediately.</li>
+            <li><strong>Loop</strong> — model → (optional) tool call → tool result → model again, up to 5 steps.</li>
+            <li><strong>Stop</strong> — when there are no more tool calls, the model&rsquo;s text is the final answer.</li>
+          </ol>
+          <p class="sb-explain__bridge">
+            The animated cards above are this loop made visible. That loop <em>is</em> the agent.
+            Bedrock&rsquo;s Converse API supports the same tool-use pattern with a site key behind Cognito.
+          </p>
+        </div>
+
+        <div class="sb-codeblock">
+          <h3 class="sb-codeblock__title">Python — <code>03_simple_agent.py</code></h3>
+          <dl class="sb-annotate">
+            <div class="sb-annotate__row">
+              <dt><code>@tool</code> / <code>lookup_fact</code></dt>
+              <dd>Registers a function the model can call. The docstring tells the model <em>when</em> to use it.</dd>
+            </div>
+            <div class="sb-annotate__row">
+              <dt><code>llm.bind_tools([lookup_fact])</code></dt>
+              <dd>Attaches the tool schema to the model so responses can include structured tool calls.</dd>
+            </div>
+            <div class="sb-annotate__row">
+              <dt><code>for step in range(5):</code></dt>
+              <dd>Hard step limit — agents must stop. Without a limit, a buggy loop can spend forever.</dd>
+            </div>
+            <div class="sb-annotate__row">
+              <dt><code>response.tool_calls</code></dt>
+              <dd>If empty → final answer. If present → run each tool, append <code>ToolMessage</code>, continue the loop.</dd>
+            </div>
+            <div class="sb-annotate__row">
+              <dt><code>ToolMessage(...)</code></dt>
+              <dd>Feeds the tool&rsquo;s return value back so the next model turn can use real data, not guesses.</dd>
+            </div>
+          </dl>
+          <pre class="sb-codeblock__pre"><code>{code['03_simple_agent.py']}</code></pre>
+        </div>
+      </div>
+
+      <!-- Run + pipeline -->
+      <div class="sandbox-bar">
+        <button id="sandbox-run" class="site-cta" type="button">▶ Run</button>
+        <span id="sandbox-status" class="sandbox-status"></span>
+      </div>
+      <div id="sandbox-pipeline" class="sb-pipeline" aria-live="polite"></div>
+
+      <!-- Guide -->
+      <div class="sandbox-guide">
+        <h2>How it works</h2>
+
+        <h3>The animated pipeline</h3>
+        <p>Every run shows cards as steps happen:</p>
+        <ol>
+          <li><strong>Brief</strong> — prompt / question / document context.</li>
+          <li><strong>Model</strong> — tokens stream in.</li>
+          <li><strong>Tool call</strong> — (agent) the model asks for a tool.</li>
+          <li><strong>Tool result</strong> — the tool returns data.</li>
+          <li><strong>Answer</strong> — final reply.</li>
+        </ol>
+        <p>On Agent + Tools, steps 2–4 repeat. That loop is the agent.</p>
+
+        <h3>Next stage: Bedrock, no BYOK</h3>
+        <p>
+          The teaching shape stays the same. What changes for web users:
+        </p>
+        <ul>
+          <li><strong>Amazon Bedrock</strong> (e.g. Nova Micro in EU) — model calls from a Lambda function URL, not the browser.</li>
+          <li><strong>Site key</strong> — IAM role on Lambda; users never see or paste a key.</li>
+          <li><strong>Cognito + authenticator (TOTP)</strong> — sign-in before a run.</li>
+          <li><strong>$1/day budget</strong> — DynamoDB ledger + AWS Budgets (already sketched for this app).</li>
+        </ul>
+        <p>
+          Until that ships, BYOK OpenAI keeps the sandbox usable for learning. The Python above is what you run locally;
+          the browser run is the same ideas without installing LangChain.
+        </p>
+
+        <h3>Lessons ↔ Sandbox</h3>
+        <table class="sandbox-table">
+          <thead><tr><th>Scenario</th><th>Build (Stage 2)</th><th>Foundations</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Simple Chat</td>
+              <td><a href="/learn/build/calling-a-model">Calling a model</a></td>
+              <td><a href="/learn/foundations/prompting-clear-communication">Prompting</a></td>
+            </tr>
+            <tr>
+              <td>Document Q&amp;A</td>
+              <td><a href="/learn/build/vectors-in-code">Vectors in code</a></td>
+              <td><a href="/learn/foundations/why-vectors-embeddings">Embeddings</a></td>
+            </tr>
+            <tr>
+              <td>Agent + Tools</td>
+              <td>
+                <a href="/learn/build/assemble-a-python-agent">Assemble</a>,
+                <a href="/learn/build/grow-chat-into-agent">Chat→agent</a>
+              </td>
+              <td><a href="/learn/foundations/agentic-workflows">Agentic</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <p><a href="/learn/build">Start Stage 2 — Build path →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline src="/sandbox.js"></script>
+</BaseLayout>

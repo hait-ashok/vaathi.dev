@@ -7,6 +7,36 @@ minutes: 15
 draft: false
 ---
 
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">A fluent answer can still be private data you should not have pasted, or a fact that was never in the source.</Beat>
+  <Beat label="From your world">It is like forwarding a message that had a door code still in it.</Beat>
+  <Beat label="One example">“Parents get 20% off” sounds helpful and is not in the class note.</Beat>
+  <Beat label="Watch-out">Checking the tone is not the same as checking the source.</Beat>
+  <Beat label="Try this">Mark the invented line, and leave the door code out of the brief.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">The request body is the data you export. Verification is a diff against the source.</Beat>
+  <Beat label="From your world">It fails the way an under-specified ticket fails: a success response with an extra field.</Beat>
+  <Beat label="One example">A discount line that is not in the fixture should fail the check, however polished it looks.</Beat>
+  <Beat label="Watch-out">Do not log the brief. It may hold the secret you meant to keep out.</Beat>
+  <Beat label="Try this">Untick the secret line and confirm it is absent from the request.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="start">
+  <Beat label="In one sentence">If the source does not say it, you cannot promise it.</Beat>
+  <Beat label="From your world">An invented discount is a commitment a customer will hear as yours.</Beat>
+  <Beat label="One example">The class note lists the time and the materials. It does not list 20% off.</Beat>
+  <Beat label="Watch-out">A door code in a follow-up is not a detail. It is someone else’s secret.</Beat>
+  <Beat label="Try this">Catch the discount, then decide which lines of a note are safe to send.</Beat>
+</Lens>
+
+<LessonBody>
+
 Useful tools still need boundaries. Responsible use is mostly **habits**, not legalese.
 
 ## Privacy
@@ -34,5 +64,7 @@ Two habits transfer everywhere: **minimize sensitive input**, and **verify high-
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Open the privacy settings of one AI app you use. Write one sentence: what data it may store, and one thing you will never paste into it.
+Open the privacy settings of one AI app you use. Write one sentence: what data it may store, and one thing you will never paste into it. Then try a run in the [Sandbox](/sandbox) and check the answer against the source.
 </div>
+
+</LessonBody>

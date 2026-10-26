@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const lessons = (await getCollection('lessons'))
+  .filter((l) => l.data.path === 'build' && !l.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const first = lessons[0];
+const totalMinutes = lessons.reduce((sum, l) => sum + l.data.minutes, 0);
+---
+
+<BaseLayout
+  title="Build: Python to agents"
+  description="Stage 2 — Python basics, model calls, vectors, tools, and the agent loop. Then open the Sandbox."
+>
+  <div class="site-shell">
+    <header class="page-header">
+      <p class="mono-label">Stage 02 · Path</p>
+      <h1>Build: Python to agents</h1>
+      <p>
+        After Foundations, learn the code shape behind chat, retrieval, tools, and agents —
+        with real Python examples you assemble step by step before the Sandbox.
+        {lessons.length} lessons · about {totalMinutes} minutes.
+      </p>
+      {
+        first && (
+          <p style="margin-top: 1.5rem">
+            <a class="site-cta" href={`/learn/build/${first.id}`}>
+              Start lesson 1
+            </a>
+          </p>
+        )
+      }
+    </header>
+
+    <p class="section__lede" style="margin-bottom: 2rem">
+      Flow: <strong>Python basics</strong> → <strong>call a model</strong> → <strong>vectors / RAG</strong> →
+      <strong>tools</strong> → <strong>loop</strong> → <strong>assemble an agent</strong> →
+      <strong>chat → agent</strong> → then
+      <a href="/sandbox">Sandbox (Stage 3)</a>.
+    </p>
+
+    <ol class="lesson-list">
+      {
+        lessons.map((lesson) => (
+          <li>
+            <a href={`/learn/build/${lesson.id}`}>
+              <span class="lesson-list__num">
+                {String(lesson.data.order).padStart(2, '0')}
+              </span>
+              <span>
+                <span class="lesson-list__title">{lesson.data.title}</span>
+                <br />
+                <span class="lesson-list__meta">{lesson.data.description}</span>
+              </span>
+              <span class="lesson-list__meta">{lesson.data.minutes} min</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p style="margin-top: 2.5rem">
+      <a class="site-cta site-cta--ghost" href="/sandbox">Continue to Sandbox →</a>
+    </p>
+  </div>
+</BaseLayout>
