@@ -2291,6 +2291,10 @@ var qrcode = function() {
       define([], factory);
   } else if (typeof exports === 'object') {
       module.exports = factory();
+  } else {
+      // Classic <script> in the browser — expose global for sandbox-auth-ui.js
+      var root = typeof self !== 'undefined' ? self : this;
+      root.qrcode = factory();
   }
 }(function () {
     return qrcode;

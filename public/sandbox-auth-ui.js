@@ -34,23 +34,30 @@
     if (!host) return;
     host.replaceChildren();
     if (!secret) return;
-    if (typeof qrcode !== 'function') {
+    var make = typeof qrcode === 'function' ? qrcode : (window && window.qrcode);
+    if (typeof make !== 'function') {
       host.textContent = 'QR library missing — use the manual key below.';
       return;
     }
     try {
-      if (qrcode.stringToBytesFuncs && qrcode.stringToBytesFuncs['UTF-8']) {
-        qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
+      if (make.stringToBytesFuncs && make.stringToBytesFuncs['UTF-8']) {
+        make.stringToBytes = make.stringToBytesFuncs['UTF-8'];
       }
-      var qr = qrcode(0, 'M');
+      var qr = make(0, 'M');
       qr.addData(otpauthUrl(email, secret));
       qr.make();
-      host.innerHTML = qr.createSvgTag(5, 0);
-      var svg = host.querySelector('svg');
-      if (svg) {
-        svg.setAttribute('role', 'img');
-        svg.setAttribute('aria-label', 'Scan to add vaathi.dev to your authenticator');
+      // Prefer PNG data-URL <img> — reliable for phone cameras / CSP img-src data:
+      var dataUrl = typeof qr.createDataURL === 'function' ? qr.createDataURL(6, 8) : '';
+      if (dataUrl) {
+        var img = document.createElement('img');
+        img.src = dataUrl;
+        img.width = 220;
+        img.height = 220;
+        img.alt = 'Scan to add vaathi.dev to your authenticator';
+        host.appendChild(img);
+        return;
       }
+      host.innerHTML = qr.createSvgTag(6, 2);
     } catch (err) {
       host.textContent = 'Could not draw QR — use the manual key below.';
     }
