@@ -1,0 +1,49 @@
+---
+title: From code to Sandbox
+description: Chat, RAG, and agent side by side — then Stage 3 where you run them.
+order: 8
+path: build
+minutes: 8
+draft: false
+---
+
+You now have the map **and** the build recipes. Stage 3 is where you feel them.
+
+## Three shapes, one mental model
+
+| Sandbox option | Build lessons | What happens |
+|----------------|---------------|--------------|
+| **Simple Chat** | [Calling a model](/learn/build/calling-a-model) | One completion. System + user. |
+| **Document Q&amp;A** | [Vectors in code](/learn/build/vectors-in-code) | Context (or retrieve chunks) → grounded answer. |
+| **Agent + Tools** | [Tools](/learn/build/tool-calls-in-code) → [Loop](/learn/build/agent-loop-in-code) → [Assemble](/learn/build/assemble-a-python-agent) → [Grow chat→agent](/learn/build/grow-chat-into-agent) | Model may call tools, read results, loop, stop. |
+
+Python basics ([lesson 1](/learn/build/python-just-enough)) sit under all three.
+
+## Agent path you just walked
+
+1. Define a tool (`@tool`).
+2. Bind it (`bind_tools`).
+3. Keep a `messages` list.
+4. Cap a loop (`range(5)`).
+5. Print a trace — same events the Sandbox animates.
+
+## How to use the Sandbox
+
+1. Pick one option (start with Simple Chat, then Agent + Tools).
+2. Change the prompt or question — one change at a time.
+3. Watch the animated pipeline (brief → model → tool → result → answer).
+4. Read the annotated Python under that option — match each card to a line from [Assemble](/learn/build/assemble-a-python-agent).
+
+## What comes after Stage 3
+
+The teaching shape stays. For web users without BYOK, the same scenarios move to **Amazon Bedrock** behind Cognito and a daily budget. Messages, tools, and loops remain — only the transport changes.
+
+## Takeaway
+
+**Understand the flow in words and code, then run it.** Foundations → Build (with real agent code) → Sandbox.
+
+<div class="try-this">
+<span class="mono-label">Next</span>
+
+Open the [Sandbox](/sandbox). Run Simple Chat once, then Agent + Tools once. Keep the Version A → B → C sketch from [Grow a chat into an agent](/learn/build/grow-chat-into-agent) beside you.
+</div>

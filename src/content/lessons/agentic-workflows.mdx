@@ -7,8 +7,37 @@ minutes: 15
 draft: false
 ---
 
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
 import SingleShotChatDiagram from '../../components/diagrams/SingleShotChatDiagram.astro';
 import AgenticWorkflowDiagram from '../../components/diagrams/AgenticWorkflowDiagram.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">One reply is a single ask. An agent looks something up, reads it, and tries again until it stops.</Beat>
+  <Beat label="From your world">It is a checklist that can tick itself, which is why you still set the last tick.</Beat>
+  <Beat label="One example">Find the time, write the reminder, stop. A fourth step that wants to email everyone is the loop without a limit.</Beat>
+  <Beat label="Watch-out">More steps mean more chances to do something you did not ask for.</Beat>
+  <Beat label="Try this">Step the rows, then run the short loop with the limit on.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">The agent is the loop: goal, plan, tool, observation, stop. The model is the same.</Beat>
+  <Beat label="From your world">A step limit is the timeout. An allow gate is the change window.</Beat>
+  <Beat label="One example">lookup_note returns 4pm. The draft uses that string. Step 4 does not run when the limit is 3.</Beat>
+  <Beat label="Watch-out">A fluent loop can still be wrong. Verify the tool result, not the tone.</Beat>
+  <Beat label="Try this">Read the trace, lift the limit once, then approve a send yourself.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="useful">
+  <Beat label="In one sentence">An agent can draft the follow-up. You still approve what a customer receives.</Beat>
+  <Beat label="From your world">The pause before send is the part you do not hand over.</Beat>
+  <Beat label="One example">The note says Thursday at 4pm. The draft may say that. Filing it waits for you.</Beat>
+  <Beat label="Watch-out">“It handled it” is not a sentence to use before you have seen the line.</Beat>
+  <Beat label="Try this">Write the stop rule and refuse once, so you feel the gate.</Beat>
+</Lens>
+
+<LessonBody>
 
 Most chat use is **single-shot**: you ask, you get a reply, you’re done (or you ask again yourself). **Agentic** systems try to chase a goal by planning, calling tools, reading results, and looping until they finish — or until a limit stops them.
 
@@ -47,5 +76,7 @@ From the [tool landscape](/learn/foundations/tool-landscape): start with chat; t
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Pick a task (e.g. “find three reputable sources on X and draft a paragraph”). Sketch it once as single-shot chat, once as the five-step loop. Which steps would you insist on doing yourself?
+Pick a task (e.g. “find three reputable sources on X and draft a paragraph”). Sketch it once as single-shot chat, once as the five-step loop. Which steps would you insist on doing yourself? Then open the [Sandbox](/sandbox) and run the Agent template — watch the model call a tool, read the result, and loop.
 </div>
+
+</LessonBody>

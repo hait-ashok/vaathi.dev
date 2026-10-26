@@ -1,0 +1,82 @@
+---
+title: Python, just enough
+description: The few language pieces you need before you call a model from code.
+order: 1
+path: build
+minutes: 12
+draft: false
+---
+
+You do not need to become a programmer first. You need a handful of Python ideas so the Sandbox templates stop looking like noise. Everything below shows up again when you call a model, a tool, or a retrieval index.
+
+## What a script is
+
+A `.py` file runs top to bottom. You import a library, set some values, call a function, print a result. That is the whole shape of Template 1 in the Sandbox.
+
+```python
+name = "vaathi"
+print("hello,", name)
+```
+
+- A **variable** holds a value (`name`).
+- A **string** is text in quotes.
+- `print(...)` shows something on the screen (or in the Sandbox output).
+
+## Functions
+
+A **function** is a named block you can call. Tools in agents *are* functions the model is allowed to ask for.
+
+```python
+def greet(person: str) -> str:
+    return "hello, " + person
+
+print(greet("learner"))
+```
+
+- `def` defines the function.
+- `person` is an **argument** (input).
+- `return` sends a value back to the caller.
+
+## Lists and dictionaries
+
+Models and tools pass structured data. Two shapes matter:
+
+```python
+messages = [
+    {"role": "system", "content": "Be brief."},
+    {"role": "user", "content": "What is an LLM?"},
+]
+
+facts = {
+    "llm": "predicts the next token",
+    "agent": "loops with tools",
+}
+
+print(messages[0]["role"])   # system
+print(facts["agent"])        # loops with tools
+```
+
+- A **list** (`[...]`) is ordered — message history is a list.
+- A **dict** (`{...}`) maps keys to values — tool arguments and fact lookups are dicts.
+
+## A tiny loop
+
+Agents use a loop with a **hard stop**. In Python that is often `for` + `range`:
+
+```python
+for step in range(3):
+    print("step", step + 1)
+# prints step 1, step 2, step 3 — then stops
+```
+
+Without a limit, a buggy agent can call tools forever. The Sandbox agent template caps at five steps for the same reason.
+
+## Takeaway
+
+Variables, functions, lists, dicts, and a bounded loop are enough to *read* every Sandbox template. Next you will see those pieces call a model.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+On paper (or in a notebook), write a dict with three AI terms you care about and a one-line definition each. You will see the same pattern in the agent&rsquo;s <code>lookup_fact</code> tool.
+</div>

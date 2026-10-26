@@ -7,7 +7,7 @@ const lessons = defineCollection({
     title: z.string(),
     description: z.string(),
     order: z.number(),
-    path: z.literal('foundations'),
+    path: z.enum(['foundations', 'build']),
     minutes: z.number(),
     draft: z.boolean().default(false),
   }),

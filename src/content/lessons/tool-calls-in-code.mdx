@@ -1,0 +1,110 @@
+---
+title: Tool calls in code
+description: Named functions, schemas, and the handshake — model asks, your code runs, result goes back.
+order: 4
+path: build
+minutes: 14
+draft: false
+---
+
+A [tool](/learn/foundations/tool-landscape) is not magic. In code it is a **function** plus a short description the model can read. When the model wants data it cannot invent safely, it emits a **tool call** instead of a final answer.
+
+## The contract
+
+| Field | Meaning |
+|-------|---------|
+| **Name** | e.g. `lookup_fact` |
+| **Description** | When to use it (the docstring matters). |
+| **Arguments** | What inputs it needs (`topic: str`). |
+| **Read / write** | What it may see and what it may change. |
+
+## LangChain style (what the Sandbox uses)
+
+```python
+from langchain_core.tools import tool
+
+@tool
+def lookup_fact(topic: str) -> str:
+    """Look up a fact about an AI concept. Input: a short topic name."""
+    facts = {
+        "llm": "predicts the next token from patterns in training data",
+        "agent": "a goal-driven loop: plan, act, observe, stop",
+    }
+    key = topic.lower()
+    for name, text in facts.items():
+        if name in key:
+            return text
+    return "No fact found."
+
+# Later: agent = llm.bind_tools([lookup_fact])
+#        result = lookup_fact.invoke({"topic": "agent"})
+```
+
+The `@tool` decorator publishes name, docstring, and argument types to the model.
+
+## Raw OpenAI style (same idea, more JSON)
+
+Under the hood (and in the browser Sandbox), tools look like this schema:
+
+```python
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "lookup_fact",
+        "description": "Look up a fact about an AI concept.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "topic": {"type": "string", "description": "Short topic name"}
+            },
+            "required": ["topic"],
+        },
+    },
+}]
+
+# response may include:
+# message.tool_calls[0].function.name == "lookup_fact"
+# message.tool_calls[0].function.arguments == '{"topic":"agent"}'
+```
+
+LangChain’s `@tool` builds that JSON for you. Either way: **model requests, your process executes**.
+
+## The handshake (three prints)
+
+```python
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, ToolMessage
+
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0).bind_tools([lookup_fact])
+messages = [HumanMessage(content="Call the tool. What is an agent?")]
+
+ai = llm.invoke(messages)
+print("1 model asked for:", ai.tool_calls)
+
+messages.append(ai)
+for call in ai.tool_calls:
+    data = lookup_fact.invoke(call["args"])
+    print("2 we returned:   ", data)
+    messages.append(ToolMessage(content=data, tool_call_id=call["id"]))
+
+final = llm.invoke(messages)
+print("3 model answered: ", final.content)
+```
+
+If print `1` is empty, the model skipped the tool — tighten the user line (“Always call lookup_fact first”).
+
+## Safety
+
+- A **read-only** tool (lookup) is safer than a **write** tool (send email).
+- Giving every tool to every run is how a lookup becomes a send.
+- MCP later = the same card plus a standard connector.
+
+## Takeaway
+
+**Tool = function + description + permission.** Next you put tools inside a [loop](/learn/build/agent-loop-in-code) so the model can call them more than once.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Write a tool card for “lookup calendar”: name, one-line description, arguments, and whether it may only read or also create events. Keep write off until you have a human approve step.
+</div>

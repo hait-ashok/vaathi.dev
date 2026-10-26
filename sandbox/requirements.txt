@@ -1,0 +1,8 @@
+openai>=3.30
+langchain>=1.4
+langchain-openai>=1.7
+langchain-community>=0.4
+langchain-text-splitters>=1.1
+faiss-cpu>=1.15
+flask>=3.1
+flask-cors>=6.0

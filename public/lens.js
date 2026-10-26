@@ -36,7 +36,7 @@
   document.documentElement.setAttribute('data-lens-ready', 'ready');
 
   function propagateLinks(lens) {
-    document.querySelectorAll('a[href^="/learn/foundations"]').forEach(function (anchor) {
+    document.querySelectorAll('a[href^="/learn/foundations"], a[href^="/learn/build"]').forEach(function (anchor) {
       var url = new URL(anchor.getAttribute('href') || '', location.origin);
       url.searchParams.set('lens', lens);
       anchor.setAttribute('href', url.pathname + url.search);

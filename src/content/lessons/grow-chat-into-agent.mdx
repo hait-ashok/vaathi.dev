@@ -1,0 +1,137 @@
+---
+title: Grow a chat into an agent
+description: One file, three versions — chat only, one tool call, then a full multi-step agent.
+order: 7
+path: build
+minutes: 16
+draft: false
+---
+
+The easiest way to understand agents is to **upgrade the same script**. Version A is Sandbox Simple Chat. Version C is Sandbox Agent + Tools. Nothing mystical appears — only tools and a loop.
+
+## Version A — Chat only (no tools)
+
+```python
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, SystemMessage
+
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+
+messages = [
+    SystemMessage(content="Answer in two short sentences."),
+    HumanMessage(content="What is an agent?"),
+]
+
+reply = llm.invoke(messages)
+print(reply.content)
+```
+
+One call. One reply. The model may invent details because it has no lookup.
+
+## Version B — One tool call (still almost chat)
+
+Add a tool and **one** follow-up after you run it. No `for` loop yet — you hard-code two model calls so you can see the handshake.
+
+```python
+from langchain_openai import ChatOpenAI
+from langchain_core.tools import tool
+from langchain_core.messages import HumanMessage, ToolMessage
+
+@tool
+def lookup_fact(topic: str) -> str:
+    """Return a one-line fact for an AI topic word."""
+    facts = {"agent": "A loop: plan, tool, observe, stop."}
+    return facts.get(topic.lower(), "Not found.")
+
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+model = llm.bind_tools([lookup_fact])
+
+messages = [HumanMessage(content="Use the tool. What is an agent?")]
+
+# Call 1 — model may request the tool
+ai = model.invoke(messages)
+messages.append(ai)
+print("tool_calls:", ai.tool_calls)
+
+# Run whatever it asked for
+for call in ai.tool_calls or []:
+    out = lookup_fact.invoke(call["args"])
+    print("result:", out)
+    messages.append(ToolMessage(content=out, tool_call_id=call["id"]))
+
+# Call 2 — model answers with the tool result in history
+final = model.invoke(messages)
+print("answer:", final.content)
+```
+
+Read the prints:
+
+1. `tool_calls` — structured request, not prose.
+2. `result` — **your** function’s return value.
+3. `answer` — prose that should use that result.
+
+If `tool_calls` is empty, the model skipped the tool (try a clearer system/user line: “Always call lookup_fact first”).
+
+## Version C — Full agent (the loop)
+
+Replace the two hard-coded calls with the capped loop from [Assemble a Python agent](/learn/build/assemble-a-python-agent):
+
+```python
+messages = [HumanMessage(content="What is an agent and how does it relate to an LLM?")]
+
+for step in range(5):
+    ai = model.invoke(messages)
+    messages.append(ai)
+    if not ai.tool_calls:
+        print("answer:", ai.content)
+        break
+    for call in ai.tool_calls:
+        out = lookup_fact.invoke(call["args"])
+        print(f"step {step+1}: {call['name']} -> {out}")
+        messages.append(ToolMessage(content=out, tool_call_id=call["id"]))
+```
+
+Now the model can look up **agent**, then **llm**, then answer — however many tool rounds it needs, until the cap.
+
+## Side-by-side
+
+| Version | Model calls | Tools | Loop | Feels like |
+|---------|-------------|-------|------|------------|
+| A | 1 | No | No | Chat |
+| B | 2 (fixed) | Yes | No | “Tool then answer” |
+| C | Up to 5 | Yes | Yes | Agent |
+
+## Adding a second tool (pattern)
+
+Copy the `@tool` function, change the name and body, then bind both:
+
+```python
+@tool
+def lookup_glossary(term: str) -> str:
+    """Return a glossary-style definition for a short term."""
+    return {"rag": "Retrieve, then generate."}.get(term.lower(), "Missing.")
+
+model = llm.bind_tools([lookup_fact, lookup_glossary])
+```
+
+The model chooses which name to call. Your loop does not change — it still runs `call["name"]` against the right function (in Template 3, one tool keeps the dispatch simple; with two tools you map name → function).
+
+```python
+TOOLS = {
+    "lookup_fact": lookup_fact,
+    "lookup_glossary": lookup_glossary,
+}
+# inside the loop:
+fn = TOOLS[call["name"]]
+out = fn.invoke(call["args"])
+```
+
+## Takeaway
+
+Chat → tool handshake → capped loop. When you can explain Version B’s two prints (`tool_calls` then `result`), you are ready for the Sandbox agent animation.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Write Version B on paper with arrows: Human → AI (tool_calls) → ToolMessage → AI (answer). In the Sandbox, run Agent + Tools and tick each arrow as a card appears.
+</div>

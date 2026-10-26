@@ -1,0 +1,82 @@
+---
+title: Calling a model from code
+description: System + user messages, one completion — the shape behind every chat API.
+order: 2
+path: build
+minutes: 12
+draft: false
+---
+
+Foundations taught *what* a model is. Here you see *how code talks to one*. The Sandbox **Simple Chat** scenario is this lesson live.
+
+## The shape
+
+Almost every chat API uses the same idea:
+
+1. Create a **client** (holds credentials and endpoint).
+2. Send a list of **messages**.
+3. Read the **completion** text.
+
+```python
+from openai import OpenAI
+
+client = OpenAI()  # reads OPENAI_API_KEY from the environment
+
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "Explain AI in one short paragraph."},
+        {"role": "user",   "content": "What is a large language model?"},
+    ],
+    max_tokens=200,
+)
+
+print(response.choices[0].message.content)
+```
+
+## Roles (why two messages)
+
+| Role | Job |
+|------|-----|
+| **system** | Standing instructions — tone, length, rules. |
+| **user** | This turn&rsquo;s ask. |
+| **assistant** | Prior model replies (used in longer chats and agent loops). |
+| **tool** | Results from a tool the model asked to run (next lessons). |
+
+Change the system line and the same user question can feel completely different. That is [prompting](/learn/foundations/prompting-clear-communication) made concrete in code.
+
+## What “one completion” means
+
+The model returns **one** assistant message. No tools. No second round unless *you* send another request. That is single-shot chat — enough for many tasks, and the baseline before agents.
+
+## Multi-turn (still not an agent)
+
+You can append the assistant reply and ask again. That is a **chat**, not an agent — no tools, no automatic loop.
+
+```python
+messages = [
+    {"role": "system", "content": "Be brief."},
+    {"role": "user", "content": "What is an LLM?"},
+]
+r1 = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
+messages.append({"role": "assistant", "content": r1.choices[0].message.content})
+messages.append({"role": "user", "content": "Say that in one metaphor."})
+r2 = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
+print(r2.choices[0].message.content)
+```
+
+Agents reuse this message list idea, then add tool results as extra roles. You will build that in [Assemble a Python agent](/learn/build/assemble-a-python-agent).
+
+## Keys and trust
+
+In local learning you may paste a key (BYOK). On the web stage, the key lives on a server (for vaathi.dev: Bedrock behind Lambda + Cognito). The *message shape* stays the same; only who holds the credential changes. See also [AWS Bedrock basics](/learn/foundations/aws-bedrock-basics).
+
+## Takeaway
+
+**Client → messages → completion.** If you can point at those three, you can read Template 1 and the Bedrock Converse preview in the Sandbox.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Write two system prompts for the same user question (“What is an embedding?”): one that demands one sentence, one that demands a metaphor. Run both in the [Sandbox Simple Chat](/sandbox) when you reach Stage 3.
+</div>

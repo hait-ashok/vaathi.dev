@@ -1,0 +1,132 @@
+---
+title: Assemble a Python agent
+description: Build an agent file from scratch — tool, bind, messages, loop, and a printed trace.
+order: 6
+path: build
+minutes: 18
+draft: false
+---
+
+This lesson is a **build along**. You stack five pieces until you have the same shape as Sandbox Template 3. Read it like a recipe: each block is something you could paste into a `.py` file and run locally with an API key.
+
+## Piece 1 — Imports and the model
+
+```python
+from langchain_openai import ChatOpenAI
+from langchain_core.tools import tool
+from langchain_core.messages import HumanMessage, ToolMessage
+
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+```
+
+- `ChatOpenAI` is the chat model wrapper (same idea as the OpenAI client).
+- `temperature=0` keeps answers steadier while you learn — less random wording.
+- You have a model. You do **not** have an agent yet.
+
+## Piece 2 — One tool (the hands)
+
+```python
+@tool
+def lookup_fact(topic: str) -> str:
+    """Look up a short fact about an AI topic. Pass a single word like llm or agent."""
+    facts = {
+        "llm": "An LLM predicts the next token from patterns in training data.",
+        "agent": "An agent loops: plan, call tools, observe, stop.",
+        "rag": "RAG retrieves relevant text first, then asks the model.",
+    }
+    key = topic.lower().strip()
+    for name, text in facts.items():
+        if name in key:
+            return text
+    return f"Unknown topic '{topic}'. Try: {', '.join(facts)}"
+```
+
+The **docstring** is not decoration. The model reads it to decide *when* to call the tool. A vague docstring → vague tool use.
+
+## Piece 3 — Bind tools (give the model permission)
+
+```python
+agent = llm.bind_tools([lookup_fact])
+```
+
+`bind_tools` attaches the tool schema to the model. From here on, a response may include `tool_calls` instead of (or before) a final answer.
+
+Still no loop. One `invoke` could return either text or a tool request.
+
+## Piece 4 — Start the message list
+
+```python
+question = "What is an agent and how does it relate to an LLM?"
+messages = [HumanMessage(content=question)]
+```
+
+`messages` is the shared notebook. Every turn appends: human → AI → tool result → AI → …
+
+## Piece 5 — The loop (the agent)
+
+```python
+MAX_STEPS = 5
+
+for step in range(MAX_STEPS):
+    print(f"--- Step {step + 1} ---")
+    response = agent.invoke(messages)
+    messages.append(response)
+
+    if not response.tool_calls:
+        print("FINAL:", response.content)
+        break
+
+    for call in response.tool_calls:
+        print(f"TOOL  {call['name']}({call['args']})")
+        result = lookup_fact.invoke(call["args"])
+        print(f"RESULT {result}")
+        messages.append(
+            ToolMessage(content=result, tool_call_id=call["id"])
+        )
+else:
+    print("Stopped: hit step limit.")
+```
+
+What this does in plain language:
+
+1. Ask the model with the current history.
+2. If it did **not** request a tool → that text is the answer; stop.
+3. If it did → **you** run the Python function, print the result, append it, and loop.
+4. Never remove the `MAX_STEPS` cap.
+
+## What a real run looks like (example trace)
+
+You will not get identical wording every time, but the *shape* looks like this:
+
+```text
+--- Step 1 ---
+TOOL  lookup_fact({'topic': 'agent'})
+RESULT An agent loops: plan, call tools, observe, stop.
+
+--- Step 2 ---
+TOOL  lookup_fact({'topic': 'llm'})
+RESULT An LLM predicts the next token from patterns in training data.
+
+--- Step 3 ---
+FINAL: An agent is a loop that uses an LLM as its reasoning engine…
+```
+
+Match that to the Sandbox cards: Brief → Model → Tool → Result → Model → Tool → Result → Answer.
+
+## Checklist — “is this an agent yet?”
+
+| You have… | Agent? |
+|-----------|--------|
+| Model + one chat call | No — chat |
+| Model + tools, one call | Almost — tool-using chat |
+| Model + tools + **bounded loop** | Yes |
+
+## Takeaway
+
+**Tool → bind → messages → capped loop → print a trace.** That is how a minimal Python agent is built. The Sandbox Agent scenario is this file with animation on top.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Copy the five pieces into one file in order. Change the <code>facts</code> dict to include one term from your work. Ask a question that needs that term. When you reach the Sandbox, compare your print trace to the animated cards.
+</div>
