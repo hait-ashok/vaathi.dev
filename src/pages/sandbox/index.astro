@@ -36,25 +36,15 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
         Pick a scenario, change the inputs, watch the animated pipeline — then read the annotated Python for that option.
       </p>
 
-      <aside class="sb-stage-note" aria-label="Access modes">
+      <aside class="sb-stage-note" aria-label="How runs are secured">
         <p>
-          <strong>Today (local / learning):</strong> paste your own OpenAI key — it stays in this browser
-          and is sent only to <code>api.openai.com</code>.
+          <strong>Runs on Amazon Bedrock</strong> (Nova Micro, EU) through an AWS Lambda in your account —
+          not OpenAI, no API key to paste. The browser only talks to the sandbox API; the model stays on the AWS backbone.
         </p>
         <p>
-          <strong>Next stage (web):</strong> Amazon Bedrock with a site-managed key, Cognito sign-in,
-          and a $1/day budget cap — no BYOK. Same scenarios; the model call moves server-side.
+          Soft site cap ~$1/day (DynamoDB ledger) plus the AWS Budget on Bedrock. Cognito sign-in can gate this further next.
         </p>
       </aside>
-
-      <!-- Key input (BYOK until Bedrock stage) -->
-      <div class="sandbox-setup">
-        <div class="sandbox-row">
-          <label class="sandbox-label" for="sandbox-key">OpenAI API key (temporary BYOK)</label>
-          <input id="sandbox-key" class="sandbox-input" type="password" placeholder="sk-…" autocomplete="off" />
-          <span class="sandbox-hint">Required only until the Bedrock stage ships. Stored in localStorage only.</span>
-        </div>
-      </div>
 
       <!-- Scenario tabs -->
       <nav class="sb-tabs" aria-label="Scenario picker">
@@ -257,20 +247,14 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
         </ol>
         <p>On Agent + Tools, steps 2–4 repeat. That loop is the agent.</p>
 
-        <h3>Next stage: Bedrock, no BYOK</h3>
-        <p>
-          The teaching shape stays the same. What changes for web users:
-        </p>
+        <h3>Security model</h3>
         <ul>
-          <li><strong>Amazon Bedrock</strong> (e.g. Nova Micro in EU) — model calls from a Lambda function URL, not the browser.</li>
-          <li><strong>Site key</strong> — IAM role on Lambda; users never see or paste a key.</li>
-          <li><strong>Cognito + authenticator (TOTP)</strong> — sign-in before a run.</li>
-          <li><strong>$1/day budget</strong> — DynamoDB ledger + AWS Budgets (already sketched for this app).</li>
+          <li><strong>Amazon Bedrock</strong> (Nova Micro, EU inference profile) — invoked only from Lambda IAM role.</li>
+          <li><strong>No BYOK</strong> — nothing leaves the browser except the scenario payload to your Function URL.</li>
+          <li><strong>Origin allow-list</strong> — Lambda rejects requests that are not from vaathi.dev (or local dev).</li>
+          <li><strong>$1/day soft ledger</strong> + AWS Budget on Bedrock as the hard backstop.</li>
+          <li><strong>Next:</strong> Cognito + TOTP so only signed-in learners can run.</li>
         </ul>
-        <p>
-          Until that ships, BYOK OpenAI keeps the sandbox usable for learning. The Python above is what you run locally;
-          the browser run is the same ideas without installing LangChain.
-        </p>
 
         <h3>Lessons ↔ Sandbox</h3>
         <table class="sandbox-table">
@@ -301,5 +285,6 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
     </div>
   </section>
 
+  <script is:inline src="/sandbox-config.js"></script>
   <script is:inline src="/sandbox.js"></script>
 </BaseLayout>
