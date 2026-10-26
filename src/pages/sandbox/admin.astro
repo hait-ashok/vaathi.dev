@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Sandbox admin — vaathi.dev"
+  description="Approve or deny Sandbox access requests. Cognito MFA required."
+>
+  <section class="section" aria-labelledby="admin-heading">
+    <div class="site-shell">
+      <p class="mono-label">Sandbox · Admin</p>
+      <h1 id="admin-heading" class="section__title">Access requests</h1>
+      <p class="section__lede">
+        Sign in with your admin Cognito account (email + authenticator). Approve emails so they can register and use Bedrock under the shared $1/day cap.
+      </p>
+      <p class="sandbox-hint"><a href="/sandbox">← Back to Sandbox</a></p>
+
+      <p id="admin-who" class="sandbox-hint" hidden></p>
+      <p>
+        <button id="admin-signout" class="site-cta site-cta--ghost" type="button" hidden>Sign out</button>
+      </p>
+
+      <div id="admin-auth" class="sandbox-setup sb-auth" aria-label="Admin sign-in">
+        <p id="admin-auth-msg" class="sandbox-hint" role="status"></p>
+
+        <div data-admin-panel="signin">
+          <h2 class="sb-explain__title">Admin sign in</h2>
+          <form id="admin-form-signin" class="sb-auth__form">
+            <label class="sandbox-label" for="admin-email">Email</label>
+            <input id="admin-email" class="sandbox-input" type="email" autocomplete="username" required />
+            <label class="sandbox-label" for="admin-password">Password</label>
+            <input id="admin-password" class="sandbox-input" type="password" autocomplete="current-password" required minlength="10" />
+            <button class="site-cta" type="submit">Sign in</button>
+          </form>
+        </div>
+
+        <div data-admin-panel="mfa-setup" hidden>
+          <h2 class="sb-explain__title">Set up authenticator</h2>
+          <p class="sandbox-hint">Scan this QR, then enter a 6-digit code.</p>
+          <div id="admin-totp-qr" class="sb-auth__qr" role="img" aria-label="Authenticator QR code"></div>
+          <p class="sandbox-hint">Manual key:</p>
+          <p class="sb-auth__secret"><code id="admin-totp-secret"></code></p>
+          <form id="admin-form-mfa-setup" class="sb-auth__form">
+            <label class="sandbox-label" for="admin-mfa-setup-code">Authenticator code</label>
+            <input id="admin-mfa-setup-code" class="sandbox-input" inputmode="numeric" autocomplete="one-time-code" required pattern="[0-9]{6}" />
+            <button class="site-cta" type="submit">Verify &amp; continue</button>
+          </form>
+        </div>
+
+        <div data-admin-panel="mfa" hidden>
+          <h2 class="sb-explain__title">Authenticator code</h2>
+          <form id="admin-form-mfa" class="sb-auth__form">
+            <label class="sandbox-label" for="admin-mfa-code">6-digit code</label>
+            <input id="admin-mfa-code" class="sandbox-input" inputmode="numeric" autocomplete="one-time-code" required pattern="[0-9]{6}" />
+            <button class="site-cta" type="submit">Verify</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="admin-panel" class="sb-admin" hidden>
+        <div class="sb-admin__bar">
+          <h2 class="sb-explain__title">Pending</h2>
+          <button id="admin-refresh" class="site-cta site-cta--ghost" type="button">Refresh</button>
+        </div>
+        <p id="admin-list-msg" class="sandbox-hint" role="status"></p>
+        <div id="admin-pending" class="sb-admin__list"></div>
+
+        <h2 class="sb-explain__title">Recently decided</h2>
+        <div id="admin-recent" class="sb-admin__list"></div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline src="/sandbox-config.js?v=20261026a"></script>
+  <script is:inline src="/qrcode.js?v=20261026a"></script>
+  <script is:inline src="/cognito-auth.js?v=20261026a"></script>
+  <script is:inline src="/sandbox-admin.js?v=20261026a"></script>
+</BaseLayout>

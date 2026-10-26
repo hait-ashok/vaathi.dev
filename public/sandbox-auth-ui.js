@@ -1,9 +1,13 @@
-// Sandbox auth panel: register → confirm → sign-in → TOTP setup / code.
+// Sandbox auth panel: request access → register → confirm → sign-in → TOTP.
 (function () {
-  var state = { email: '', session: '', secret: '', mode: 'signin' };
+  var state = { email: '', session: '', secret: '', mode: 'request' };
 
   function $(id) { return document.getElementById(id); }
   function auth() { return window.VaathiAuth; }
+
+  function apiUrl() {
+    return (window.VAATHI_SANDBOX_API || '').replace(/\/?$/, '/');
+  }
 
   function setMsg(text, isError) {
     var el = $('sandbox-auth-msg');
@@ -82,6 +86,38 @@
         who.hidden = true;
         who.textContent = '';
       }
+    }
+  }
+
+  async function onRequestAccess(e) {
+    e.preventDefault();
+    var email = (($('auth-email-request') || {}).value || '').trim().toLowerCase();
+    var url = apiUrl();
+    if (!url || url.indexOf('http') !== 0) {
+      setMsg('Sandbox API is not configured.', true);
+      return;
+    }
+    try {
+      var resp = await fetch(url + 'access-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email }),
+      });
+      var data = await resp.json().catch(function () { return {}; });
+      if (!resp.ok) {
+        throw new Error(data.error || ('Request failed (' + resp.status + ')'));
+      }
+      state.email = email;
+      if (data.status === 'approved') {
+        setMsg(data.message || 'Already approved. Create an account.');
+        showPanel('register');
+        var regEmail = $('auth-email');
+        if (regEmail) regEmail.value = email;
+      } else {
+        setMsg(data.message || 'Request submitted. Check back after approval.');
+      }
+    } catch (err) {
+      setMsg(err.message || 'Could not submit request.', true);
     }
   }
 
@@ -183,20 +219,22 @@
   function onSignOut() {
     auth().clearSession();
     setMsg('Signed out.');
-    showPanel('signin');
+    showPanel('request');
     refreshSignedIn();
   }
 
   function start() {
     if (!auth()) return;
-    showPanel('signin');
+    showPanel('request');
     refreshSignedIn();
 
+    var req = $('auth-form-request');
     var reg = $('auth-form-register');
     var conf = $('auth-form-confirm');
     var sign = $('auth-form-signin');
     var mfa = $('auth-form-mfa');
     var setup = $('auth-form-mfa-setup');
+    if (req) req.addEventListener('submit', onRequestAccess);
     if (reg) reg.addEventListener('submit', onRegister);
     if (conf) conf.addEventListener('submit', onConfirm);
     if (sign) sign.addEventListener('submit', onSignIn);

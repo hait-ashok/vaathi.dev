@@ -1350,3 +1350,55 @@ html[data-lens-ready] .lesson-prose.is-skim:not(.is-open) .lesson-body {
   color: var(--brand);
 }
 
+
+.sb-admin {
+  margin: var(--space-5) 0;
+  max-width: 40rem;
+}
+
+.sb-admin__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.sb-admin__bar .sb-explain__title {
+  margin: 0;
+}
+
+.sb-admin__list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-5);
+}
+
+.sb-admin__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface-quiet);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+}
+
+.sb-admin__row--quiet {
+  background: transparent;
+}
+
+.sb-admin__meta {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 12rem;
+}
+
+.sb-admin__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
