@@ -18,6 +18,44 @@
     });
   }
 
+  function otpauthUrl(email, secret) {
+    var label = encodeURIComponent('vaathi.dev:' + (email || 'user'));
+    var issuer = encodeURIComponent('vaathi.dev');
+    return (
+      'otpauth://totp/' + label +
+      '?secret=' + encodeURIComponent(secret) +
+      '&issuer=' + issuer +
+      '&algorithm=SHA1&digits=6&period=30'
+    );
+  }
+
+  function renderTotpQr(email, secret) {
+    var host = $('auth-totp-qr');
+    if (!host) return;
+    host.replaceChildren();
+    if (!secret) return;
+    if (typeof qrcode !== 'function') {
+      host.textContent = 'QR library missing — use the manual key below.';
+      return;
+    }
+    try {
+      if (qrcode.stringToBytesFuncs && qrcode.stringToBytesFuncs['UTF-8']) {
+        qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
+      }
+      var qr = qrcode(0, 'M');
+      qr.addData(otpauthUrl(email, secret));
+      qr.make();
+      host.innerHTML = qr.createSvgTag(5, 0);
+      var svg = host.querySelector('svg');
+      if (svg) {
+        svg.setAttribute('role', 'img');
+        svg.setAttribute('aria-label', 'Scan to add vaathi.dev to your authenticator');
+      }
+    } catch (err) {
+      host.textContent = 'Could not draw QR — use the manual key below.';
+    }
+  }
+
   function refreshSignedIn() {
     var a = auth();
     var signed = a && a.isSignedIn();
@@ -91,7 +129,8 @@
       state.secret = assoc.SecretCode || '';
       var secretEl = $('auth-totp-secret');
       if (secretEl) secretEl.textContent = state.secret;
-      setMsg('Add this key to your authenticator app, then enter a code.');
+      renderTotpQr(email, state.secret);
+      setMsg('Scan the QR code (or enter the key), then enter a 6-digit code.');
       showPanel('mfa-setup');
       return;
     }

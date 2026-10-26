@@ -89,7 +89,11 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
 
         <div data-auth-panel="mfa-setup" hidden>
           <h2 class="sb-explain__title">Set up authenticator</h2>
-          <p class="sandbox-hint">Add this secret in Google Authenticator / 1Password / Authy, then enter a 6-digit code.</p>
+          <p class="sandbox-hint">
+            Scan this QR code with Google Authenticator, 1Password, Authy, or similar — then enter a 6-digit code.
+          </p>
+          <div id="auth-totp-qr" class="sb-auth__qr" role="img" aria-label="Authenticator QR code"></div>
+          <p class="sandbox-hint">Can&rsquo;t scan? Enter this key manually:</p>
           <p class="sb-auth__secret"><code id="auth-totp-secret"></code></p>
           <form id="auth-form-mfa-setup" class="sb-auth__form">
             <label class="sandbox-label" for="auth-mfa-setup-code">Authenticator code</label>
@@ -348,6 +352,7 @@ An agent is a system that uses a model inside a loop: set a goal, plan steps, ca
   </section>
 
   <script is:inline src="/sandbox-config.js"></script>
+  <script is:inline src="/qrcode.js"></script>
   <script is:inline src="/cognito-auth.js"></script>
   <script is:inline src="/sandbox-auth-ui.js"></script>
   <script is:inline src="/sandbox.js"></script>
