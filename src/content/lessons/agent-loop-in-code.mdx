@@ -7,7 +7,39 @@ minutes: 16
 draft: false
 ---
 
-[Agentic workflows](/learn/foundations/agentic-workflows) named the loop. Here it is as code you can follow — the same shape as Sandbox **Agent + Tools**.
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">An agent is the same model inside a bounded loop with tools — plan, act, observe, stop — not a smarter brain.</Beat>
+  <Beat label="From your world">Ash’s meetup checklist that can tick itself: look up a fact, read it, maybe look up again, then answer — with a hard stop.</Beat>
+  <Beat label="One example">Step 1 calls `lookup_fact` for agent; step 2 for LLM; step 3 prints the answer. That is a successful run.</Beat>
+  <Beat label="Watch-out">More steps mean more chances to do something Ash did not ask for. Cap the loop.</Beat>
+  <Beat label="Try this">Draw five boxes — Brief, Model, Tool, Result, Answer — and fill them from the sample console output.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">`bind_tools` + growing `messages` + `for step in range(n)` + stop when `tool_calls` empty — that is the agent runtime.</Beat>
+  <Beat label="From your world">Step limit = timeout; allow-listed tools = change window. Same as Ash’s supervised meetup helper.</Beat>
+  <Beat label="One example">Without appending `ToolMessage`, the next turn forgets `GOT:` — history is the short-term memory of the loop.</Beat>
+  <Beat label="Watch-out">Fluent answers can still ignore a bad tool result. Verify `GOT:` lines, not tone.</Beat>
+  <Beat label="Try this">Read the full example top to bottom; mark where the Sandbox Brief / Model / Tool / Result / Answer cards map.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="useful">
+  <Beat label="In one sentence">You can say: it can look things up and try again until it stops — you still set the stop and approve sends.</Beat>
+  <Beat label="From your world">Buyers hear “autonomous.” Offer “bounded loop with tools we chose.”</Beat>
+  <Beat label="One example">“Two lookups, then an answer about agents and LLMs — step limit five, read-only tool” — a demo sentence you can stand behind.</Beat>
+  <Beat label="Watch-out">“It handled it” is not a sentence before you’ve seen the tool result line.</Beat>
+  <Beat label="Try this">Write Ash’s stop rule in one line: max steps, read-only tools, human approve for write.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+[Agentic workflows](/learn/foundations/agentic-workflows) named the loop. **Ash** still wants more than one chat reply for the meetup: look something up, read it, maybe look again, stop. Here it is as code you can follow — the same shape as Sandbox **Agent + Tools**.
 
 ## Single-shot vs loop
 
@@ -19,7 +51,7 @@ draft: false
 
 ## Full example (read top to bottom)
 
-This is close to `sandbox/templates/03_simple_agent.py`. Comments mark what you will see in the Sandbox cards.
+This is close to `sandbox/templates/03_simple_agent.py`. Comments mark what you will see in the Sandbox cards — the same cards Ash’s run would light up.
 
 ```python
 from langchain_openai import ChatOpenAI
@@ -76,7 +108,7 @@ else:
 
 1. **`@tool` / `lookup_fact`** — the only thing that can return *your* facts, not guesses.
 2. **`bind_tools`** — model may emit structured `tool_calls`.
-3. **`messages`** — growing history; without it, the model forgets earlier tool results.
+3. **`messages`** — growing history; without it, the model forgets earlier tool results (Ash’s short-term sticky notes for this run).
 4. **`for step in range(5)`** — hard stop. Agents must timeout.
 5. **`if not response.tool_calls`** — done; print the answer.
 6. **`lookup_fact.invoke` + `ToolMessage`** — you execute; the next model turn sees real data.
@@ -96,12 +128,12 @@ GOT:  An LLM predicts the next token from training patterns.
 ANSWER: An agent uses an LLM inside a loop. The LLM reasons; tools (like lookup_fact) supply facts…
 ```
 
-Two tool rounds, then a final answer — that is a successful agent run.
+Two tool rounds, then a final answer — that is a successful agent run for Ash’s “explain this” ask.
 
 ## Limits to keep
 
 - Step cap (here: 5).
-- Prefer read-only tools until you add a human approve step for writes.
+- Prefer read-only tools until you add a human approve step for writes — same gate Ash uses before sending invites.
 - Check `GOT:` lines — fluent answers can still ignore a bad tool result.
 
 ## Takeaway
@@ -113,3 +145,5 @@ An agent is not a smarter model. It is the **same model inside a bounded loop wi
 
 On paper, draw five boxes: Brief, Model, Tool, Result, Answer. Fill them using the sample console output above. In the Sandbox, run Agent + Tools and tick each box as it appears.
 </div>
+
+</LessonBody>

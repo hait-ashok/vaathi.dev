@@ -7,7 +7,39 @@ minutes: 14
 draft: false
 ---
 
-A [tool](/learn/foundations/tool-landscape) is not magic. In code it is a **function** plus a short description the model can read. When the model wants data it cannot invent safely, it emits a **tool call** instead of a final answer.
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">A tool is a named function plus a short description — the model asks, your code runs it, the result goes back.</Beat>
+  <Beat label="From your world">Like Ash handing a volunteer a card: “lookup calendar — read only.” The volunteer does not invent the room; they look it up.</Beat>
+  <Beat label="One example">`lookup_fact("agent")` returns a stored line. The model asked; Ash’s process executed; then the model wrote the answer.</Beat>
+  <Beat label="Watch-out">If the model skips the tool, tighten the ask (“Always call lookup_fact first”). Fluent guesses are not lookups.</Beat>
+  <Beat label="Try this">Write a tool card for “lookup calendar”: name, one-line description, arguments, read vs write.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Contract = name + description + JSON schema args; `@tool` or raw function schema — model emits `tool_calls`, you `invoke`, append `ToolMessage`.</Beat>
+  <Beat label="From your world">Same as an allow-listed RPC: publish the schema, execute in *your* process, never let the model run arbitrary code.</Beat>
+  <Beat label="One example">Three prints: model asked → we returned → model answered. Empty `tool_calls` means the bind or prompt failed.</Beat>
+  <Beat label="Watch-out">Binding every tool to every run turns a lookup into a send. Prefer read-only until an approve gate exists.</Beat>
+  <Beat label="Try this">Trace one Sandbox tool card: which field is name, description, args, and permission?</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="useful">
+  <Beat label="In one sentence">You can say: the model can request a lookup; our system runs it and feeds the fact back.</Beat>
+  <Beat label="From your world">Buyers hear “tools” and picture the AI doing anything. Offer “named actions we allow.”</Beat>
+  <Beat label="One example">“It checked Ash’s notes for Hall B — it did not email the invite list” — read vs write in one sentence.</Beat>
+  <Beat label="Watch-out">Don’t demo write tools (send, delete, charge) without a human approve step.</Beat>
+  <Beat label="Try this">Rewrite one “the agent can take action” claim as: which tools, read or write, who approves.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+**Ash** needs facts the model should not invent — Hall B from notes, a calendar slot, a guest count. A [tool](/learn/foundations/tool-landscape) is not magic. In code it is a **function** plus a short description the model can read. When the model wants data it cannot invent safely, it emits a **tool call** instead of a final answer.
 
 ## The contract
 
@@ -40,7 +72,7 @@ def lookup_fact(topic: str) -> str:
 #        result = lookup_fact.invoke({"topic": "agent"})
 ```
 
-The `@tool` decorator publishes name, docstring, and argument types to the model.
+The `@tool` decorator publishes name, docstring, and argument types to the model — Ash’s volunteer card, in code.
 
 ## Raw OpenAI style (same idea, more JSON)
 
@@ -95,16 +127,18 @@ If print `1` is empty, the model skipped the tool — tighten the user line (“
 
 ## Safety
 
-- A **read-only** tool (lookup) is safer than a **write** tool (send email).
+- A **read-only** tool (lookup) is safer than a **write** tool (send email) — Ash keeps send behind a human approve.
 - Giving every tool to every run is how a lookup becomes a send.
 - MCP later = the same card plus a standard connector.
 
 ## Takeaway
 
-**Tool = function + description + permission.** Next you put tools inside a [loop](/learn/build/agent-loop-in-code) so the model can call them more than once.
+**Tool = function + description + permission.** Next Ash puts tools inside a [loop](/learn/build/agent-loop-in-code) so the model can call them more than once.
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Write a tool card for “lookup calendar”: name, one-line description, arguments, and whether it may only read or also create events. Keep write off until you have a human approve step.
+Write a tool card for “lookup calendar”: name, one-line description, arguments, and whether it may only read or also create events. Keep write off until you have a human approve step — same rule Ash uses for invites.
 </div>
+
+</LessonBody>

@@ -1,0 +1,101 @@
+---
+title: Memory for agents
+description: Why agents need memory, how you configure it, and a map of market options — told through one meetup story.
+order: 18
+path: foundations
+minutes: 8
+draft: false
+---
+
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">An agent only “remembers” what you save and put back into the next ask — the model itself forgets between sessions.</Beat>
+  <Beat label="From your world">It’s like a sticky note on the fridge, not a person who was at yesterday’s chat.</Beat>
+  <Beat label="One example">Ash’s assistant looked up Hall B yesterday. Today Ash asks “which room?” again — blank, unless Hall B was written down somewhere the app can reread.</Beat>
+  <Beat label="Watch-out">Chat apps that “remember you” are still storing notes. Treat them as sticky notes you don’t fully control.</Beat>
+  <Beat label="Try this">Name one fact you’d want remembered next week. Where would you write it: this chat, a summary, or a real save?</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Memory is read/write policy plus a store and a size budget — not a model feature flag.</Beat>
+  <Beat label="From your world">Same as session state: what you persist, where, TTL, and what you inject on the next request.</Beat>
+  <Beat label="One example">Append tool result to `messages` for this run; `remember(meetup_room=Hall B)` in DynamoDB for the next run.</Beat>
+  <Beat label="Watch-out">Unbounded history burns tokens and can leak old facts into new tasks.</Beat>
+  <Beat label="Try this">Write the four knobs for one agent: what / where / when to read / max size.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="useful">
+  <Beat label="In one sentence">You can say: it can keep notes we choose to save; it does not magically know the account.</Beat>
+  <Beat label="From your world">Buyers hear “memory” and picture a loyal colleague. Offer “saved facts we can edit or delete.”</Beat>
+  <Beat label="One example">“It remembered Hall B because we stored that booking note” — a sentence you can stand behind.</Beat>
+  <Beat label="Watch-out">Don’t promise it remembers every past email unless that pipeline exists.</Beat>
+  <Beat label="Try this">Rewrite one memory claim as: what is saved, who can erase it, and when it is used.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Imagine **Ash** — organising a small meetup, not an engineer. Yesterday Ash asked an assistant which room was free; it looked something up and said **Hall B**. This morning Ash opens a new chat and asks again: “Which room did we book?”
+
+Silence. Not rude — **empty**. The model did not attend yesterday. Nothing was saved for today.
+
+That gap is why agents need memory. Memory is **storage you control**, plus rules for when to save and when to reread — not a smarter brain. See also: [Glossary — Agent memory](/glossary#agent-memory).
+
+## Why it matters for Ash
+
+| If nothing is saved… | What Ash feels |
+| --- | --- |
+| Multi-step booking | Ash repeats the same lookup |
+| “Keep answers short” | Tone resets every new chat |
+| Hall B from a tool | The fact vanishes when the window fills or the tab closes |
+
+Agents [loop](/learn/foundations/agentic-workflows). Loops only stay useful if useful facts **survive** the next turn.
+
+## Three kinds (enough)
+
+| Kind | Where it lives | For Ash |
+| --- | --- | --- |
+| **Short-term** | This chat’s message list | Hall B still on screen in *this* thread |
+| **Session** | A short summary of the run | “We already booked Hall B” |
+| **Long-term** | A store outside the model | Prefs, FAQ notes, saved facts next week |
+
+Long-term often uses [embeddings](/learn/foundations/why-vectors-embeddings) to *find* notes — retrieval, not the model “learning” Ash’s meetup by magic.
+
+## How you configure it (four knobs)
+
+Before picking a vendor, write Ash’s answers:
+
+1. **What** — full chat, a one-line summary, or facts only (`meetup_room=Hall B`)  
+2. **Where** — only in the prompt, or a real store (file, DB, vector index)  
+3. **When** — every turn, end of session, or only when Ash says “remember this”  
+4. **Budget** — max messages / tokens / chunks, and who can delete  
+
+Mental model: **read policy + write policy + store + size limit**.
+
+## Market map (not a tour)
+
+| Region | Job | Beginner cue | Examples |
+| --- | --- | --- | --- |
+| **Chat products** | Built-in chat / custom memory | Notice it; don’t bet an app on it | Consumer chat “memory”, project spaces |
+| **Frameworks** | You wire history + stores in code | When you build | LangChain / LangGraph, LlamaIndex |
+| **Session / KV stores** | Prefs + summaries | Simple long-term | Redis, DynamoDB, Postgres |
+| **Vector / knowledge** | “Find relevant notes” | RAG-shaped memory | pgvector, OpenSearch, Bedrock Knowledge Bases |
+| **Memory specialists** | Profiles / facts over time | Optional later | Mem0, Zep |
+
+For Ash’s room name: **last N messages + one saved fact** beats a fancy memory product. Add vectors when the job is “search my notes,” not “remember Hall B.”
+
+## Takeaway
+
+**Memory = sticky notes you file and hand back to the model** — configured storage, not a feature the model invents.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Be Ash for one minute. Fill: *what / where / when to read / max size* for “Hall B.” Then open Build: [Memory in code](/learn/build/memory-in-code) — same story in a few lines of Python.
+</div>
+
+</LessonBody>

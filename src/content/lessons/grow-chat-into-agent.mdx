@@ -1,13 +1,45 @@
 ---
 title: Grow a chat into an agent
 description: One file, three versions — chat only, one tool call, then a full multi-step agent.
-order: 7
+order: 8
 path: build
 minutes: 16
 draft: false
 ---
 
-The easiest way to understand agents is to **upgrade the same script**. Version A is Sandbox Simple Chat. Version C is Sandbox Agent + Tools. Nothing mystical appears — only tools and a loop.
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">Ash upgrades the same script three times: chat → one tool handshake → a capped loop.</Beat>
+  <Beat label="From your world">Nothing mystical appears — only a tool and a `for` that can call it more than once.</Beat>
+  <Beat label="One example">Version A answers “what is an agent?” from memory; Version C can look up agent, then llm, then stop.</Beat>
+  <Beat label="Watch-out">Two hard-coded model calls (Version B) are still not a loop — useful to see, easy to outgrow.</Beat>
+  <Beat label="Try this">Sketch Version B with arrows: Human → AI (tool_calls) → ToolMessage → AI (answer).</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">A → B → C is the migration path: single `invoke`, fixed two-call handshake, then `range(N)` with dispatch.</Beat>
+  <Beat label="From your world">Same file Ash would keep in the meetup helper repo — Sandbox Simple Chat vs Agent + Tools.</Beat>
+  <Beat label="One example">Version B prints `tool_calls`, then `result`, then `answer` — the handshake you debug first.</Beat>
+  <Beat label="Watch-out">Empty `tool_calls` means the brief was weak; fix the prompt before blaming the loop.</Beat>
+  <Beat label="Try this">Add a second `@tool`, bind both, map `name → fn` — loop body stays the same.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="useful">
+  <Beat label="In one sentence">You can say: chat becomes an agent when we add tools and a bounded loop — same model, new workflow.</Beat>
+  <Beat label="From your world">Show Ash’s side-by-side table: one call / two fixed calls / up to five with tools.</Beat>
+  <Beat label="One example">“Version B is the handshake demo; Version C is what Agent + Tools animates.”</Beat>
+  <Beat label="Watch-out">Don’t call Version B a full agent — buyers will expect multi-step autonomy you have not built.</Beat>
+  <Beat label="Try this">Say the three version labels out loud while a Sandbox run ticks each card.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Imagine **Ash** — organising a small meetup, not an engineer. The easiest way to see agents is to **upgrade the same script**. Version A is Sandbox Simple Chat. Version C is Sandbox Agent + Tools. Nothing mystical appears — only tools and a loop.
 
 ## Version A — Chat only (no tools)
 
@@ -128,10 +160,12 @@ out = fn.invoke(call["args"])
 
 ## Takeaway
 
-Chat → tool handshake → capped loop. When you can explain Version B’s two prints (`tool_calls` then `result`), you are ready for the Sandbox agent animation.
+Chat → tool handshake → capped loop. When you can explain Version B’s two prints (`tool_calls` then `result`), you are ready for the Sandbox agent animation — the same path Ash took from one invite draft to a lookup-and-loop helper.
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
 Write Version B on paper with arrows: Human → AI (tool_calls) → ToolMessage → AI (answer). In the Sandbox, run Agent + Tools and tick each arrow as a card appears.
 </div>
+
+</LessonBody>

@@ -9,8 +9,39 @@ draft: false
 
 import AttentionAnim from '../../components/diagrams/AttentionAnim.astro';
 import TransformerLayersAnim from '../../components/diagrams/TransformerLayersAnim.astro';
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
 
-The previous lesson gave the [transformer](/learn/foundations/transformers-beginner) nickname and the attention spotlight. Here we walk the **path a sentence takes** through the architecture — still intuition, not linear algebra.
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">A sentence becomes tokens, then number-coordinates, then soft spotlights and stacked layers — then “what’s next?”</Beat>
+  <Beat label="From your world">Same path as reading meetup copy: break it up, sense meaning, look back for “it,” deepen the read, finish the line.</Beat>
+  <Beat label="One example">Ash’s invite: tokens → sticky-note-like embeddings → attention on the pronoun → layers → next-word draft.</Beat>
+  <Beat label="Watch-out">Architecture explains fluency, not truth. Ash still checks the draft.</Beat>
+  <Beat label="Try this">Write one tricky-pronoun sentence. Circle the words a human needs — that’s your attention map.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Pipeline: tokenize → embed → multi-head attention + FFN stacked → next-token distribution; decoder-only is the common chat shape.</Beat>
+  <Beat label="From your world">Same recipe scaled: more layers/width/context → more capacity and more GPU-shaped cost.</Beat>
+  <Beat label="One example">Ash’s chat draft runs decoder-only: positions attend over prompt + prior tokens, then sample the next one.</Beat>
+  <Beat label="Watch-out">Attention cost grows with context length; longer windows need more memory and compute.</Beat>
+  <Beat label="Try this">Sketch tokens → embeddings → attention → stack → next token for one product call.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">You can say: it turns your ask into pieces, weighs what matters, and predicts the next words — still a draft to check.</Beat>
+  <Beat label="From your world">Skip the layer math. Sell the path: read context, then write.</Beat>
+  <Beat label="One example">“Ash’s model looks back at earlier words to keep pronouns straight, then continues the invite” — clear without jargon.</Beat>
+  <Beat label="Watch-out">Don’t promise infinite context or that “transformer” means verified facts.</Beat>
+  <Beat label="Try this">Tell the five-step path in under thirty seconds without saying “matrix.”</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Ash already heard the [transformer](/learn/foundations/transformers-beginner) nickname and the attention spotlight. Now the question is the path itself: **how does a meetup sentence travel through the box?** Here we walk that path — still intuition, not linear algebra.
 
 ## The path in one picture
 
@@ -20,11 +51,11 @@ The previous lesson gave the [transformer](/learn/foundations/transformers-begin
 
 Text is split into [tokens](/glossary#token). Each token becomes an [embedding](/learn/foundations/why-vectors-embeddings) — a vector that starts as “this piece of text” and will be refined as context mixes in.
 
-You already know the sticky-note wall idea. Inside a transformer, those vectors are the working memory for each position in the sequence.
+You already know Ash’s sticky-note wall idea. Inside a transformer, those vectors are the working memory for each position in the sequence.
 
 ## 2. Attention: what to focus on
 
-[Attention](/glossary#attention) lets each position **look at other positions** and pull in a weighted blend of what matters. Resolving “it” in a sentence is the classic story:
+[Attention](/glossary#attention) lets each position **look at other positions** and pull in a weighted blend of what matters. Resolving “it” in meetup copy is the classic story:
 
 <AttentionAnim />
 
@@ -58,7 +89,7 @@ A few beginner-friendly reasons transformers stuck for language (and spilled int
 - **Composable depth** — Stack more layers / more width → more capacity, with the same recipe.
 - **Fits prediction** — [LLMs](/learn/foundations/llms-plain-language) need “what’s next?”; attention + layers produce a distribution over next tokens.
 
-Limits stay honest: attention cost grows with context length; longer windows need more memory and compute. Architecture helps; it doesn’t invent truth.
+Limits stay honest: attention cost grows with context length; longer windows need more memory and compute. Architecture helps; it doesn’t invent truth — Ash still reads the invite before send.
 
 See also: [Glossary — Transformer](/glossary#transformer), [Attention](/glossary#attention), [Embedding](/glossary#embedding). Related: [Gen AI](/learn/foundations/what-gen-ai-is), [embeddings](/learn/foundations/why-vectors-embeddings).
 
@@ -69,5 +100,7 @@ See also: [Glossary — Transformer](/glossary#transformer), [Attention](/glossa
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Write one sentence with a tricky pronoun. Circle the words a human would need to resolve it. That’s your attention map — then ask a chat model which words it “relied on.” Compare the stories.
+Be Ash for a minute. Write one meetup sentence with a tricky pronoun. Circle the words a human would need to resolve it. That’s your attention map — then ask a chat model which words it “relied on.” Compare the stories.
 </div>
+
+</LessonBody>

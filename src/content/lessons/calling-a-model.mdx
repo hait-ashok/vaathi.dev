@@ -7,7 +7,39 @@ minutes: 12
 draft: false
 ---
 
-Foundations taught *what* a model is. Here you see *how code talks to one*. The Sandbox **Simple Chat** scenario is this lesson live.
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">Code talks to a model by sending a message list and reading one completion back — client → messages → text.</Beat>
+  <Beat label="From your world">Like texting a helpful stranger with a sticky note of rules at the top, then reading their one reply.</Beat>
+  <Beat label="One example">Ash’s system line says “Be concise. Help book the meetup.” The user line asks “Which room?” — one completion answers.</Beat>
+  <Beat label="Watch-out">One completion is not an agent. No tools, no automatic second round unless *you* send another request.</Beat>
+  <Beat label="Try this">Write two system prompts for “What is an embedding?” — one that demands one sentence, one a metaphor.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Chat APIs share one contract: authenticated client, `messages[]` with roles, one assistant completion (optionally capped by `max_tokens`).</Beat>
+  <Beat label="From your world">Same as any RPC: credentials on the client, payload in, response out. Roles are the schema.</Beat>
+  <Beat label="One example">Append assistant + user turns for multi-turn chat; agents later append `tool` roles to the same list.</Beat>
+  <Beat label="Watch-out">BYOK locally vs server-held keys on the web stage — message shape stays; credential ownership changes.</Beat>
+  <Beat label="Try this">Point at Template 1: where is the client, the messages array, and the printed completion?</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="useful">
+  <Beat label="In one sentence">You can say: every chat product is this handshake — instructions plus the user’s ask, one model reply.</Beat>
+  <Beat label="From your world">Buyers hear “API.” Offer “we send a short brief and a question; the model returns one answer.”</Beat>
+  <Beat label="One example">“Change the system line and Ash’s same question about Hall B sounds different” — prompting as a product lever.</Beat>
+  <Beat label="Watch-out">Don’t call multi-turn chat an “agent.” Agents add tools and a loop; chat only appends messages.</Beat>
+  <Beat label="Try this">Rewrite one “our AI agent chats” claim as: single-shot vs multi-turn vs tool loop — which do you actually ship?</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Foundations taught *what* a model is. **Ash** still needs Hall B booked — and wants to see *how code talks to one*. The Sandbox **Simple Chat** scenario is this lesson live: same meetup ask, one completion back.
 
 ## The shape
 
@@ -38,7 +70,7 @@ print(response.choices[0].message.content)
 
 | Role | Job |
 |------|-----|
-| **system** | Standing instructions — tone, length, rules. |
+| **system** | Standing instructions — tone, length, rules. Ash’s “be brief / help book the meetup.” |
 | **user** | This turn&rsquo;s ask. |
 | **assistant** | Prior model replies (used in longer chats and agent loops). |
 | **tool** | Results from a tool the model asked to run (next lessons). |
@@ -47,7 +79,7 @@ Change the system line and the same user question can feel completely different.
 
 ## What “one completion” means
 
-The model returns **one** assistant message. No tools. No second round unless *you* send another request. That is single-shot chat — enough for many tasks, and the baseline before agents.
+The model returns **one** assistant message. No tools. No second round unless *you* send another request. That is single-shot chat — enough for many of Ash’s tasks, and the baseline before agents.
 
 ## Multi-turn (still not an agent)
 
@@ -65,7 +97,7 @@ r2 = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
 print(r2.choices[0].message.content)
 ```
 
-Agents reuse this message list idea, then add tool results as extra roles. You will build that in [Assemble a Python agent](/learn/build/assemble-a-python-agent).
+Agents reuse this message list idea, then add tool results as extra roles. Ash will build that in [Assemble a Python agent](/learn/build/assemble-a-python-agent).
 
 ## Keys and trust
 
@@ -73,10 +105,12 @@ In local learning you may paste a key (BYOK). On the web stage, the key lives on
 
 ## Takeaway
 
-**Client → messages → completion.** If you can point at those three, you can read Template 1 and the Bedrock Converse preview in the Sandbox.
+**Client → messages → completion.** If you can point at those three, you can read Template 1 and the Bedrock Converse preview in the Sandbox — same shape Ash uses for every meetup ask.
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
 Write two system prompts for the same user question (“What is an embedding?”): one that demands one sentence, one that demands a metaphor. Run both in the [Sandbox Simple Chat](/sandbox) when you reach Stage 3.
 </div>
+
+</LessonBody>

@@ -8,14 +8,45 @@ draft: false
 ---
 
 import EmbeddingsAnim from '../../components/diagrams/EmbeddingsAnim.astro';
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
 
-Computers don’t “feel” that *dog* and *puppy* are related. **Embeddings** turn words, sentences, or documents into lists of numbers (**vectors**) so that *similar meaning tends to sit nearby* in that number-space.
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">Embeddings turn text into numbers so “similar meaning” can sit nearby — useful for finding notes, not for inventing truth.</Beat>
+  <Beat label="From your world">Sticky notes on a wall: related ideas closer, unrelated farther.</Beat>
+  <Beat label="One example">Ash’s “refund for no-shows” note can match “money-back if people cancel” without the same keywords.</Beat>
+  <Beat label="Watch-out">Nearby ≠ correct. Close notes can still be the wrong policy.</Beat>
+  <Beat label="Try this">Write two near-synonyms and one odd phrase. Mentally place them on a wall.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Embeddings map text to vectors so retrieval can rank by similarity instead of exact string match.</Beat>
+  <Beat label="From your world">Same job as a search index with a distance function — candidates first, then you read.</Beat>
+  <Beat label="One example">Ash’s FAQ store: embed the question, nearest chunks for “door code / Hall B,” then answer from those notes.</Beat>
+  <Beat label="Watch-out">Retrieval quality ≠ answer quality. Bad chunks still feed a fluent wrong reply.</Beat>
+  <Beat label="Try this">Name one search that fails on keywords but should succeed on meaning.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">You can say: it finds similar notes by meaning; it does not guarantee the right note.</Beat>
+  <Beat label="From your world">Buyers hear “understands my docs.” Offer “ranks likely matches you still open.”</Beat>
+  <Beat label="One example">“It can surface Ash’s refund note when someone asks about money-back” — find, not invent.</Beat>
+  <Beat label="Watch-out">Don’t promise perfect search or that nearby equals approved policy.</Beat>
+  <Beat label="Try this">Rewrite one “semantic search” claim as: find candidates, human or RAG checks them.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Ash has a pile of meetup notes — refunds, room names, speaker bios — and asks again: **“How does it know which note to pull?”** Computers don’t “feel” that *dog* and *puppy* are related. **Embeddings** turn words, sentences, or documents into lists of numbers (**vectors**) so that *similar meaning tends to sit nearby* in that number-space.
 
 <EmbeddingsAnim />
 
 ## The intuition
 
-Imagine placing sticky notes on a wall: related ideas closer together, unrelated ones farther apart. An embedding model learns a high-dimensional version of that wall. “Distance” (or angle) between vectors becomes a rough measure of **similarity**.
+Imagine Ash placing sticky notes on a wall: related ideas closer together, unrelated ones farther apart. An embedding model learns a high-dimensional version of that wall. “Distance” (or angle) between vectors becomes a rough measure of **similarity**.
 
 You don’t need the math. You need the idea: **meaning → coordinates → compare by nearness**.
 
@@ -23,7 +54,7 @@ You don’t need the math. You need the idea: **meaning → coordinates → comp
 
 - **Search / retrieval** — Find documents like your question without exact keyword matches (“refund policy” can find “money-back terms”).
 - **Recommendations** — “More like this.”
-- **RAG-style apps** — Retrieve relevant notes first, then ask a language model to answer using them (reduces pure guesswork).
+- **RAG-style apps** — Retrieve relevant notes first, then ask a language model to answer using them (reduces pure guesswork) — how Ash’s FAQ bot should work when the answer lives in a note.
 
 See also: [Glossary — Embedding](/glossary#embedding).
 
@@ -38,5 +69,7 @@ Vectors/embeddings are how modern AI systems **measure likeness** so they can re
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Write three short phrases: two that mean nearly the same thing, and one that doesn’t. Mentally place them on a wall — the first pair close, the odd one out farther. That’s the embedding story without code.
+Be Ash for a minute. Write three short meetup phrases: two that mean nearly the same thing, and one that doesn’t. Mentally place them on a wall — the first pair close, the odd one out farther. That’s the embedding story without code.
 </div>
+
+</LessonBody>

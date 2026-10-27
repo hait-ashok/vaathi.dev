@@ -15,29 +15,33 @@ import AgenticWorkflowDiagram from '../../components/diagrams/AgenticWorkflowDia
 
 <Lens persona="new" relevance="start">
   <Beat label="In one sentence">One reply is a single ask. An agent looks something up, reads it, and tries again until it stops.</Beat>
-  <Beat label="From your world">It is a checklist that can tick itself, which is why you still set the last tick.</Beat>
-  <Beat label="One example">Find the time, write the reminder, stop. A fourth step that wants to email everyone is the loop without a limit.</Beat>
+  <Beat label="From your world">It is a checklist that can tick itself for Ash’s meetup — which is why Ash still sets the last tick.</Beat>
+  <Beat label="One example">Find the time, write Ash’s reminder, stop. A fourth step that wants to email everyone is the loop without a limit.</Beat>
   <Beat label="Watch-out">More steps mean more chances to do something you did not ask for.</Beat>
-  <Beat label="Try this">Step the rows, then run the short loop with the limit on.</Beat>
+  <Beat label="Try this">Step the rows for Ash’s short loop, then run it with the limit on.</Beat>
 </Lens>
 
 <Lens persona="it" relevance="start">
   <Beat label="In one sentence">The agent is the loop: goal, plan, tool, observation, stop. The model is the same.</Beat>
-  <Beat label="From your world">A step limit is the timeout. An allow gate is the change window.</Beat>
-  <Beat label="One example">lookup_note returns 4pm. The draft uses that string. Step 4 does not run when the limit is 3.</Beat>
+  <Beat label="From your world">A step limit is the timeout. An allow gate is the change window — same as Ash’s supervised meetup helper.</Beat>
+  <Beat label="One example">lookup_note returns 4pm for Ash. The draft uses that string. Step 4 does not run when the limit is 3.</Beat>
   <Beat label="Watch-out">A fluent loop can still be wrong. Verify the tool result, not the tone.</Beat>
-  <Beat label="Try this">Read the trace, lift the limit once, then approve a send yourself.</Beat>
+  <Beat label="Try this">Read Ash’s trace, lift the limit once, then approve a send yourself.</Beat>
 </Lens>
 
 <Lens persona="sales" relevance="useful">
   <Beat label="In one sentence">An agent can draft the follow-up. You still approve what a customer receives.</Beat>
-  <Beat label="From your world">The pause before send is the part you do not hand over.</Beat>
-  <Beat label="One example">The note says Thursday at 4pm. The draft may say that. Filing it waits for you.</Beat>
+  <Beat label="From your world">The pause before send is the part Ash does not hand over.</Beat>
+  <Beat label="One example">Ash’s note says Thursday at 4pm. The draft may say that. Filing it waits for Ash.</Beat>
   <Beat label="Watch-out">“It handled it” is not a sentence to use before you have seen the line.</Beat>
-  <Beat label="Try this">Write the stop rule and refuse once, so you feel the gate.</Beat>
+  <Beat label="Try this">Write Ash’s stop rule and refuse once, so you feel the gate.</Beat>
 </Lens>
 
 <LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Imagine **Ash** — organising a small meetup, not an engineer. Ash wants more than one chat reply: look up Hall B, draft a reminder, stop. That multi-step chase is an **agentic** loop — and Ash still decides what gets sent.
 
 Most chat use is **single-shot**: you ask, you get a reply, you’re done (or you ask again yourself). **Agentic** systems try to chase a goal by planning, calling tools, reading results, and looping until they finish — or until a limit stops them.
 
@@ -67,7 +71,7 @@ See also: [Glossary — Agent](/glossary#agent), [Agentic workflow](/glossary#ag
 - A fluent loop is not the same as a **correct** loop — you still verify outcomes.
 - Prefer supervised / sandboxed agents before anything that can email, buy, or delete.
 
-From the [tool landscape](/learn/foundations/tool-landscape): start with chat; treat agents as “powerful; start supervised.” For how apps reach cloud-hosted models in that loop, see [how clouds serve frontier models](/learn/foundations/cloud-frontier-models).
+From the [tool landscape](/learn/foundations/tool-landscape): start with chat; treat agents as “powerful; start supervised.” Next: [memory for agents](/learn/foundations/memory-for-agents) — what survives each turn. For how apps reach cloud-hosted models in that loop, see [how clouds serve frontier models](/learn/foundations/cloud-frontier-models).
 
 ## Takeaway
 

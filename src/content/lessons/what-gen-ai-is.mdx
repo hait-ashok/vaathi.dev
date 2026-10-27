@@ -7,11 +7,43 @@ minutes: 12
 draft: false
 ---
 
-“Generative AI” (often shortened to **Gen AI**) is a family of systems that **create new content** — text, images, audio, code — that wasn’t sitting in a fixed answer key.
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">Generative AI makes a new draft when you ask — text, image, audio — instead of only sorting what already exists.</Beat>
+  <Beat label="From your world">Spam filters label mail. Gen AI writes the reply you still edit.</Beat>
+  <Beat label="One example">Ash needs a polite “thanks for coming” note for the meetup. Gen AI drafts it. A spam score would only say “not spam.”</Beat>
+  <Beat label="Watch-out">A fluent draft is not a checked fact. Ash still reads before send.</Beat>
+  <Beat label="Try this">Name one task that needs a label, and one that needs a new draft.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="useful">
+  <Beat label="In one sentence">Discriminative models classify or score; generative models sample new content under a prompt contract.</Beat>
+  <Beat label="From your world">Same “AI” sticker on a classifier endpoint and a chat completion API — different failure modes.</Beat>
+  <Beat label="One example">Ash’s booking bot: classify room availability (score) vs draft the confirmation email (generate).</Beat>
+  <Beat label="Watch-out">Don’t replace a reliable classifier with a chat model for a yes/no gate.</Beat>
+  <Beat label="Try this">Pick one feature at work. Is the deliverable a label/score or a draft?</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="start">
+  <Beat label="In one sentence">You can say: it drafts new content from your ask; it does not replace a specialist’s sign-off.</Beat>
+  <Beat label="From your world">Buyers lump “AI” together. Separate “sorts this” from “writes a first draft.”</Beat>
+  <Beat label="One example">“It will draft Ash’s meetup invite” is fair. “It will know every guest” is not.</Beat>
+  <Beat label="Watch-out">Don’t sell Gen AI as a truth engine or as all of AI.</Beat>
+  <Beat label="Try this">Write one sentence that promises a draft, not a verdict.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Ash keeps hearing “we’ll use AI for the meetup.” Sometimes people mean “flag spammy signups.” Sometimes they mean “write the invite.” Those are different jobs under one sticker.
+
+“Generative AI” (often **Gen AI**) is the family that **creates new content** — text, images, audio, code — that wasn’t sitting in a fixed answer key.
 
 ## Generative vs discriminative (plain version)
-
-A helpful contrast:
 
 | Kind | Everyday job | Example |
 | --- | --- | --- |
@@ -41,5 +73,7 @@ When someone says Gen AI, think **content creator under instruction** — powerf
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-List two tasks: one that needs a *label or score*, and one that needs a *new draft*. Which fits classical ML better? Which fits Gen AI?
+List two of Ash’s meetup tasks: one that needs a *label or score*, and one that needs a *new draft*. Which fits classical ML better? Which fits Gen AI?
 </div>
+
+</LessonBody>

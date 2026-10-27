@@ -1,0 +1,113 @@
+---
+title: Memory in code
+description: Ash’s Hall B as a message list, a size cap, and a tiny fact store — the smallest useful memory.
+order: 7
+path: build
+minutes: 8
+draft: false
+---
+
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">Ash’s Hall B only survives if you leave it in the message list, or save it and put it back next time.</Beat>
+  <Beat label="From your world">Same sticky-note idea as Foundations — here it is three short Python shapes.</Beat>
+  <Beat label="One example">`remember("meetup_room", "Hall B")` then `inject_facts` so tomorrow’s empty chat is not blank.</Beat>
+  <Beat label="Watch-out">A long `messages` list without a cap will push Hall B out of the window.</Beat>
+  <Beat label="Try this">Run Sandbox once with “room is Hall B” in the prompt and once without — feel short-term on vs off.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Short-term is the growing `messages` array; long-term is a store you read before the next invoke.</Beat>
+  <Beat label="From your world">Trim = size budget. `FACTS` today; DynamoDB or a file tomorrow — same inject shape.</Beat>
+  <Beat label="One example">Keep system head, drop middle turns, inject `meetup_room=Hall B` on the next run.</Beat>
+  <Beat label="Watch-out">Unbounded history burns tokens and can leak yesterday’s wrong room into today’s ask.</Beat>
+  <Beat label="Try this">Mark where `remember` + `inject_facts` sit relative to the agent loop in Assemble.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="useful">
+  <Beat label="In one sentence">You can say: we keep notes we choose to save in code — not a model that “just remembers.”</Beat>
+  <Beat label="From your world">Buyers hear memory; show Ash’s three lines: list, trim, fact inject.</Beat>
+  <Beat label="One example">“Hall B is in our saved facts dict, re-injected each morning” — a claim you can defend.</Beat>
+  <Beat label="Watch-out">Don’t promise every past chat is searchable unless a vector store is actually wired.</Beat>
+  <Beat label="Try this">Rewrite one memory slide as list + trim + optional fact store — Ash’s sticky note in code.</Beat>
+</Lens>
+
+<LessonBody>
+
+[Memory for agents](/learn/foundations/memory-for-agents) left Ash stuck: new chat, no Hall B. Here is the **smallest** code shape that fixes that — no special memory product.
+
+<p class="mono-label">Scene</p>
+
+Same meetup. We will (1) keep Hall B in **this** run’s message list, (2) **trim** when the list grows, (3) **save** the room so tomorrow’s run can inject it again.
+
+## 1 — Short-term = the messages list
+
+This run’s memory is already the `messages` list. Each turn appends; the model only sees what is still there.
+
+```python
+messages = [
+    {"role": "system", "content": "Be concise. You help Ash book the meetup."},
+    {"role": "user", "content": "What room is the meetup?"},
+]
+# after a tool result:
+messages.append({"role": "tool", "content": "Hall B"})
+```
+
+While those lines stay in `messages`, Ash’s assistant still “knows” the room — for **this** session only.
+
+## 2 — Cap it (budget)
+
+Long chats fill the window. Cap the list — drop old turns, or crush them into one summary line.
+
+```python
+MAX = 12  # messages, not “forever”
+
+def trim(messages, max_len=MAX):
+    if len(messages) <= max_len:
+        return messages
+    head, tail = messages[:1], messages[-(max_len - 1) :]
+    return head + [{"role": "system", "content": "[earlier turns summarized]"}] + tail
+```
+
+That is Ash’s **budget** knob in code.
+
+## 3 — Long-term = a tiny fact store
+
+Tomorrow’s empty chat needs a store **outside** the model. Dict today; file / DynamoDB later — same idea.
+
+```python
+FACTS = {}  # stand-in for a real store
+
+def remember(key: str, value: str) -> None:
+    FACTS[key] = value
+
+def inject_facts(messages):
+    if not FACTS:
+        return messages
+    blob = "; ".join(f"{k}={v}" for k, v in FACTS.items())
+    return [{"role": "system", "content": f"Known facts: {blob}"}] + messages
+
+remember("meetup_room", "Hall B")
+messages = inject_facts(messages)
+```
+
+Next morning: load `FACTS`, call `inject_facts`, then start the [agent loop](/learn/build/agent-loop-in-code). Ash asks “which room?” — Hall B is already in the prompt.
+
+## When to add vectors
+
+If Ash had *dozens* of notes and needed “find the right one,” retrieve chunks first ([vectors in code](/learn/build/vectors-in-code)), then inject. For one room name, a fact store is enough.
+
+## Takeaway
+
+**List + trim + optional fact inject.** Same four knobs as Foundations; still one file; still Ash’s sticky note.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+In the [Sandbox](/sandbox) Agent + Tools, run once with “room is Hall B” in the prompt and once without. That is short-term memory on vs off. Then mark where `remember("meetup_room", "Hall B")` would sit in [Assemble](/learn/build/assemble-a-python-agent).
+</div>
+
+</LessonBody>

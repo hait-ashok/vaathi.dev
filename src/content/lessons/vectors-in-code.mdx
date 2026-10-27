@@ -7,11 +7,43 @@ minutes: 14
 draft: false
 ---
 
-You already met [vectors and embeddings](/learn/foundations/why-vectors-embeddings) as intuition. Here is how that idea becomes a **document Q&A** program — the Sandbox **Document Q&A** path.
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">RAG finds the nearby pieces of *your* doc, then asks the model — so answers can quote Ash’s notes, not invent them.</Beat>
+  <Beat label="From your world">Like searching a binder for the Hall B page before you answer “which room?” — nearness in meaning, not keyword luck alone.</Beat>
+  <Beat label="One example">Ash’s meetup notes are chunked; the question “What’s the room?” retrieves the Hall B paragraph, then the model writes from that.</Beat>
+  <Beat label="Watch-out">Nearby chunks are candidates, not truth. Always check what was retrieved.</Beat>
+  <Beat label="Try this">Take three sentences from a note. Ask a question whose answer is only in sentence 2 — then confirm retrieval hits that part.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Pipeline: chunk → embed → index → retrieve top-k → chat with context — Document Q&A is that loop in code.</Beat>
+  <Beat label="From your world">Same as search + generation: FAISS (or pgvector) for nearness; the LLM only sees what you inject.</Beat>
+  <Beat label="One example">`chunk_size=200`, `k=2` — Ash’s short FAQ fits; a whole policy doc needs overlap so sentences aren’t cut mid-thought.</Beat>
+  <Beat label="Watch-out">Browser demos that paste the whole doc into the system prompt are fine for learning; production still needs real retrieve.</Beat>
+  <Beat label="Try this">Open `sandbox/templates/02_document_qa.py` and mark chunk / embed / retrieve / ask.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">You can say: we search your documents first, then the model answers from those passages.</Beat>
+  <Beat label="From your world">Buyers hear “RAG” and picture magic memory. Offer “find the right paragraph, then write.”</Beat>
+  <Beat label="One example">“It said Hall B because that line was in Ash’s uploaded notes” — a claim you can show.</Beat>
+  <Beat label="Watch-out">Don’t promise zero hallucination unless citation and human check are in the product.</Beat>
+  <Beat label="Try this">Rewrite one “our AI knows your docs” line as: retrieve → generate → show sources.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+**Ash** already met [vectors and embeddings](/learn/foundations/why-vectors-embeddings) as intuition. Now the meetup notes pile is growing — invites, Hall B confirmation, a FAQ. Here is how that idea becomes a **document Q&A** program — the Sandbox **Document Q&A** path Ash can run on those notes.
 
 ## The problem a model alone has
 
-If you only send a question, the model answers from training patterns. It may invent. If you send **the document** (or the right pieces of it) with the question, the model can ground the answer in *your* text. That pattern is **RAG**: retrieval-augmented generation.
+If you only send a question, the model answers from training patterns. It may invent. If you send **the document** (or the right pieces of it) with the question, the model can ground the answer in *Ash’s* text. That pattern is **RAG**: retrieval-augmented generation.
 
 ## The pipeline (four steps)
 
@@ -41,7 +73,7 @@ result = qa.invoke({"query": question})
 
 ## Why chunk at all?
 
-A whole book will not fit (or will waste tokens). Small chunks let retrieval pick the *few* paragraphs that match the question. Overlap stops a sentence from being cut in half at a boundary.
+A whole book will not fit (or will waste tokens). Small chunks let retrieval pick the *few* paragraphs that match Ash’s question — e.g. the Hall B line, not the whole invite thread. Overlap stops a sentence from being cut in half at a boundary.
 
 ## Browser vs full RAG
 
@@ -49,10 +81,12 @@ In the Sandbox browser demo, a short document is often sent whole in the system 
 
 ## Takeaway
 
-**Nearness in vector space ≈ related meaning.** Retrieval finds candidates; the chat model writes the answer. Always check the retrieved chunks — nearby is not the same as true.
+**Nearness in vector space ≈ related meaning.** Retrieval finds candidates; the chat model writes the answer. Always check the retrieved chunks — nearby is not the same as true. For one room name Ash already knows, a [fact store](/learn/build/memory-in-code) may be enough; vectors shine when the notes pile gets large.
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
 Take three sentences from a policy or note. Ask a question whose answer is only in sentence 2. When you reach the Sandbox, run Document Q&amp;A and confirm the answer quotes that part — not a confident guess.
 </div>
+
+</LessonBody>

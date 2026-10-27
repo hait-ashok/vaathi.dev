@@ -8,12 +8,43 @@ draft: false
 ---
 
 import AttentionAnim from '../../components/diagrams/AttentionAnim.astro';
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
 
-Most modern language (and many multimodal) models are built on an architecture nicknamed the **transformer**. You don’t need the equations — you need the *job* it does.
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">A transformer predicts the next bit of text while learning what earlier words to spotlight — attention, not a hard grammar rule.</Beat>
+  <Beat label="From your world">Like reading meetup copy and deciding what “it” points to.</Beat>
+  <Beat label="One example">“The mic didn’t fit in the bag because **it** was too big” — Ash’s brain spotlights mic vs bag; attention does a soft version of that.</Beat>
+  <Beat label="Watch-out">Spotlighting context ≠ checking facts. Fluent still needs Ash’s eye.</Beat>
+  <Beat label="Try this">Paste a short paragraph and ask which words resolve a pronoun in sentence two.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Transformers are context-aware next-token engines; attention is learned soft weighting over positions in the sequence.</Beat>
+  <Beat label="From your world">Architecture family behind most chat LLMs — encoder / decoder labels are roles, not product SKUs.</Beat>
+  <Beat label="One example">Ash’s invite draft: decoder-style generation with attention over the prompt and prior tokens.</Beat>
+  <Beat label="Watch-out">Longer context means more attention cost; window size isn’t free.</Beat>
+  <Beat label="Try this">Say in one line: represent context → generate next tokens.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">You can say: the model weighs which earlier words matter while writing the next ones.</Beat>
+  <Beat label="From your world">Customers don’t need “self-attention.” They need “it reads the whole ask before finishing the sentence.”</Beat>
+  <Beat label="One example">“It can keep Ash’s pronoun straight in meetup copy by looking back at the sentence” — spotlight, not magic memory.</Beat>
+  <Beat label="Watch-out">Don’t sell “transformer” as a guarantee of truth or infinite context.</Beat>
+  <Beat label="Try this">Explain attention in twenty seconds using a pronoun, not a paper name.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Ash is polishing meetup copy and wonders again: **“How does it know what ‘it’ means?”** Most modern language (and many multimodal) models are built on an architecture nicknamed the **transformer**. You don’t need the equations — you need the *job* it does.
 
 ## Attention: what to focus on
 
-When you read “The trophy didn’t fit in the suitcase because **it** was too big,” you decide what “it” refers to. **Attention** is a learned way for the model to weigh which earlier words matter for the next prediction — a soft spotlight, not a single hard rule.
+When you read “The trophy didn’t fit in the suitcase because **it** was too big,” you decide what “it” refers to. Same spotlight Ash uses on pronouns in an invite. **Attention** is a learned way for the model to weigh which earlier words matter for the next prediction — a soft spotlight, not a single hard rule.
 
 <AttentionAnim />
 
@@ -42,5 +73,7 @@ A transformer is a design that lets the model **decide what to pay attention to*
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Paste a short paragraph into a chat model and ask: “Which words would you need to resolve the pronoun in sentence two?” You’re practicing the *attention* idea — spotlighting context — without any code.
+Be Ash for a minute. Paste a short meetup paragraph into a chat model and ask: “Which words would you need to resolve the pronoun in sentence two?” You’re practicing the *attention* idea — spotlighting context — without any code.
 </div>
+
+</LessonBody>

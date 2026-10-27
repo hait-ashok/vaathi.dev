@@ -1,15 +1,49 @@
 ---
 title: Claude Code basics
 description: Install and first use of Anthropic’s coding CLI/agent — vs Claude chat; link to official docs.
-order: 20
+order: 21
 path: foundations
-minutes: 18
+minutes: 12
 draft: false
 ---
 
-**Claude Code** is Anthropic’s **agentic coding tool**: it can read a codebase, edit files, run commands, and work across your project. It is **not** the same as pasting code into [Claude chat](/learn/foundations/claude-basics). Chat is a conversation; Claude Code is a **development agent** that lives next to your files (terminal, IDE, desktop, or web).
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
 
-Official source of truth: [Claude Code docs](https://code.claude.com/docs/en/overview) and the [quickstart](https://code.claude.com/docs/en/quickstart). Install steps below match those pages; if anything drifts, **trust the official site**.
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">Claude Code is a coding agent in Ash’s project folder — not the same as pasting into Claude chat.</Beat>
+  <Beat label="From your world">Chat is a conversation. Claude Code can read files, edit, and run commands you allow.</Beat>
+  <Beat label="One example">Ash asks “where is the Hall B booking note handled?” and it explores the repo instead of waiting for a paste.</Beat>
+  <Beat label="Watch-out">Review every edit. Ash is still the author. Don’t paste secrets.</Beat>
+  <Beat label="Try this">Write three questions you’d ask about a folder you know — no install required to plan them.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Claude Code is an agentic coding CLI/IDE surface over a real working tree — plan → act → observe on disk.</Beat>
+  <Beat label="From your world">Treat it like a supervised agent: allowlist, review diffs, small test repo first.</Beat>
+  <Beat label="One example">`cd meetup-helper && claude` then “explain this error” with a stack trace — tool use, not a single chat reply.</Beat>
+  <Beat label="Watch-out">Official docs win if install steps drift. Native installer preferred for updates.</Beat>
+  <Beat label="Try this">Skim the [quickstart](https://code.claude.com/docs/en/quickstart); note install + first session only.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">You can say: chat drafts; Claude Code works in the codebase — different product surface.</Beat>
+  <Beat label="From your world">Buyers hear “Claude” and picture one box. Split assistant chat from coding agent.</Beat>
+  <Beat label="One example">“Ash uses Claude chat for invites; Claude Code to tidy the signup script” — two clear jobs.</Beat>
+  <Beat label="Watch-out">Don’t promise it ships production code unreviewed.</Beat>
+  <Beat label="Try this">One sentence: chat vs coding agent, both under the Claude brand.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+**Ash** has Hall B saved and a messy meetup helper repo. Pasting files into [Claude chat](/learn/foundations/claude-basics) is slow. Ash wants something that **lives next to the files**.
+
+**Claude Code** is Anthropic’s **agentic coding tool**: read a codebase, edit, run commands, work across the project. Chat is conversation; Claude Code is a **development agent** (terminal, IDE, desktop, or web).
+
+Official source of truth: [Claude Code docs](https://code.claude.com/docs/en/overview) and [quickstart](https://code.claude.com/docs/en/quickstart). If steps drift, **trust the official site**.
 
 ## Claude chat vs Claude Code
 
@@ -17,11 +51,11 @@ Official source of truth: [Claude Code docs](https://code.claude.com/docs/en/ove
 | --- | --- | --- |
 | Best for | Writing, explaining, brainstorming | Editing a real repo, running commands |
 | Where it runs | Browser / app chat | Terminal, IDE, desktop, or web coding UI |
-| Sees your project | Only what you paste | Can explore files you allow in the project |
+| Sees Ash’s project | Only what Ash pastes | Files Ash allows in the project |
 
 ## Install (native path recommended)
 
-Open a terminal and run the command for your system. Prefer the **native installer** (auto-updates). Alternatives: Homebrew, WinGet — see the [install / setup docs](https://code.claude.com/docs/en/setup).
+Prefer the **native installer** (auto-updates). Alternatives: Homebrew, WinGet — see [setup docs](https://code.claude.com/docs/en/setup).
 
 **macOS, Linux, WSL:**
 
@@ -29,33 +63,25 @@ Open a terminal and run the command for your system. Prefer the **native install
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-**Windows PowerShell** (prompt often shows `PS C:\`):
+**Windows PowerShell:**
 
 ```powershell
 irm https://claude.ai/install.ps1 | iex
 ```
 
-**Windows CMD** (prompt often shows `C:\` without `PS`):
+**Windows CMD:**
 
 ```batch
 curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
 
-Then open a **new** terminal and verify:
+New terminal, then:
 
 ```bash
 claude --version
 ```
 
-You should see a version number (and usually “Claude Code”). We don’t hard-code a version here — it changes often.
-
-**Also useful:**
-
-- macOS Homebrew: `brew install --cask claude-code` (manual upgrades; see docs)
-- Windows WinGet: `winget install Anthropic.ClaudeCode`
-- Desktop app / VS Code / JetBrains: linked from the [overview](https://code.claude.com/docs/en/overview) if you prefer not to live in the terminal
-
-Stuck? [Troubleshoot install](https://code.claude.com/docs/en/troubleshoot-install). On native Windows, Git for Windows is recommended so Bash-style tools work smoothly.
+Also useful: `brew install --cask claude-code`, `winget install Anthropic.ClaudeCode`, or desktop/IDE links from the [overview](https://code.claude.com/docs/en/overview). Stuck? [Troubleshoot install](https://code.claude.com/docs/en/troubleshoot-install). On native Windows, Git for Windows helps Bash-style tools.
 
 ## Basic usage
 
@@ -64,31 +90,33 @@ cd /path/to/your/project
 claude
 ```
 
-On first launch you’ll usually **log in** via the browser (subscription or Console). You can finish *reading* this lesson without installing; installing is optional practice.
+First launch usually means browser login. You can **finish reading** without installing.
 
-Common first asks (after it starts):
+First asks Ash might try:
 
 - “What’s the structure of this repo?”
 - “Where is authentication handled?”
 - “Explain this error: …” (paste a stack trace)
 
-One-shot style (non-interactive) appears in the docs as `claude -p "…"`. Learn interactive first.
+One-shot style (`claude -p "…"`) is in the docs — learn interactive first.
 
 ## Safety habits
 
-- **Review diffs** before you accept edits or commits — you’re still the author.
-- **Don’t paste secrets** (API keys, passwords, private keys, customer data) into prompts or logs.
-- Prefer a **small test repo** for your first session.
-- Treat tool use like [agentic workflows](/learn/foundations/agentic-workflows): plan → act → observe → verify.
+- **Review diffs** before accept or commit.
+- **Don’t paste secrets** (keys, passwords, customer data).
+- Prefer a **small test repo** for session one.
+- Same loop shape as [agentic workflows](/learn/foundations/agentic-workflows): plan → act → observe → verify.
 
 See also: [Glossary — Claude Code](/glossary#claude-code).
 
 ## Takeaway
 
-Claude Code = **coding agent in your project**. Install via the official native script for your OS, run `claude` in a folder, ask about the repo, and review every change.
+Claude Code = **coding agent in Ash’s project**. Official install → `claude` in a folder → ask about the repo → review every change.
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Without pasting any secrets: open the [quickstart](https://code.claude.com/docs/en/quickstart), skim install + “first session,” and write three questions you’d ask Claude Code about a repo you know.
+No secrets. Open the [quickstart](https://code.claude.com/docs/en/quickstart), skim install + first session, and write three questions Ash would ask about the meetup helper repo.
 </div>
+
+</LessonBody>

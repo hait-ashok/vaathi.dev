@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LensSwitch from '../../../components/LensSwitch.astro';
+import { LENSES, RELEVANCE_LABEL, relevanceFor } from '../../../lib/lenses';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -48,12 +50,34 @@ const { Content } = await render(lesson);
       </span>
     </nav>
 
+    <LensSwitch />
+
     <article class="lesson-article">
       <h1>{lesson.data.title}</h1>
       <p class="mono-label" style="margin-bottom: 1.5rem">{lesson.data.description}</p>
+      <p class="lens-unframed">
+        {
+          LENSES.map((lens) => {
+            const relevance = relevanceFor(lesson.id, lens.id);
+            return (
+              <span class="lens-mark" data-lens={lens.id} data-relevance={relevance}>
+                {RELEVANCE_LABEL[relevance]}
+              </span>
+            );
+          })
+        }
+        <span class="lens-unframed__hint">
+          Tailored frame not written yet — this is the shared explanation.
+        </span>
+      </p>
       <div class="lesson-prose">
         <Content />
       </div>
+      <p class="lens-expand-row">
+        <button type="button" class="site-cta site-cta--ghost" data-lens-expand hidden aria-controls="lesson-body" aria-expanded="false">
+          Read the full lesson
+        </button>
+      </p>
 
       <nav class="lesson-nav" aria-label="Continue">
         {

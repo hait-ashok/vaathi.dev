@@ -7,9 +7,42 @@ minutes: 15
 draft: false
 ---
 
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
 import ModelPipelineAnim from '../../components/diagrams/ModelPipelineAnim.astro';
 
-You rarely train a giant model yourself. Still, knowing the **pipeline** helps you ask better questions of vendors and of your own workflow.
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">A model is shaped by examples, adjusted, checked, then wrapped as a product — Ash usually only uses the last step.</Beat>
+  <Beat label="From your world">Like recipe → practice → taste-test → open the café. Ash orders coffee; Ash doesn’t rebuild the kitchen.</Beat>
+  <Beat label="One example">Ash’s invite-drafting chat was pre-trained on lots of text, maybe fine-tuned for chat style, then shipped as an app.</Beat>
+  <Beat label="Watch-out">“The model learned from our chat” usually means this session’s prompt — not permanent training.</Beat>
+  <Beat label="Try this">For one AI app Ash uses, guess: mostly pre-training, fine-tuning, or just today’s prompt?</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Pipeline: labeled data → train/fine-tune → eval → deploy with filters, limits, and logging.</Beat>
+  <Beat label="From your world">Same shape as any ML service: dataset, training job, holdout metrics, then an API behind rate limits.</Beat>
+  <Beat label="One example">Ash’s meetup bot: base LLM + optional fine-tune on FAQ tone → eval on sample invites → API with logging.</Beat>
+  <Beat label="Watch-out">Don’t treat a chat product as “our private facts are in the weights” unless that data was in training or retrieval.</Beat>
+  <Beat label="Try this">Sketch the four stages for one vendor claim Ash heard this week.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">You can say: labs train general skill; your prompt steers this session; private facts need retrieval or fine-tune.</Beat>
+  <Beat label="From your world">Buyers hear “trained on our data” and picture instant company knowledge. Separate base skill from customization.</Beat>
+  <Beat label="One example">“It drafts Ash’s meetup copy from general writing skill” is fair. “It knows every past guest” is not — unless that pipeline exists.</Beat>
+  <Beat label="Watch-out">Don’t promise the product retrains overnight from one customer chat.</Beat>
+  <Beat label="Try this">Rewrite one “AI learns you” line as: base model / this session / optional saved prefs.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Ash is planning a meetup and keeps hearing “the model was trained on…” Without knowing the pipeline, every product pitch sounds the same.
+
+Ash rarely trains a giant model. Still, knowing **data → train → evaluate → deploy** helps Ash ask better questions of vendors — and of today’s chat app.
 
 <ModelPipelineAnim />
 
@@ -20,30 +53,32 @@ You rarely train a giant model yourself. Still, knowing the **pipeline** helps y
 3. **Evaluate** — Humans and metrics check whether outputs are useful, safe, and on-task. Numbers help; they don’t replace judgment. (You’ll meet [evaluating AI outputs](/learn/foundations/bleu-and-rouge) — BLEU, ROUGE, and more — soon after.)
 4. **Deploy** — The model is wrapped as a product or API: filters, rate limits, logging, updates.
 
-## What “training” means for you as a user
+## What “training” means for Ash
 
 When a chat app “learns,” it might mean:
 
-- The **base model** was trained earlier by a lab (you’re borrowing that skill).
-- Your **prompt and chat history** steer this session only (usually not permanent learning).
+- The **base model** was trained earlier by a lab (Ash is borrowing that skill).
+- Ash’s **prompt and chat history** steer this session only (usually not permanent learning).
 - Optional **memory / personalization** features store preferences — check privacy settings.
 
-You are almost always **using** a deployed model, not rebuilding it.
+Ash is almost always **using** a deployed model, not rebuilding it.
 
 ## Where the heavy compute goes
 
-Adjusting those “knobs” (and later running the model for every user request) is mostly **matrix math at scale** — the kind of work [GPUs and accelerators](/learn/foundations/gpus-vs-cpus) are built for. You’ll meet that hardware intuition next.
+Adjusting those “knobs” (and later running the model for every request) is mostly **matrix math at scale** — the kind of work [GPUs and accelerators](/learn/foundations/gpus-vs-cpus) are built for. Ash meets that hardware intuition next.
 
 ## Why this matters
 
-Understanding the pipeline explains product behavior: a model can be great at fluent English and still weak on your company’s private facts (those weren’t in training). Retrieval and good prompts help bridge that gap — covered in later lessons.
+Understanding the pipeline explains product behavior: a model can be great at fluent English and still weak on Ash’s venue rules or guest list (those weren’t in training). Retrieval and good prompts help bridge that gap — covered in later lessons.
 
 ## Takeaway
 
-**Data shapes skill → training adjusts → evaluation catches gaps → deploy serves users.** Your job as a beginner is usually step “use carefully,” not step “train from scratch.”
+**Data shapes skill → training adjusts → evaluation catches gaps → deploy serves users.** Ash’s job as a beginner is usually step “use carefully,” not step “train from scratch.”
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-For one AI product you use, guess: was the hard work mostly *pre-training* (general), *fine-tuning* (specialized), or *your prompt* (this session)? You don’t need a perfect answer — noticing the layers is the win.
+For one AI product Ash uses for meetup copy, guess: was the hard work mostly *pre-training* (general), *fine-tuning* (specialized), or *the prompt* (this session)? You don’t need a perfect answer — noticing the layers is the win.
 </div>
+
+</LessonBody>

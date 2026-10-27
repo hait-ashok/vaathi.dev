@@ -54,11 +54,22 @@ export const RELEVANCE: Record<string, Row> = {
   'personal-ai-workflow': row('useful', 'start'),
   'tool-landscape': row('useful', 'start'),
   'agentic-workflows': row('start', 'useful'),
+  'memory-for-agents': row('start', 'useful'),
   'cloud-frontier-models': row('start', 'useful'),
   'claude-basics': row('start', 'useful'),
   'claude-code-basics': row('start', 'skim'),
   'aws-bedrock-basics': row('start', 'skim'),
   'where-to-go-next': row('start', 'start'),
+  // Build path
+  'python-just-enough': row('start', 'skim'),
+  'calling-a-model': row('start', 'useful'),
+  'vectors-in-code': row('start', 'skim'),
+  'tool-calls-in-code': row('start', 'useful'),
+  'agent-loop-in-code': row('start', 'useful'),
+  'assemble-a-python-agent': row('start', 'skim'),
+  'memory-in-code': row('start', 'useful'),
+  'grow-chat-into-agent': row('start', 'useful'),
+  'from-code-to-sandbox': row('start', 'start'),
 };
 
 export function isLensId(value: string | null | undefined): value is LensId {
