@@ -1,30 +1,36 @@
 ---
 title: Memory in code
-description: Keep a message list, cap its size, and save a few facts outside the model — the smallest useful memory.
+description: Ash’s Hall B as a message list, a size cap, and a tiny fact store — the smallest useful memory.
 order: 7
 path: build
 minutes: 8
 draft: false
 ---
 
-[Memory for agents](/learn/foundations/memory-for-agents) said: store on purpose, then feed back. Here is the **smallest** code shape — no special memory product.
+[Memory for agents](/learn/foundations/memory-for-agents) left Ash stuck: new chat, no Hall B. Here is the **smallest** code shape that fixes that — no special memory product.
+
+<p class="mono-label">Scene</p>
+
+Same meetup. We will (1) keep Hall B in **this** run’s message list, (2) **trim** when the list grows, (3) **save** the room so tomorrow’s run can inject it again.
 
 ## 1 — Short-term = the messages list
 
-Every agent you built already has memory for *this run*: the `messages` list. Each turn appends; the model only sees what is still in that list.
+This run’s memory is already the `messages` list. Each turn appends; the model only sees what is still there.
 
 ```python
 messages = [
-    {"role": "system", "content": "Be concise."},
+    {"role": "system", "content": "Be concise. You help Ash book the meetup."},
     {"role": "user", "content": "What room is the meetup?"},
 ]
 # after a tool result:
 messages.append({"role": "tool", "content": "Hall B"})
 ```
 
+While those lines stay in `messages`, Ash’s assistant still “knows” the room — for **this** session only.
+
 ## 2 — Cap it (budget)
 
-Context windows fill. Keep a hard cap — drop oldest turns, or replace a block with one summary line.
+Long chats fill the window. Cap the list — drop old turns, or crush them into one summary line.
 
 ```python
 MAX = 12  # messages, not “forever”
@@ -36,9 +42,11 @@ def trim(messages, max_len=MAX):
     return head + [{"role": "system", "content": "[earlier turns summarized]"}] + tail
 ```
 
+That is Ash’s **budget** knob in code.
+
 ## 3 — Long-term = a tiny fact store
 
-Facts that must survive a new run live **outside** the model. Dict / file / DynamoDB — same idea.
+Tomorrow’s empty chat needs a store **outside** the model. Dict today; file / DynamoDB later — same idea.
 
 ```python
 FACTS = {}  # stand-in for a real store
@@ -56,18 +64,18 @@ remember("meetup_room", "Hall B")
 messages = inject_facts(messages)
 ```
 
-Next run: load `FACTS`, call `inject_facts`, then start the [agent loop](/learn/build/agent-loop-in-code) as usual.
+Next morning: load `FACTS`, call `inject_facts`, then start the [agent loop](/learn/build/agent-loop-in-code). Ash asks “which room?” — Hall B is already in the prompt.
 
 ## When to add vectors
 
-If the job is “find the right note among many,” retrieve chunks first ([vectors in code](/learn/build/vectors-in-code)), then inject those — that is long-term memory shaped as RAG. Do not start there for prefs or one room name.
+If Ash had *dozens* of notes and needed “find the right one,” retrieve chunks first ([vectors in code](/learn/build/vectors-in-code)), then inject. For one room name, a fact store is enough.
 
 ## Takeaway
 
-**List + trim + optional fact inject.** Same knobs as Foundations; still one file.
+**List + trim + optional fact inject.** Same four knobs as Foundations; still one file; still Ash’s sticky note.
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-In the [Sandbox](/sandbox) Agent + Tools, run once with the room in the prompt and once without. That is short-term memory on vs off. Then sketch where `remember("meetup_room", ...)` would live in [Assemble](/learn/build/assemble-a-python-agent).
+In the [Sandbox](/sandbox) Agent + Tools, run once with “room is Hall B” in the prompt and once without. That is short-term memory on vs off. Then mark where `remember("meetup_room", "Hall B")` would sit in [Assemble](/learn/build/assemble-a-python-agent).
 </div>

@@ -54,6 +54,7 @@ export const RELEVANCE: Record<string, Row> = {
   'personal-ai-workflow': row('useful', 'start'),
   'tool-landscape': row('useful', 'start'),
   'agentic-workflows': row('start', 'useful'),
+  'memory-for-agents': row('start', 'useful'),
   'cloud-frontier-models': row('start', 'useful'),
   'claude-basics': row('start', 'useful'),
   'claude-code-basics': row('start', 'skim'),
