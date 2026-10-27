@@ -3,52 +3,88 @@ title: Claude basics
 description: Claude as Anthropic’s models and products — chat, API, and Claude Code — not a cloud platform.
 order: 20
 path: foundations
-minutes: 12
+minutes: 8
 draft: false
 ---
 
-**Claude** is Anthropic’s family of **language models** and the **products** built around them. Think of Claude as the *assistant / model brand*, not as a cloud. Clouds like [AWS Bedrock](/learn/foundations/aws-bedrock-basics) are separate platforms that may *host* Claude (and many other models).
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">Claude is Anthropic’s assistant brand — models and products — not a cloud like AWS.</Beat>
+  <Beat label="From your world">Clouds are doors. Claude is one kitchen that can sit behind Anthropic’s shop *or* a cloud door.</Beat>
+  <Beat label="One example">Ash drafts a Hall B confirmation in Claude chat. A company app might call the same model family through Bedrock.</Beat>
+  <Beat label="Watch-out">You do not need a paid plan to finish Foundations. Any careful chat habit works.</Beat>
+  <Beat label="Try this">Say out loud: “Claude = model/product; Bedrock = AWS door.”</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Claude is a model line plus Anthropic surfaces (chat, API, Claude Code); Bedrock is a separate invoke path.</Beat>
+  <Beat label="From your world">Different front door = different keys, IAM, logging, and invoice — same family possible behind both.</Beat>
+  <Beat label="One example">Ash’s meetup bot: `messages` to Anthropic API, or `InvokeModel` on Bedrock with a Claude model id.</Beat>
+  <Beat label="Watch-out">Don’t pin stale version numbers in docs you own — check the product when version matters.</Beat>
+  <Beat label="Try this">Draw two arrows to “Claude model”: Anthropic API vs cloud provider.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="useful">
+  <Beat label="In one sentence">You can say: Claude is the assistant; a cloud may host it — they are not the same purchase.</Beat>
+  <Beat label="From your world">Buyers say “we’re on Claude” and mean chat, API, or “Claude on AWS.” Ask which surface.</Beat>
+  <Beat label="One example">“Ash uses Claude chat for invites” is clear. “Ash’s company runs on Claude” needs the door named.</Beat>
+  <Beat label="Watch-out">Don’t promise Bedrock includes Claude, or that Claude chat is an AWS product.</Beat>
+  <Beat label="Try this">Rewrite one fuzzy claim as: brand + surface + who bills.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Someone tells **Ash**: “Just use Claude for the meetup.” Ash wonders — is that a cloud? A chat box? The thing that edits code?
+
+**Claude** is Anthropic’s family of **language models** and the **products** around them. Think *assistant / model brand*, not cloud. Clouds like [AWS Bedrock](/learn/foundations/aws-bedrock-basics) may *host* Claude (and many other models).
 
 ## Anthropic product surfaces
 
-| Surface | What beginners notice |
+| Surface | What Ash notices |
 | --- | --- |
-| **Chat** | A conversation UI (claude.ai and similar) for drafting, explaining, Q&A. |
-| **API** | Apps call Claude programmatically through Anthropic’s developer API. |
-| **Claude Code** | A coding agent / CLI that works in your project folder — covered next in [Claude Code basics](/learn/foundations/claude-code-basics). |
+| **Chat** | Conversation UI for drafts, explainers, Q&A (e.g. claude.ai). |
+| **API** | Ash’s app calls Claude programmatically. |
+| **Claude Code** | A coding agent in the project folder — next: [Claude Code basics](/learn/foundations/claude-code-basics). |
 
-You can learn Foundations habits with **any** chat assistant. You do **not** need a paid plan or API key to finish reading this path.
+You can learn Foundations with **any** chat assistant. No paid plan or API key required to finish reading.
 
 ## What “a Claude model” means
 
-Anthropic ships different model versions over time. Treat “Claude” as a **line of models**: same general idea (a large language model for dialogue and text), with version differences in speed, cost, and capability. Check the product’s own docs for *which* version you’re on when it matters — we don’t pin version numbers here so they don’t go stale.
+Anthropic ships versions over time. Treat “Claude” as a **line**: dialogue and text, with speed/cost/capability differences. Check the product’s docs for *which* version when it matters — we don’t pin numbers here so they don’t go stale.
 
-## High-level strengths (tendencies, not scores)
+## Tendencies (not scores)
 
-People often use Claude for careful drafting, step-by-step explanations, and working with pasted documents. Those are **tendencies**. Any LLM can invent facts — keep [verify habits](/learn/foundations/personal-ai-workflow).
+People often use Claude for careful drafting, step-by-step explanations, and pasted documents. Still an LLM — it can invent facts. Keep [verify habits](/learn/foundations/personal-ai-workflow).
 
 ## Claude ≠ Bedrock
 
 | | Claude | Bedrock |
 | --- | --- | --- |
 | Who makes it | Anthropic | Amazon Web Services |
-| What it is | Models + Anthropic products | AWS service to call many foundation models |
-| Your mental model | “The assistant / model” | “A cloud door to models” |
+| What it is | Models + Anthropic products | AWS door to many foundation models |
+| Ash’s mental model | “The assistant / model” | “A cloud door to models” |
 
-Same model family can be reached via Anthropic’s own products **or** via a cloud provider. Different door, different billing and permissions — see [how clouds serve frontier models](/learn/foundations/cloud-frontier-models).
+Same family via Anthropic **or** a cloud — different billing and permissions. See [how clouds serve frontier models](/learn/foundations/cloud-frontier-models).
 
 ## Neutral stance
 
-vaathi.dev is not affiliated with Anthropic. We name Claude because beginners hear it often. The same [prompting](/learn/foundations/prompting-clear-communication) and [risk](/learn/foundations/limits-risks-responsible-use) habits apply across assistants.
+vaathi.dev is not affiliated with Anthropic. We name Claude because beginners hear it often. Same [prompting](/learn/foundations/prompting-clear-communication) and [risk](/learn/foundations/limits-risks-responsible-use) habits apply across assistants.
 
 See also: [Glossary — Claude](/glossary#claude).
 
 ## Takeaway
 
-Claude = **Anthropic’s models and product surfaces** (chat, API, Claude Code). Cloud hosting is a separate story.
+Claude = **Anthropic’s models and surfaces** (chat, API, Claude Code). Cloud hosting is a separate story.
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Say out loud: “Claude is the model/product; Bedrock is an AWS platform.” Then skim the Bedrock lesson title only — if both sound like “Claude’s home,” re-read the table above.
+Be Ash: “Claude is the model/product; Bedrock is an AWS platform.” If both still sound like “Claude’s home,” re-read the table above.
 </div>
+
+</LessonBody>

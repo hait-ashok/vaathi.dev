@@ -7,6 +7,40 @@ minutes: 18
 draft: false
 ---
 
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">Metrics give a number for “how close to a reference”; Ash still needs a human glance for open-ended meetup copy.</Beat>
+  <Beat label="From your world">Like scoring a practice invite against Ash’s “gold” draft — useful, not the only taste-test.</Beat>
+  <Beat label="One example">ROUGE-ish overlap for a summary of Hall B rules; Ash still reads tone before send.</Beat>
+  <Beat label="Watch-out">A high score can still sound wrong, miss the point, or invent a fact.</Beat>
+  <Beat label="Try this">Pick one task Ash does (translate, summarize, or label). Name one metric and one reason for a human check.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Map metric to task: overlap (BLEU/ROUGE), meaning (BERTScore), LM fit (perplexity), labels (F1) — plus human eval.</Beat>
+  <Beat label="From your world">Same as any quality gate: automatic score on a holdout, then spot-check before ship.</Beat>
+  <Beat label="One example">Ash’s invite summarizer: ROUGE vs reference blurbs; spam triage: precision/recall — not BLEU.</Beat>
+  <Beat label="Watch-out">Don’t force essay metrics onto classification, or F1 onto free-form chat.</Beat>
+  <Beat label="Try this">For one feature, write the cheat-sheet row: situation → start metric.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">You can say: lab scores compare to references; they don’t replace “would a human trust this?”</Beat>
+  <Beat label="From your world">Buyers hear a high BLEU/ROUGE and picture perfect copy. Offer “reference overlap plus human review.”</Beat>
+  <Beat label="One example">“We score Ash’s draft summaries against gold blurbs, then Ash edits” — a sentence you can stand behind.</Beat>
+  <Beat label="Watch-out">Don’t sell a metric as proof of truth, safety, or brand voice.</Beat>
+  <Beat label="Try this">Rewrite one “98% accurate” claim as: metric name + what was compared + human step.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Ash has drafts for meetup copy — invites, “thanks for coming” notes, Hall B blurbs. Vendors wave **scores**. Which numbers actually help Ash judge outputs?
+
 When teams train or compare models, they often want a **number** that says “how good is this output?” Classic text metrics include **BLEU** and **ROUGE** — and several others you’ll hear next. This lesson is a **map of metrics**, not a formulas course.
 
 *(People sometimes write “BLUE” by mistake — the standard name is **BLEU**.)*
@@ -21,7 +55,7 @@ These scores compare a model’s text to one or more **human reference** answers
 
 - **Use when:** translation-style tasks with fairly fixed “right” phrasings.
 - **Intuition:** same little phrases as the reference → higher BLEU.
-- **Limit:** synonyms and paraphrases can score poorly even when meaning is fine.
+- **Limit:** synonyms and paraphrases can score poorly even when meaning is fine — Ash’s polite rewrite might lose points and still be better for guests.
 
 ### ROUGE — mostly summarization
 
@@ -56,7 +90,7 @@ See also: [Glossary — BLEU](/glossary#bleu), [ROUGE](/glossary#rouge), [METEOR
 **Perplexity** roughly asks: *how surprised is the model by this text?* Lower usually means the text looks more “expected” under the model.
 
 - **Use when:** comparing language models on held-out text, or checking how well a model fits a domain.
-- **What it doesn’t measure:** helpfulness, truth, or whether a *generated* answer is good for a user task. Low perplexity ≠ good chat reply.
+- **What it doesn’t measure:** helpfulness, truth, or whether a *generated* answer is good for Ash’s guest email. Low perplexity ≠ good chat reply.
 
 See also: [Glossary — Perplexity](/glossary#perplexity).
 
@@ -76,7 +110,7 @@ If the model picks a **category** (spam / not spam, topic tags), people use clas
 
 ## Human evaluation (still the grown-up check)
 
-Automatic metrics are **lab tools**. For real products, people still:
+Automatic metrics are **lab tools**. For real products — and for Ash’s send button — people still:
 
 - Side-by-side **preference** checks (“which answer would you use?”)
 - Rubrics for usefulness, tone, safety
@@ -97,10 +131,12 @@ Automatic metrics are **lab tools**. For real products, people still:
 
 ## Takeaway
 
-**BLEU** and **ROUGE** are classic overlap scores. **METEOR/chrF** soften overlap; **BERTScore** leans on meaning; **perplexity** fits LMs to text; **F1-style** metrics fit labeled tasks. None replace **human judgment** for open-ended Gen AI.
+**BLEU** and **ROUGE** are classic overlap scores. **METEOR/chrF** soften overlap; **BERTScore** leans on meaning; **perplexity** fits LMs to text; **F1-style** metrics fit labeled tasks. None replace **human judgment** for open-ended Gen AI — including Ash’s meetup copy.
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Pick one real task (translate a sentence, summarize a paragraph, or label an email). Name **one** automatic metric that might help and **one** reason you’d still want a human glance.
+Pick one real task Ash faces (translate a sentence, summarize a paragraph, or label an email). Name **one** automatic metric that might help and **one** reason you’d still want a human glance.
 </div>
+
+</LessonBody>

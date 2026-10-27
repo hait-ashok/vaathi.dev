@@ -7,7 +7,39 @@ minutes: 12
 draft: false
 ---
 
-You do not need to become a programmer first. You need a handful of Python ideas so the Sandbox templates stop looking like noise. Everything below shows up again when you call a model, a tool, or a retrieval index.
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">A few Python ideas — variables, functions, lists, dicts, a bounded loop — are enough to read every Sandbox template.</Beat>
+  <Beat label="From your world">Like learning the buttons on a microwave before you cook: you do not need chef school, just the controls you will press.</Beat>
+  <Beat label="One example">Ash’s meetup notes become a dict: `{"room": "Hall B", "guests": 12}` — keys and values, same shape tools use later.</Beat>
+  <Beat label="Watch-out">Skipping this makes Sandbox code look like noise. Ten minutes here pays off for the rest of Build.</Beat>
+  <Beat label="Try this">On paper, write a three-key dict for Ash’s meetup (room, date, guest count). You will see that shape again in tools.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Scripts, typed functions, list/dict payloads, and `for` + `range` caps are the runtime primitives agents reuse.</Beat>
+  <Beat label="From your world">Same as any ETL stub: import → assign → call → print; tools are just functions with a published schema.</Beat>
+  <Beat label="One example">`messages` is a list of dicts; `facts["agent"]` is a key lookup — both show up in every agent template.</Beat>
+  <Beat label="Watch-out">Unbounded loops = runaway tool calls. Cap with `range(n)` the way you cap retries.</Beat>
+  <Beat label="Try this">Skim Template 1 in the Sandbox and label each line: variable, function call, list, or dict.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">You can say: we use a tiny bit of Python so the demo is real code, not a black box slide.</Beat>
+  <Beat label="From your world">Buyers ask “do we need engineers?” — answer: to *run* product you need builders; to *follow* this path, a handful of concepts is enough.</Beat>
+  <Beat label="One example">“Hall B lives in a dictionary Ash’s tool can look up” — concrete, not “AI magic.”</Beat>
+  <Beat label="Watch-out">Don’t promise the customer will write agent code after one lesson. Promise they can *read* the demo shape.</Beat>
+  <Beat label="Try this">Rewrite one “we need Python experts” objection as: what this lesson covers vs what a production team still owns.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+**Ash** is organising a small meetup — Hall B, invites, a notes file. They are not becoming a programmer. They just need the handful of Python ideas so Sandbox templates stop looking like noise. Everything below shows up again when Ash’s assistant calls a model, a tool, or a retrieval index.
 
 ## What a script is
 
@@ -24,7 +56,7 @@ print("hello,", name)
 
 ## Functions
 
-A **function** is a named block you can call. Tools in agents *are* functions the model is allowed to ask for.
+A **function** is a named block you can call. Tools in agents *are* functions the model is allowed to ask for — like “look up Ash’s room.”
 
 ```python
 def greet(person: str) -> str:
@@ -39,7 +71,7 @@ print(greet("learner"))
 
 ## Lists and dictionaries
 
-Models and tools pass structured data. Two shapes matter:
+Models and tools pass structured data. Two shapes matter — the same ones Ash will use for chat history and meetup facts:
 
 ```python
 messages = [
@@ -69,14 +101,16 @@ for step in range(3):
 # prints step 1, step 2, step 3 — then stops
 ```
 
-Without a limit, a buggy agent can call tools forever. The Sandbox agent template caps at five steps for the same reason.
+Without a limit, a buggy agent can call tools forever. The Sandbox agent template caps at five steps for the same reason Ash would not let a booking bot spin forever.
 
 ## Takeaway
 
-Variables, functions, lists, dicts, and a bounded loop are enough to *read* every Sandbox template. Next you will see those pieces call a model.
+Variables, functions, lists, dicts, and a bounded loop are enough to *read* every Sandbox template. Next Ash’s code will call a model.
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-On paper (or in a notebook), write a dict with three AI terms you care about and a one-line definition each. You will see the same pattern in the agent&rsquo;s <code>lookup_fact</code> tool.
+On paper (or in a notebook), write a dict with three AI terms you care about and a one-line definition each — or three meetup facts for Ash. You will see the same pattern in the agent&rsquo;s <code>lookup_fact</code> tool.
 </div>
+
+</LessonBody>

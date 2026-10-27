@@ -7,7 +7,39 @@ minutes: 18
 draft: false
 ---
 
-This lesson is a **build along**. You stack five pieces until you have the same shape as Sandbox Template 3. Read it like a recipe: each block is something you could paste into a `.py` file and run locally with an API key.
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">Ash stacks five pieces — tool, bind, messages, capped loop, print — until the meetup helper can look things up and stop.</Beat>
+  <Beat label="From your world">It is a recipe card: paste each block in order into one `.py` file.</Beat>
+  <Beat label="One example">`lookup_fact` returns a short note; the loop prints TOOL → RESULT → FINAL the way Sandbox cards do.</Beat>
+  <Beat label="Watch-out">A model alone is chat. Without the loop and the step cap, it is not Ash’s agent yet.</Beat>
+  <Beat label="Try this">Copy the five pieces; change one fact in the dict to a meetup term Ash cares about.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Agent = `bind_tools` + growing `messages` + bounded `for` that runs tool calls you execute.</Beat>
+  <Beat label="From your world">Same as Template 3: you own dispatch, logging, and `MAX_STEPS` — the model only proposes calls.</Beat>
+  <Beat label="One example">Step 1 requests `lookup_fact({topic: agent})`; you invoke; append `ToolMessage`; step 2 may finish.</Beat>
+  <Beat label="Watch-out">Never ship without a step limit. Vague docstrings → vague tool use.</Beat>
+  <Beat label="Try this">Match your print trace to Brief → Model → Tool → Result → Answer in the Sandbox.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">You can say: we assemble a small loop that may call tools we wrote — not a smarter brain in a box.</Beat>
+  <Beat label="From your world">Show Ash’s checklist table: chat vs tool-using chat vs capped loop.</Beat>
+  <Beat label="One example">“It looked up the fact, printed the result, then answered” — a demo path buyers can follow.</Beat>
+  <Beat label="Watch-out">Don’t promise multi-system orchestration from this one-file recipe.</Beat>
+  <Beat label="Try this">Walk one printed trace out loud: tool name, result line, final sentence.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Imagine **Ash** — organising a small meetup, not an engineer. Ash wants one Python file that can look up a short fact, read the result, and answer — the same shape as Sandbox Template 3. This lesson is a **build along**: five pieces, pasted in order.
 
 ## Piece 1 — Imports and the model
 
@@ -123,10 +155,12 @@ Match that to the Sandbox cards: Brief → Model → Tool → Result → Model �
 
 ## Takeaway
 
-**Tool → bind → messages → capped loop → print a trace.** That is how a minimal Python agent is built. Next: [memory in code](/learn/build/memory-in-code) — trim the list and inject saved facts. The Sandbox Agent scenario is this file with animation on top.
+**Tool → bind → messages → capped loop → print a trace.** That is how a minimal Python agent is built. Next: [memory in code](/learn/build/memory-in-code) — trim the list and inject saved facts (Hall B). The Sandbox Agent scenario is this file with animation on top.
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
 Copy the five pieces into one file in order. Change the <code>facts</code> dict to include one term from your work. Ask a question that needs that term. When you reach the Sandbox, compare your print trace to the animated cards.
 </div>
+
+</LessonBody>

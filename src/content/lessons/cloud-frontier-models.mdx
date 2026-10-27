@@ -3,13 +3,46 @@ title: How clouds serve frontier models
 description: Cloud-hosted foundation models, access patterns, and how agentic apps call them — one mental model.
 order: 19
 path: foundations
-minutes: 15
+minutes: 10
 draft: false
 ---
 
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
 import CloudAgenticAccessDiagram from '../../components/diagrams/CloudAgenticAccessDiagram.astro';
 
-**Frontier** (or **foundation**) models are the large general-purpose models teams build products on. Cloud providers don’t usually “own” every model brand — they often **host and sell access** to several, behind one account, bill, and permission system.
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">Ash’s meetup app does not “contain” the model — it calls a cloud door, and the door runs a frontier model.</Beat>
+  <Beat label="From your world">Like ordering food: you talk to the counter (provider); the kitchen (model) is behind it.</Beat>
+  <Beat label="One example">Ash’s helper asks “which room?” → app → Bedrock/Azure/Vertex → a large model → Hall B comes back.</Beat>
+  <Beat label="Watch-out">Claude is a model brand. A cloud is a door. Same kitchen can have more than one door.</Beat>
+  <Beat label="Try this">Sketch App → Provider → Model. Label one door Ash might use.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Frontier models are reached through a provider API under keys or IAM — your agent loop still lives in your app.</Beat>
+  <Beat label="From your world">Console chat ≠ production. Prefer IAM roles over long-lived keys when you can.</Beat>
+  <Beat label="One example">Ash’s booking agent: plan → `invoke_model` on Bedrock → tool lookup → loop. The cloud hop is only the model call.</Beat>
+  <Beat label="Watch-out">Catalogs change. Pin the durable shape: app → provider → model (+ tools).</Beat>
+  <Beat label="Try this">Name access for a weekend demo (API key) vs a company service (IAM).</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="useful">
+  <Beat label="In one sentence">You can say: the cloud hosts and bills access; the model is what answers.</Beat>
+  <Beat label="From your world">Buyers mix “we use AWS” with “we use Claude.” Separate platform from assistant brand.</Beat>
+  <Beat label="One example">“Ash’s app calls a model through AWS” is fair. “AWS is Claude” is not.</Beat>
+  <Beat label="Watch-out">Don’t promise which model sits behind a customer’s cloud account.</Beat>
+  <Beat label="Try this">Say one sentence that splits door (cloud) from brand (model).</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+**Ash** is past sticky-note memory. Now Ash wants a tiny meetup helper that can ask a large model which room is free. Where does that ask go?
+
+Not into Ash’s laptop brain. The app calls a **cloud provider**. The provider **hosts and sells access** to **frontier** (foundation) models — often several brands behind one account, bill, and permission system.
 
 ## One mental model (not a catalog)
 
@@ -19,15 +52,15 @@ import CloudAgenticAccessDiagram from '../../components/diagrams/CloudAgenticAcc
 | **Azure OpenAI** (and related Azure AI) | Microsoft Azure’s managed access to certain OpenAI (and other) models |
 | **Google Vertex AI** | Google Cloud’s managed ML / generative model platform |
 
-Names and catalogs change. The durable idea: **your app talks to a provider; the provider routes to a model.**
+Names change. Durable idea: **Ash’s app → provider → model.**
 
-Anthropic’s [Claude](/learn/foundations/claude-basics) is a *model/product line*. It may appear in Anthropic’s own apps **or** as one option inside a cloud catalog. Claude is not “owned by” Bedrock.
+[Claude](/learn/foundations/claude-basics) is a *model/product line*. It may sit in Anthropic’s own apps **or** as one option in a cloud catalog. Claude is not “owned by” Bedrock.
 
-## How you get access
+## How Ash’s app gets access
 
-1. **Console / chat UIs** — Click around in a vendor console or consumer chat. Great for learning; less for production apps.
-2. **API keys + SDK** — Your code holds a key (or secret from a vault) and calls an HTTP API. Easy to start; protect keys carefully.
-3. **Cloud IAM roles** — In AWS/Azure/GCP, permissions say *which identity may invoke which model*. No long-lived key in the app if designed well — think “badge access,” not a password taped to a laptop.
+1. **Console / chat UIs** — Learn by clicking. Weak for production apps.
+2. **API keys + SDK** — Code holds a key; easy weekend demo; protect it.
+3. **Cloud IAM roles** — “This identity may invoke that model” — badge access, not a password on a laptop.
 
 You do **not** need an account to finish this lesson.
 
@@ -35,14 +68,16 @@ You do **not** need an account to finish this lesson.
 
 <CloudAgenticAccessDiagram />
 
-An [agentic workflow](/learn/foundations/agentic-workflows) adds the loop: the app plans, calls tools, observes results, and may call the model again. The **cloud provider** is usually just the hop that runs the model; your agent logic still lives in your app (or in a coding agent like [Claude Code](/learn/foundations/claude-code-basics)).
+An [agentic workflow](/learn/foundations/agentic-workflows) adds the loop: plan, tools, observe, call the model again. The **cloud** is usually just the hop that runs the model; Ash’s loop still lives in the app (or in a coding agent like [Claude Code](/learn/foundations/claude-code-basics)).
 
 ## Takeaway
 
-Clouds **serve** frontier models through APIs and permissions. Agentic apps = your loop + provider call + model (+ tools). Learn the map before the console.
+Clouds **serve** frontier models through APIs and permissions. Agentic apps = Ash’s loop + provider call + model (+ tools).
 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Sketch three boxes on paper: App → Provider → Model. Label one access style you’d use for a weekend demo (API key) vs a company service (IAM). No accounts required.
+Be Ash for one minute. Three boxes: App → Provider → Model. Label demo access (API key) vs company access (IAM). No accounts required.
 </div>
+
+</LessonBody>

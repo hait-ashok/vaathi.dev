@@ -13,31 +13,35 @@ import LessonBody from '../../components/LessonBody.astro';
 
 <Lens persona="new" relevance="start">
   <Beat label="In one sentence">Chat answers in words. A tool is a named lookup. An agent repeats those steps.</Beat>
-  <Beat label="From your world">A map stops you collecting every new app.</Beat>
-  <Beat label="One example">Asking for the room calls lookup_note. Guessing “the lobby” calls nothing.</Beat>
+  <Beat label="From your world">A map stops Ash collecting every new meetup app.</Beat>
+  <Beat label="One example">Ash asking for the room calls lookup_note. Guessing “the lobby” calls nothing.</Beat>
   <Beat label="Watch-out">A tool that can send mail is a different object from a tool that can only read.</Beat>
-  <Beat label="Try this">Fill in the tool card: name, what it may see, what it may change.</Beat>
+  <Beat label="Try this">Fill in the tool card for Ash’s helper: name, what it may see, what it may change.</Beat>
 </Lens>
 
 <Lens persona="it" relevance="useful">
   <Beat label="In one sentence">Chat, API, and agent are the same model with a longer trace. The tool card is the contract.</Beat>
-  <Beat label="From your world">Name, read scope, write scope. An MCP server later is that card plus an endpoint.</Beat>
-  <Beat label="One example">lookup_note reads the fixture and returns Hall B. It has no write.</Beat>
+  <Beat label="From your world">Name, read scope, write scope. An MCP server later is that card plus an endpoint — same discipline Ash’s meetup bot needs.</Beat>
+  <Beat label="One example">lookup_note reads Ash’s fixture and returns Hall B. It has no write.</Beat>
   <Beat label="Watch-out">Giving every tool to every call is how a lookup becomes a send.</Beat>
-  <Beat label="Try this">Read the card, then run the one-tool task and find the tool row.</Beat>
+  <Beat label="Try this">Read the card for Ash’s room lookup, then run the one-tool task and find the tool row.</Beat>
 </Lens>
 
 <Lens persona="sales" relevance="start">
   <Beat label="In one sentence">Start with chat. Add a tool when the answer must come from a source you can point to.</Beat>
-  <Beat label="From your world">A lookup you can name is safer to describe than a system that “just knows”.</Beat>
-  <Beat label="One example">“It looked up Hall B” is a sentence you can say. “It guessed the lobby” is not.</Beat>
-  <Beat label="Watch-out">Do not describe a read-only tool as something that emails the customer.</Beat>
-  <Beat label="Try this">Write the card, then see the lookup in the run.</Beat>
+  <Beat label="From your world">A lookup Ash can name is safer to describe than a system that “just knows.”</Beat>
+  <Beat label="One example">“It looked up Hall B for Ash” is a sentence you can say. “It guessed the lobby” is not.</Beat>
+  <Beat label="Watch-out">Do not describe a read-only tool as something that emails the guest list.</Beat>
+  <Beat label="Try this">Write Ash’s tool card, then see the lookup in the run.</Beat>
 </Lens>
 
 <LessonBody>
 
-You don’t need every tool. You need a **map** so new logos don’t scramble your brain.
+<p class="mono-label">Scene</p>
+
+Imagine **Ash** — organising a small meetup, not an engineer. Every week a new logo promises to draft invites, design posters, or “just handle” the guest list.
+
+Ash doesn’t need every tool. Ash needs a **map** so new logos don’t scramble the plan. You don’t need every tool either.
 
 ## Four rough regions
 

@@ -7,6 +7,40 @@ minutes: 12
 draft: false
 ---
 
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">Most AI products are a box you send something into and get something back — you don’t train the engine.</Beat>
+  <Beat label="From your world">Like ordering coffee: you ask, the shop makes it elsewhere, you judge the cup.</Beat>
+  <Beat label="One example">Ash types “draft a meetup invite” into a chat app. Input goes out; a draft comes back. The model ran on someone else’s servers.</Beat>
+  <Beat label="Watch-out">Wrong output still looks finished. Ash’s job is to notice wrong, not to rebuild the shop.</Beat>
+  <Beat label="Try this">Sketch one feature as input → mystery box → output. Add what “wrong” looks like.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="useful">
+  <Beat label="In one sentence">Treat the model as a remote service with a probabilistic contract — input, output, cost, data path.</Beat>
+  <Beat label="From your world">Same mental model as any SaaS API: latency, quotas, and what leaves the network.</Beat>
+  <Beat label="One example">Ash’s invite draft: prompt + system settings in; tokens out; bill and logs follow the vendor path.</Beat>
+  <Beat label="Watch-out">Vendor model swaps can change behavior without your code changing.</Beat>
+  <Beat label="Try this">Name input, output, where the call goes, and one production failure mode.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="start">
+  <Beat label="In one sentence">You can say: the product sends your ask to a hosted model and returns a result you still check.</Beat>
+  <Beat label="From your world">Customers don’t need training math. They need the contract: in, out, who checks.</Beat>
+  <Beat label="One example">“Ash gets a draft invite from the assistant; Ash still hits send” is a clean story.</Beat>
+  <Beat label="Watch-out">Don’t imply the model lives on the laptop unless it does.</Beat>
+  <Beat label="Try this">Explain the loop in twenty seconds without saying “neural network.”</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Ash opens a chat box and asks for a meetup invite. No toolkit. No training run. Just type, wait, draft. That outside view is enough for most people — and it is how you should learn to think first.
+
 You can understand most AI products without opening the engine bay. Think in **inputs**, **outputs**, and **services**.
 
 ## The loop
@@ -36,5 +70,7 @@ Treat every AI feature as a **service with a contract**: what goes in, what come
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Pick one AI feature you use. Sketch: input → mystery box → output. Add one note: “What would a wrong output look like here?”
+Pick one AI feature Ash might use for the meetup. Sketch: input → mystery box → output. Add one note: “What would a wrong output look like here?”
 </div>
+
+</LessonBody>

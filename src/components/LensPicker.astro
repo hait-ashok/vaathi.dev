@@ -1,11 +1,5 @@
 ---
 import { LENSES } from '../lib/lenses';
-
-const pilots = [
-  { href: '/learn/foundations/what-ai-means', label: 'What “AI” usually means' },
-  { href: '/learn/foundations/prompting-clear-communication', label: 'Prompting as clear communication' },
-  { href: '/learn/foundations/aws-bedrock-basics', label: 'AWS Bedrock basics' },
-];
 ---
 
 <section class="lens-picker" data-lens-picker aria-labelledby="lens-heading">
@@ -27,15 +21,8 @@ const pilots = [
     }
   </div>
   <p class="lens-picker__pilots">
-    Tailored frames are written on three lessons so far:
-    {
-      pilots.map((pilot, index) => (
-        <>
-          <a href={pilot.href}>{pilot.label}</a>
-          {index < pilots.length - 1 ? <span aria-hidden="true"> · </span> : null}
-        </>
-      ))
-    }
-    . Every lesson is marked Start here, Useful, or Skim for the door you picked.
+    Every Foundations and Build lesson has a tailored frame for New to AI, IT, and customers —
+    told through Ash’s meetup story. Switch anytime.
+    Every lesson is also marked Start here, Useful, or Skim for the door you picked.
   </p>
 </section>

@@ -7,7 +7,39 @@ minutes: 8
 draft: false
 ---
 
-You now have the map **and** the build recipes. Stage 3 is where you feel them.
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">Ash has the recipes; Stage 3 is where Ash runs chat, document Q&amp;A, and the agent loop for real.</Beat>
+  <Beat label="From your world">Same three shapes as the Build lessons — now animated cards instead of a print trace.</Beat>
+  <Beat label="One example">Simple Chat = one completion; Agent + Tools = Hall B lookup with a capped loop.</Beat>
+  <Beat label="Watch-out">Change one thing at a time so you can tell which edit moved the cards.</Beat>
+  <Beat label="Try this">Run Simple Chat once, then Agent + Tools once, with the A → B → C sketch beside you.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Sandbox maps 1:1 to Build: client messages, retrieve-then-ask, bind + loop + optional memory inject.</Beat>
+  <Beat label="From your world">Match each animated card to a line from Assemble — Brief, Model, Tool, Result, Answer.</Beat>
+  <Beat label="One example">Agent path: `@tool` → `bind_tools` → trim/`inject_facts` → `range(5)` → print trace.</Beat>
+  <Beat label="Watch-out">Browser demos stay small; production later swaps transport (e.g. Bedrock), not the loop shape.</Beat>
+  <Beat label="Try this">Pick Agent + Tools; change only the question; watch which cards fire.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="start">
+  <Beat label="In one sentence">You can say: we teach the flow in code, then let people press run — same shapes, less jargon.</Beat>
+  <Beat label="From your world">Three Sandbox options = three buyer demos Ash can narrate without opening an IDE.</Beat>
+  <Beat label="One example">“Chat answers once; the agent may look up a fact, read it, and stop under a step cap.”</Beat>
+  <Beat label="Watch-out">Don’t sell Stage 3 as production multi-tenant hosting — it is the teaching runway.</Beat>
+  <Beat label="Try this">Narrate one Agent + Tools run out loud while the cards advance.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Imagine **Ash** — organising a small meetup, not an engineer. Ash has walked the Build recipes: call a model, retrieve notes, assemble a loop, keep Hall B in memory. Stage 3 is where Ash **feels** those shapes — chat, document Q&amp;A, and agent — side by side.
 
 ## Three shapes, one mental model
 
@@ -40,10 +72,12 @@ The teaching shape stays. For web users without BYOK, the same scenarios move to
 
 ## Takeaway
 
-**Understand the flow in words and code, then run it.** Foundations → Build (with real agent code) → Sandbox.
+**Understand the flow in words and code, then run it.** Foundations → Build (with real agent code) → Sandbox. Ash’s meetup helper story ends here as a button you can press.
 
 <div class="try-this">
 <span class="mono-label">Next</span>
 
 Open the [Sandbox](/sandbox). Run Simple Chat once, then Agent + Tools once. Keep the Version A → B → C sketch from [Grow a chat into an agent](/learn/build/grow-chat-into-agent) beside you.
 </div>
+
+</LessonBody>

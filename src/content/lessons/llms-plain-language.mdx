@@ -7,17 +7,49 @@ minutes: 15
 draft: false
 ---
 
-Large language models (LLMs) generate text by repeatedly asking: **what token is likely next?** That simple idea explains a lot of their strengths and failures.
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">An LLM keeps guessing the next bit of text — it sounds sure even when it’s guessing.</Beat>
+  <Beat label="From your world">Like finishing someone’s sentence at a party: fluent, not always true.</Beat>
+  <Beat label="One example">Ash asks “how does it know the venue address?” — it doesn’t *know*; it predicts likely words, including a confident wrong street.</Beat>
+  <Beat label="Watch-out">Polished tone ≠ checked fact. Ash still verifies before posting.</Beat>
+  <Beat label="Try this">Ask for one public date or figure you can check. Compare how sure it sounded to how right it was.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">LLMs sample next-token distributions; confidence is a style of output, not a calibrated probability you can trust.</Beat>
+  <Beat label="From your world">Same as any generative completion API: prompt in, tokens out, no built-in truth store.</Beat>
+  <Beat label="One example">Ash’s meetup FAQ bot invents a door code that “sounds right” — hallucination under uncertainty, not a DB miss.</Beat>
+  <Beat label="Watch-out">Don’t ship unchecked claims into tickets, emails, or docs that affect money or reputation.</Beat>
+  <Beat label="Try this">Name one claim type you’d always verify (cite, date, policy) before it leaves the system.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">You can say: it drafts likely next words; it does not look up a single truth file.</Beat>
+  <Beat label="From your world">Buyers hear “knows everything.” Offer “writes a draft you still check.”</Beat>
+  <Beat label="One example">“It can draft Ash’s venue blurb; Ash confirms the address” is a sentence you can stand behind.</Beat>
+  <Beat label="Watch-out">Don’t promise it never invents citations or features.</Beat>
+  <Beat label="Try this">Rewrite one “the AI knows…” claim as “it drafts; we verify.”</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Ash drafts meetup copy with a chat model and keeps asking: **“How does it know?”** The honest answer is smaller than it sounds. Large language models (LLMs) generate text by repeatedly asking: **what token is likely next?** That simple idea explains a lot of their strengths and failures.
 
 ## Tokens, not “thoughts”
 
 Text is split into **tokens** — chunks that may be whole words or pieces. The model assigns probabilities to possible next tokens and samples from them (with settings that make answers more or less “creative”).
 
-It is not looking up a single truth database. It is continuing a pattern that often *looks* like knowledge.
+It is not looking up a single truth database. It is continuing a pattern that often *looks* like knowledge — including a venue address that sounds right for Ash’s city but isn’t the one on the booking.
 
 ## Why they sound confident
 
-Training rewards fluent, helpful-sounding continuations. Confidence is a **style** of language, not a calibrated certainty meter. A wrong answer can still sound polished.
+Training rewards fluent, helpful-sounding continuations. Confidence is a **style** of language, not a calibrated certainty meter. A wrong answer can still sound polished — which is why Ash double-checks before the invite goes out.
 
 ## Hallucinations are expected
 
@@ -34,5 +66,7 @@ LLMs are powerful **pattern completers**. Use them for drafting, exploring, and 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Ask a chat model for a specific statistic you can verify (a public figure, a historical date). Check the answer against a trusted source. Note how “sure” the tone felt versus how accurate it was.
+Be Ash for a minute. Ask a chat model for a specific statistic you can verify (a public figure, a historical date). Check the answer against a trusted source. Note how “sure” the tone felt versus how accurate it was.
 </div>
+
+</LessonBody>

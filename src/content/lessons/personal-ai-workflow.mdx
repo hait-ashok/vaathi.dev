@@ -14,31 +14,35 @@ import PersonalWorkflowDiagram from '../../components/diagrams/PersonalWorkflowD
 
 <Lens persona="new" relevance="start">
   <Beat label="In one sentence">You gather the source, the model drafts, you check three claims, you say where it came from.</Beat>
-  <Beat label="From your world">It is the same care you use before forwarding a summary of a family note.</Beat>
-  <Beat label="One example">A summary that adds a fee the article never mentioned has failed the verify step.</Beat>
+  <Beat label="From your world">It is the same care Ash uses before forwarding a summary of a venue note.</Beat>
+  <Beat label="One example">A summary that adds a fee Ash’s article never mentioned has failed the verify step.</Beat>
   <Beat label="Watch-out">A fast draft is not finished work.</Beat>
-  <Beat label="Try this">Mark the line that is not in the source.</Beat>
+  <Beat label="Try this">Mark the line in Ash’s draft that is not in the source.</Beat>
 </Lens>
 
 <Lens persona="it" relevance="useful">
   <Beat label="In one sentence">Research and verify stay with the caller. The model is the draft step in the pipeline.</Beat>
-  <Beat label="From your world">It matches a review gate: generate, then diff against the input, then attribute.</Beat>
-  <Beat label="One example">The check is “is this span in the source?”, not “does this sound right?”.</Beat>
+  <Beat label="From your world">It matches a review gate for Ash’s meetup bot: generate, then diff against the input, then attribute.</Beat>
+  <Beat label="One example">The check is “is this span in Ash’s source?”, not “does this sound right?”.</Beat>
   <Beat label="Watch-out">Skipping verify because the draft compiled is how extra fields ship.</Beat>
-  <Beat label="Try this">Run the source check on the invented discount.</Beat>
+  <Beat label="Try this">Run the source check on the invented discount in Ash’s follow-up.</Beat>
 </Lens>
 
 <Lens persona="sales" relevance="start">
   <Beat label="In one sentence">You own the claims. The model may draft the words.</Beat>
-  <Beat label="From your world">A follow-up you would send is one you checked against the note in front of you.</Beat>
-  <Beat label="One example">Cite the note for the time. Drop any offer the note does not make.</Beat>
+  <Beat label="From your world">A follow-up Ash would send is one they checked against the note in front of them.</Beat>
+  <Beat label="One example">Cite Ash’s note for the time. Drop any offer the note does not make.</Beat>
   <Beat label="Watch-out">Customers hear the draft as your offer.</Beat>
-  <Beat label="Try this">Check the draft against the note before you keep it.</Beat>
+  <Beat label="Try this">Check Ash’s draft against the note before you keep it.</Beat>
 </Lens>
 
 <LessonBody>
 
-Tools change. A small **workflow** keeps you steady. The picture below is the whole idea: you lead research, checking, and credit; the model mainly helps you **draft**.
+<p class="mono-label">Scene</p>
+
+Imagine **Ash** — organising a small meetup, not an engineer. Ash wants a short summary of the venue article to share with volunteers. A fast draft appears — including a fee the article never mentioned.
+
+Tools change. A small **workflow** keeps Ash steady: research, draft, verify, cite. The picture below is the whole idea: you lead research, checking, and credit; the model mainly helps you **draft**.
 
 <PersonalWorkflowDiagram />
 

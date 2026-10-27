@@ -7,9 +7,42 @@ minutes: 14
 draft: false
 ---
 
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
 import GpuCpuCompare from '../../components/diagrams/GpuCpuCompare.astro';
 
-You’ve seen [how a model is built](/learn/foundations/how-a-model-is-built) and how [transformers](/learn/foundations/transformers-beginner) lean on [attention](/glossary#attention). This lesson answers a practical “why”: **why do labs and clouds talk so much about GPUs (and other accelerators)?**
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">GPUs do many similar number jobs at once — the shape of work models need; CPUs handle flexible control.</Beat>
+  <Beat label="From your world">CPU = a few skilled coordinators. GPU = a huge crew doing the same simple task in parallel.</Beat>
+  <Beat label="One example">Ash’s invite draft on a big cloud model runs on a GPU farm; Ash’s laptop still uses a CPU to open the browser.</Beat>
+  <Beat label="Watch-out">“Needs a GPU” is about workload shape — not a brand loyalty test.</Beat>
+  <Beat label="Try this">Open one local AI app or cloud pricing page. Note GPU, VRAM/GB, or “CPU-only.”</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Training and large-model inference are matrix-heavy; accelerators win on throughput; CPUs still own orchestration.</Beat>
+  <Beat label="From your world">Same split as a service: GPU for the hot path, CPU for the API, queues, and preprocessing.</Beat>
+  <Beat label="One example">Ash’s meetup bot: tokenize and route on CPU; generate the confirmation email on a GPU-backed inference endpoint.</Beat>
+  <Beat label="Watch-out">VRAM caps model size and context; batching helps until memory runs out.</Beat>
+  <Beat label="Try this">For one feature, name what stays on CPU vs what needs accelerator math.</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">You can say: big models need parallel math chips; your laptop may still draft with a small or remote model.</Beat>
+  <Beat label="From your world">Buyers hear GPU and picture a shopping list. Talk job shape: speed and capacity, not SKUs.</Beat>
+  <Beat label="One example">“Ash’s cloud draft uses GPU-backed inference” is fair. “You must buy this card” usually isn’t the beginner pitch.</Beat>
+  <Beat label="Watch-out">Don’t promise laptop speed equal to a lab cluster.</Beat>
+  <Beat label="Try this">Rewrite one hardware claim as: what runs where (device vs cloud).</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Ash just learned [how a model is built](/learn/foundations/how-a-model-is-built) — and now every pitch says “GPU.” Why does meetup copy care about graphics chips?
+
+Ash has seen [transformers](/learn/foundations/transformers-beginner) lean on [attention](/glossary#attention). This lesson answers the practical “why”: **labs and clouds talk about GPUs (and other accelerators) because of the shape of the math.**
 
 ## Two kinds of good at
 
@@ -33,7 +66,7 @@ That workload maps well to GPUs and similar **accelerators** (chips built for th
 - **VRAM** (GPU memory) holds the model weights and the temporary numbers for the current batch of tokens. Bigger models and longer contexts need more room.
 - **Batching** means processing several examples (or several requests) together so the chip stays busy. More parallelism → better use of those many cores — until you run out of memory.
 
-You don’t need to size hardware yourself as a beginner. Just know: **memory and parallelism** are why “this model needs a GPU” shows up in install notes and cloud bills.
+Ash doesn’t need to size hardware as a beginner. Just know: **memory and parallelism** are why “this model needs a GPU” shows up in install notes and cloud bills — including when Ash drafts an invite in a chat app.
 
 ## When CPUs still appear
 
@@ -41,7 +74,7 @@ CPUs don’t disappear:
 
 - **Small models** and light demos may run fine on CPU (slower, but fine for learning).
 - **Preprocessing** — cleaning text, loading files, tokenization — often starts on CPU.
-- **Orchestration** — your app, the API server, queues, logging — still CPU-shaped work.
+- **Orchestration** — Ash’s app, the API server, queues, logging — still CPU-shaped work.
 - **Laptop chat apps** may use a mix: local small models on CPU/Apple Silicon, big models on a remote GPU farm.
 
 So: GPUs (accelerators) for the heavy model math; CPUs for running the rest of the system.
@@ -59,5 +92,7 @@ See also: [Glossary — GPU](/glossary#gpu), [CPU](/glossary#cpu). Cross-links: 
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Open the system requirements for any local AI app or cloud “inference” pricing page. Note whether they mention GPU, memory (VRAM/GB), or “CPU-only.” You’re reading the hardware story in product language.
+Open the system requirements for any local AI app Ash might try, or a cloud “inference” pricing page. Note whether they mention GPU, memory (VRAM/GB), or “CPU-only.” You’re reading the hardware story in product language.
 </div>
+
+</LessonBody>

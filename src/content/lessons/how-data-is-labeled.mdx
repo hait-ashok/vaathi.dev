@@ -7,7 +7,41 @@ minutes: 15
 draft: false
 ---
 
-Behind many models is a quieter job: people (and sometimes tools) **label** examples so a computer can learn or be checked. A label is just a clear answer attached to an input.
+import Lens from '../../components/Lens.astro';
+import Beat from '../../components/LensBeat.astro';
+import LessonBody from '../../components/LessonBody.astro';
+
+<Lens persona="new" relevance="start">
+  <Beat label="In one sentence">A label is a clear human answer stuck on an example so a model can learn or be checked.</Beat>
+  <Beat label="From your world">Like tagging RSVPs: “coming / maybe / no” so Ash can sort the guest list later.</Beat>
+  <Beat label="One example">Someone marks meetup emails as `spam` / `not spam`, or rates a draft invite `helpful` / `needs fix`.</Beat>
+  <Beat label="Watch-out">Labels are judgments under guidelines — not absolute truth carved in stone.</Beat>
+  <Beat label="Try this">Write one guideline for `positive` / `negative` / `mixed` reviews, then mark three made-up lines.</Beat>
+</Lens>
+
+<Lens persona="it" relevance="start">
+  <Beat label="In one sentence">Labels feed supervised training, holdout eval, and preference/fine-tune data — quality beats volume.</Beat>
+  <Beat label="From your world">Same as any labeled dataset: schema, guidelines, inter-annotator agreement, then train/eval splits.</Beat>
+  <Beat label="One example">Ash’s signup triage: tickets labeled `billing` / `venue` / `other` → classifier train set and weekly eval set.</Beat>
+  <Beat label="Watch-out">Vague guidelines → noisy labels → a model that looks confident and wrong.</Beat>
+  <Beat label="Try this">For one claim, ask: labeled examples, or raw web text?</Beat>
+</Lens>
+
+<Lens persona="sales" relevance="skim">
+  <Beat label="In one sentence">You can say: people (and tools) mark examples so the system can learn or score — guidelines decide what “right” means.</Beat>
+  <Beat label="From your world">Buyers hear “trained on quality data” and picture magic. Offer “labeled under written rules we can show.”</Beat>
+  <Beat label="One example">“Ash’s spam filter learned from tagged signup emails” is a sentence you can stand behind.</Beat>
+  <Beat label="Watch-out">Don’t imply labels are objective truth or that volume alone guarantees quality.</Beat>
+  <Beat label="Try this">Rewrite one data claim as: what was labeled, by whom, under which rule.</Beat>
+</Lens>
+
+<LessonBody>
+
+<p class="mono-label">Scene</p>
+
+Ash asks a quieter question after “how is a model built?”: **who decides what good looks like?** Behind many models is labeling — people (and sometimes tools) attaching clear answers to examples.
+
+A label is just a clear answer stuck on an input so a computer can learn or be checked — including for Ash’s meetup signup mail and draft invites.
 
 ## What a label looks like
 
@@ -26,7 +60,7 @@ Labels can be categories, scores, corrected text, or “preferred answer A over 
 2. **Evaluation** — Score a model against labeled test sets (see [evaluating AI outputs](/learn/foundations/bleu-and-rouge) — BLEU, ROUGE, F1, and more).
 3. **Fine-tuning / preference data** — Steer a general model toward a style, domain, or safer behavior using curated examples.
 
-This sits inside the [how a model is built](/learn/foundations/how-a-model-is-built) pipeline: data quality often matters more than clever code.
+This sits inside the [how a model is built](/learn/foundations/how-a-model-is-built) pipeline: data quality often matters more than clever code — including when Ash wants reliable meetup copy tone.
 
 ## Humans, guidelines, and agreement
 
@@ -47,5 +81,7 @@ Labeling platforms, workforce vendors, or MLOps dashboards. As a beginner, notic
 <div class="try-this">
 <span class="mono-label">Try this</span>
 
-Write a one-line guideline for labeling restaurant reviews as `positive` / `negative` / `mixed`. Then mark three made-up one-sentence reviews. Where would two friends disagree?
+Be Ash for a minute. Write a one-line guideline for labeling restaurant reviews as `positive` / `negative` / `mixed`. Then mark three made-up one-sentence reviews. Where would two friends disagree?
 </div>
+
+</LessonBody>
