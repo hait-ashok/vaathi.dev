@@ -1,7 +1,7 @@
 ---
 title: From code to Sandbox
 description: Chat, RAG, and agent side by side — then Stage 3 where you run them.
-order: 8
+order: 9
 path: build
 minutes: 8
 draft: false
@@ -15,7 +15,7 @@ You now have the map **and** the build recipes. Stage 3 is where you feel them.
 |----------------|---------------|--------------|
 | **Simple Chat** | [Calling a model](/learn/build/calling-a-model) | One completion. System + user. |
 | **Document Q&amp;A** | [Vectors in code](/learn/build/vectors-in-code) | Context (or retrieve chunks) → grounded answer. |
-| **Agent + Tools** | [Tools](/learn/build/tool-calls-in-code) → [Loop](/learn/build/agent-loop-in-code) → [Assemble](/learn/build/assemble-a-python-agent) → [Grow chat→agent](/learn/build/grow-chat-into-agent) | Model may call tools, read results, loop, stop. |
+| **Agent + Tools** | [Tools](/learn/build/tool-calls-in-code) → [Loop](/learn/build/agent-loop-in-code) → [Assemble](/learn/build/assemble-a-python-agent) → [Memory](/learn/build/memory-in-code) → [Grow chat→agent](/learn/build/grow-chat-into-agent) | Model may call tools, read results, loop, stop — memory keeps facts across turns. |
 
 Python basics ([lesson 1](/learn/build/python-just-enough)) sit under all three.
 
@@ -23,7 +23,7 @@ Python basics ([lesson 1](/learn/build/python-just-enough)) sit under all three.
 
 1. Define a tool (`@tool`).
 2. Bind it (`bind_tools`).
-3. Keep a `messages` list.
+3. Keep a `messages` list — trim it; inject saved facts ([memory](/learn/build/memory-in-code)).
 4. Cap a loop (`range(5)`).
 5. Print a trace — same events the Sandbox animates.
 

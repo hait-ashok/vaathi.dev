@@ -1,0 +1,63 @@
+---
+title: Memory for agents
+description: Why agents need memory, how you configure it, and a map of market options — not a product tour.
+order: 18
+path: foundations
+minutes: 8
+draft: false
+---
+
+The model does **not** remember your company, your prefs, or last week’s tool results unless **you store them and feed them back**. Memory is that storage plus rules — not a smarter brain.
+
+## Why agents need it
+
+| Without memory | What breaks |
+| --- | --- |
+| Multi-step work | Re-asks or redoes the same lookup |
+| Preferences | “Be concise” vanishes next session |
+| Tool results | Facts fall out of the prompt when the window fills |
+
+Agents loop. Loops only stay useful if useful facts **survive** the next turn.
+
+## Three kinds (enough)
+
+| Kind | Where it lives | Example |
+| --- | --- | --- |
+| **Short-term** | This chat’s message list | Last tool result still in the prompt |
+| **Session** | Summary of this run | “We already booked Hall B” |
+| **Long-term** | Store outside the model | Prefs, FAQ chunks, saved facts |
+
+Long-term often uses [embeddings](/learn/foundations/why-vectors-embeddings) to *find* notes — that is retrieval, not the model “learning” your data. See also: [Glossary — Agent memory](/glossary#agent-memory).
+
+## How you configure it
+
+Four knobs. Write them down before picking a vendor:
+
+1. **What** to save — full messages, a short summary, or facts only  
+2. **Where** — in the prompt only, or a DB / vector store  
+3. **When to read / write** — every turn, end of session, or only on “remember this”  
+4. **Budget** — max messages / tokens / chunks, plus who can delete
+
+Mental model: **read policy + write policy + store + size limit**.
+
+## Market map (not a tour)
+
+| Region | Job | Beginner cue | Examples |
+| --- | --- | --- | --- |
+| **Chat products** | Built-in chat / custom memory | Notice it; don’t depend on it for apps | Consumer chat “memory”, project spaces |
+| **Frameworks** | You wire history + stores in code | When you build | LangChain / LangGraph, LlamaIndex |
+| **Session / KV stores** | Prefs + summaries | Simple long-term | Redis, DynamoDB, Postgres |
+| **Vector / knowledge** | “Find relevant notes” | RAG-shaped memory | pgvector, OpenSearch, Bedrock Knowledge Bases |
+| **Memory specialists** | Profiles / facts over time | Optional later | Mem0, Zep |
+
+Start with **last N messages + one short summary**. Add a store when the job must survive logout. Add vectors when the job is “search my notes.”
+
+## Takeaway
+
+**Memory = configured storage you put back into the prompt** — not a feature the model invents.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+Pick one real task. Fill four blanks: *what / where / when to read / max size*. Then open Build: [Memory in code](/learn/build/memory-in-code) for the same idea as a few lines of Python.
+</div>

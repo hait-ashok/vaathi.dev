@@ -1,0 +1,73 @@
+---
+title: Memory in code
+description: Keep a message list, cap its size, and save a few facts outside the model — the smallest useful memory.
+order: 7
+path: build
+minutes: 8
+draft: false
+---
+
+[Memory for agents](/learn/foundations/memory-for-agents) said: store on purpose, then feed back. Here is the **smallest** code shape — no special memory product.
+
+## 1 — Short-term = the messages list
+
+Every agent you built already has memory for *this run*: the `messages` list. Each turn appends; the model only sees what is still in that list.
+
+```python
+messages = [
+    {"role": "system", "content": "Be concise."},
+    {"role": "user", "content": "What room is the meetup?"},
+]
+# after a tool result:
+messages.append({"role": "tool", "content": "Hall B"})
+```
+
+## 2 — Cap it (budget)
+
+Context windows fill. Keep a hard cap — drop oldest turns, or replace a block with one summary line.
+
+```python
+MAX = 12  # messages, not “forever”
+
+def trim(messages, max_len=MAX):
+    if len(messages) <= max_len:
+        return messages
+    head, tail = messages[:1], messages[-(max_len - 1) :]
+    return head + [{"role": "system", "content": "[earlier turns summarized]"}] + tail
+```
+
+## 3 — Long-term = a tiny fact store
+
+Facts that must survive a new run live **outside** the model. Dict / file / DynamoDB — same idea.
+
+```python
+FACTS = {}  # stand-in for a real store
+
+def remember(key: str, value: str) -> None:
+    FACTS[key] = value
+
+def inject_facts(messages):
+    if not FACTS:
+        return messages
+    blob = "; ".join(f"{k}={v}" for k, v in FACTS.items())
+    return [{"role": "system", "content": f"Known facts: {blob}"}] + messages
+
+remember("meetup_room", "Hall B")
+messages = inject_facts(messages)
+```
+
+Next run: load `FACTS`, call `inject_facts`, then start the [agent loop](/learn/build/agent-loop-in-code) as usual.
+
+## When to add vectors
+
+If the job is “find the right note among many,” retrieve chunks first ([vectors in code](/learn/build/vectors-in-code)), then inject those — that is long-term memory shaped as RAG. Do not start there for prefs or one room name.
+
+## Takeaway
+
+**List + trim + optional fact inject.** Same knobs as Foundations; still one file.
+
+<div class="try-this">
+<span class="mono-label">Try this</span>
+
+In the [Sandbox](/sandbox) Agent + Tools, run once with the room in the prompt and once without. That is short-term memory on vs off. Then sketch where `remember("meetup_room", ...)` would live in [Assemble](/learn/build/assemble-a-python-agent).
+</div>
